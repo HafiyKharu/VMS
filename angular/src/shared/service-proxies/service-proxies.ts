@@ -2328,20 +2328,115 @@ export class AppointmentsServiceProxy {
     }
 
     /**
-     * @param appointmentId (optional) 
-     * @param item (optional) 
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @param identityCardFilter (optional) 
+     * @param phoneNoFilter (optional) 
+     * @param emailFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param companyNameFilter (optional) 
+     * @param officerToMeetFilter (optional) 
+     * @param purposeOfVisitFilter (optional) 
+     * @param departmentFilter (optional) 
+     * @param towerFilter (optional) 
+     * @param levelFilter (optional) 
+     * @param minAppDateTimeFilter (optional) 
+     * @param maxAppDateTimeFilter (optional) 
+     * @param minRegDateTimeFilter (optional) 
+     * @param maxRegDateTimeFilter (optional) 
+     * @param emailOfficerToMeet (optional) 
+     * @param phoneNoOfficerToMeet (optional) 
+     * @param statusFilter (optional) 
+     * @param passNumberFilter (optional) 
+     * @param appRefNoFilter (optional) 
      * @return Success
      */
-    cancelAppointmet(appointmentId: string | undefined, item: string | undefined): Observable<string> {
-        let url_ = this.baseUrl + "/api/services/app/Appointments/CancelAppointmet?";
-        if (appointmentId === null)
-            throw new Error("The parameter 'appointmentId' cannot be null.");
-        else if (appointmentId !== undefined)
-            url_ += "appointmentId=" + encodeURIComponent("" + appointmentId) + "&";
-        if (item === null)
-            throw new Error("The parameter 'item' cannot be null.");
-        else if (item !== undefined)
-            url_ += "Item=" + encodeURIComponent("" + item) + "&";
+    getAllAppointmentsToExcel(filter: string | undefined, fullNameFilter: string | undefined, identityCardFilter: string | undefined, phoneNoFilter: string | undefined, emailFilter: string | undefined, titleFilter: string | undefined, companyNameFilter: string | undefined, officerToMeetFilter: string | undefined, purposeOfVisitFilter: string | undefined, departmentFilter: string | undefined, towerFilter: string | undefined, levelFilter: string | undefined, minAppDateTimeFilter: DateTime | undefined, maxAppDateTimeFilter: DateTime | undefined, minRegDateTimeFilter: DateTime | undefined, maxRegDateTimeFilter: DateTime | undefined, emailOfficerToMeet: string | undefined, phoneNoOfficerToMeet: string | undefined, statusFilter: number | undefined, passNumberFilter: string | undefined, appRefNoFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Appointments/GetAllAppointmentsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (identityCardFilter === null)
+            throw new Error("The parameter 'identityCardFilter' cannot be null.");
+        else if (identityCardFilter !== undefined)
+            url_ += "IdentityCardFilter=" + encodeURIComponent("" + identityCardFilter) + "&";
+        if (phoneNoFilter === null)
+            throw new Error("The parameter 'phoneNoFilter' cannot be null.");
+        else if (phoneNoFilter !== undefined)
+            url_ += "PhoneNoFilter=" + encodeURIComponent("" + phoneNoFilter) + "&";
+        if (emailFilter === null)
+            throw new Error("The parameter 'emailFilter' cannot be null.");
+        else if (emailFilter !== undefined)
+            url_ += "EmailFilter=" + encodeURIComponent("" + emailFilter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        if (officerToMeetFilter === null)
+            throw new Error("The parameter 'officerToMeetFilter' cannot be null.");
+        else if (officerToMeetFilter !== undefined)
+            url_ += "OfficerToMeetFilter=" + encodeURIComponent("" + officerToMeetFilter) + "&";
+        if (purposeOfVisitFilter === null)
+            throw new Error("The parameter 'purposeOfVisitFilter' cannot be null.");
+        else if (purposeOfVisitFilter !== undefined)
+            url_ += "PurposeOfVisitFilter=" + encodeURIComponent("" + purposeOfVisitFilter) + "&";
+        if (departmentFilter === null)
+            throw new Error("The parameter 'departmentFilter' cannot be null.");
+        else if (departmentFilter !== undefined)
+            url_ += "DepartmentFilter=" + encodeURIComponent("" + departmentFilter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        if (minAppDateTimeFilter === null)
+            throw new Error("The parameter 'minAppDateTimeFilter' cannot be null.");
+        else if (minAppDateTimeFilter !== undefined)
+            url_ += "MinAppDateTimeFilter=" + encodeURIComponent(minAppDateTimeFilter ? "" + minAppDateTimeFilter.toJSON() : "") + "&";
+        if (maxAppDateTimeFilter === null)
+            throw new Error("The parameter 'maxAppDateTimeFilter' cannot be null.");
+        else if (maxAppDateTimeFilter !== undefined)
+            url_ += "MaxAppDateTimeFilter=" + encodeURIComponent(maxAppDateTimeFilter ? "" + maxAppDateTimeFilter.toJSON() : "") + "&";
+        if (minRegDateTimeFilter === null)
+            throw new Error("The parameter 'minRegDateTimeFilter' cannot be null.");
+        else if (minRegDateTimeFilter !== undefined)
+            url_ += "MinRegDateTimeFilter=" + encodeURIComponent(minRegDateTimeFilter ? "" + minRegDateTimeFilter.toJSON() : "") + "&";
+        if (maxRegDateTimeFilter === null)
+            throw new Error("The parameter 'maxRegDateTimeFilter' cannot be null.");
+        else if (maxRegDateTimeFilter !== undefined)
+            url_ += "MaxRegDateTimeFilter=" + encodeURIComponent(maxRegDateTimeFilter ? "" + maxRegDateTimeFilter.toJSON() : "") + "&";
+        if (emailOfficerToMeet === null)
+            throw new Error("The parameter 'emailOfficerToMeet' cannot be null.");
+        else if (emailOfficerToMeet !== undefined)
+            url_ += "EmailOfficerToMeet=" + encodeURIComponent("" + emailOfficerToMeet) + "&";
+        if (phoneNoOfficerToMeet === null)
+            throw new Error("The parameter 'phoneNoOfficerToMeet' cannot be null.");
+        else if (phoneNoOfficerToMeet !== undefined)
+            url_ += "PhoneNoOfficerToMeet=" + encodeURIComponent("" + phoneNoOfficerToMeet) + "&";
+        if (statusFilter === null)
+            throw new Error("The parameter 'statusFilter' cannot be null.");
+        else if (statusFilter !== undefined)
+            url_ += "StatusFilter=" + encodeURIComponent("" + statusFilter) + "&";
+        if (passNumberFilter === null)
+            throw new Error("The parameter 'passNumberFilter' cannot be null.");
+        else if (passNumberFilter !== undefined)
+            url_ += "PassNumberFilter=" + encodeURIComponent("" + passNumberFilter) + "&";
+        if (appRefNoFilter === null)
+            throw new Error("The parameter 'appRefNoFilter' cannot be null.");
+        else if (appRefNoFilter !== undefined)
+            url_ += "AppRefNoFilter=" + encodeURIComponent("" + appRefNoFilter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2352,21 +2447,21 @@ export class AppointmentsServiceProxy {
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCancelAppointmet(response_);
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAppointmentsToExcel(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCancelAppointmet(<any>response_);
+                    return this.processGetAllAppointmentsToExcel(<any>response_);
                 } catch (e) {
-                    return <Observable<string>><any>_observableThrow(e);
+                    return <Observable<FileDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<string>><any>_observableThrow(response_);
+                return <Observable<FileDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCancelAppointmet(response: HttpResponseBase): Observable<string> {
+    protected processGetAllAppointmentsToExcel(response: HttpResponseBase): Observable<FileDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2377,7 +2472,7 @@ export class AppointmentsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = FileDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2385,7 +2480,7 @@ export class AppointmentsServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<string>(<any>null);
+        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -12874,6 +12969,67 @@ export class PortalsServiceProxy {
             }));
         }
         return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @param appointmentId (optional) 
+     * @param item (optional) 
+     * @return Success
+     */
+    checkExpiredUrl(appointmentId: string | undefined, item: string | undefined): Observable<GetExpiredUrlForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Portals/CheckExpiredUrl?";
+        if (appointmentId === null)
+            throw new Error("The parameter 'appointmentId' cannot be null.");
+        else if (appointmentId !== undefined)
+            url_ += "appointmentId=" + encodeURIComponent("" + appointmentId) + "&";
+        if (item === null)
+            throw new Error("The parameter 'item' cannot be null.");
+        else if (item !== undefined)
+            url_ += "Item=" + encodeURIComponent("" + item) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCheckExpiredUrl(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCheckExpiredUrl(<any>response_);
+                } catch (e) {
+                    return <Observable<GetExpiredUrlForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetExpiredUrlForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCheckExpiredUrl(response: HttpResponseBase): Observable<GetExpiredUrlForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExpiredUrlForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetExpiredUrlForViewDto>(<any>null);
     }
 
     /**

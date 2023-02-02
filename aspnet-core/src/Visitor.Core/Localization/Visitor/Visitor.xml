@@ -115,6 +115,7 @@
     <text name="PassNumber">Pass Number</text>
     <text name="checkInDateTime">Check In date and time</text>
     <text name="checkOutDateTime">Check Out date and time</text>
+    <text name="cancelOutDateTime">cancel date and time</text>
     <text name="Approve and Check-in">Approve and Check In</text>
     <text name="Approve and Check-Out">Approve and Check Out</text>
     <text name="CheckInSuccessfully">Succesfully check in</text>
@@ -124,6 +125,7 @@
     <text name="OtherPurpose">Other (Please specify)</text>
     <text name="EmailOfficerToMeet">Officer To Meet Email</text>
     <text name="PhoneNoOfficerToMeet">Officer To Meet Phone No.</text>
+    <text name="IdImage">Id image</text>
 
 
     <text name="Department">Department</text>
