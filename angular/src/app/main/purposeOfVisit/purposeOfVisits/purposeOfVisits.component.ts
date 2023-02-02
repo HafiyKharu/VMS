@@ -121,5 +121,10 @@ export class PurposeOfVisitsComponent extends AppComponentBase {
             }
         });
     }
+    exportToExcel(): void {
+        this._purposeOfVisitsServiceProxy.getAllPurposeOfVisitToExcel(this.filterText, this.fullNameFilter).subscribe((result) => {
+            this._fileDownloadService.downloadTempFile(result);
+        });
+    }
 
 }
