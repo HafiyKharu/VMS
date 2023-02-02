@@ -59,7 +59,7 @@
     <text name="TitlesHeaderInfo">Title header info</text>
     <text name="CreateNewTitle">Create new title</text>
     <text name="EditTitle">Edit title</text>
-    <text name="Deletetitle">Delete title</text>
+    <text name="DeleteTitle">Delete title</text>
     <text name="Titles">Title</text>
 
     <text name="Blacklist">Blacklist</text>
@@ -80,7 +80,7 @@
     <text name="LevelsHeaderInfo">Level header info</text>
     <text name="CreateNewLevel">Create new level</text>
     <text name="EditLevel">Edit level</text>
-    <text name="Deletelevel">Delete level</text>
+    <text name="DeleteLevel">Delete level</text>
     <text name="Levels">Levels</text>
 
     <text name="VisitorRegistrationForm">Visitor Registration Form</text>
@@ -104,7 +104,7 @@
     <text name="AppDateTime">Appointment's date and time</text>
     <text name="MinAppDateTimeFilter">Appointment's date and time</text>
     <text name="MinRegDateTimeFilter">Registration's date and time</text>
-    <text name="UploadPicture">Upload Visitor's Image for Verification</text>
+    <text name="UploadPicture">Upload visitor's image for verification</text>
     <text name="RegDateTime">Register's date and time</text>
     <text name="Picture">Visitor's Image for Verification</text>
     <text name="UploadedPicture">Uploaded Visitor's Image for Verification</text>
@@ -123,18 +123,17 @@
     <text name="CheckIn">Check in</text>
     <text name="CheckOut">Check out</text>
     <text name="OtherPurpose">Other (Please specify)</text>
-    <text name="EmailOfficerToMeet">Officer To Meet Email</text>
-    <text name="PhoneNoOfficerToMeet">Officer To Meet Phone No.</text>
+    <text name="EmailOfficerToMeet">Officer to meet email</text>
+    <text name="PhoneNoOfficerToMeet">Officer to meet phone no.</text>
     <text name="IdImage">Id image</text>
-
 
     <text name="Department">Department</text>
     <text name="Visitor.Department.Department">Department</text>
     <text name="DepartmentName">Department name</text>
     <text name="DepartmentsHeaderInfo">Departments header info</text>
-    <text name="CreateNewDepartment">Create new department</text>
-    <text name="EditDepartment">Edit department</text>
-    <text name="DeleteDepartment">Delete department</text>
+    <text name="CreateNewDepartments">Create new department</text>
+    <text name="EditDepartments">Edit department</text>
+    <text name="DeleteDepartments">Delete department</text>
     <text name="Departments">Departments</text>
     <text name="{0}IsRequired">{0} is required.</text>
     <text name="View">View</text>

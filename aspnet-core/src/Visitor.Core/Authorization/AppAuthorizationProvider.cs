@@ -57,13 +57,13 @@ namespace Visitor.Authorization
             //Visitor Title
             var Titles = pages.CreateChildPermission(AppPermissions.Pages_Titles, L("Title"));
             Titles.CreateChildPermission(AppPermissions.Pages_Titles_Create, L("CreateNewTitle"));
-            Titles.CreateChildPermission(AppPermissions.Pages_Titles_Edit, L("EdiTitle"));
+            Titles.CreateChildPermission(AppPermissions.Pages_Titles_Edit, L("EditTitle"));
             Titles.CreateChildPermission(AppPermissions.Pages_Titles_Delete, L("DeleteTitle"));
 
             //Visitor Level
             var Levels = pages.CreateChildPermission(AppPermissions.Pages_Levels, L("Level"));
             Levels.CreateChildPermission(AppPermissions.Pages_Levels_Create, L("CreateNewLevel"));
-            Levels.CreateChildPermission(AppPermissions.Pages_Levels_Edit, L("EdiLevel"));
+            Levels.CreateChildPermission(AppPermissions.Pages_Levels_Edit, L("EditLevel"));
             Levels.CreateChildPermission(AppPermissions.Pages_Levels_Delete, L("DeleteLevel"));
 
             //Departments

@@ -65,7 +65,7 @@ export class ViewDetailsComponent extends AppComponentBase implements OnInit, Af
     ngOnInit(): void {
         // this.show(this.item);
         this.showMainSpinner();
-        this.appointmentId = "339B18E6-C463-47A0-B627-08DAFE7CBF73";//this._passService.appointmentId;
+        this.appointmentId = this._passService.appointmentId;
         this.getAppointment(this.appointmentId);
         this._portalAppService.createOrEditExpiredUrl(this.appointmentId, 'Cancel').subscribe(()=> 
          this.hideMainSpinner());

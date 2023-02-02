@@ -51,7 +51,7 @@ export class AppNavigationService {
                     //new AppMenuItem('Status', 'Pages.Statuses', 'flaticon-list-3', '/app/main/status/statuses'),
                     new AppMenuItem('Title', 'Pages.Titles', 'flaticon-list-3', '/app/main/title/titles'),
                     new AppMenuItem('Level', 'Pages.Levels', 'flaticon-list-3', '/app/main/level/levels'),
-                    new AppMenuItem('Companies', 'Pages.Companies', 'flaticon-more', '/app/main/company/companies'),                    
+                    new AppMenuItem('Companies', 'Pages.Companies', 'flaticon-list-3', '/app/main/company/companies'),                    
                     new AppMenuItem('Departments', 'Pages.Departments', 'flaticon-list-3', '/app/main/department/departments'),
                 ]
             ),
