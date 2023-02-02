@@ -13,6 +13,9 @@ using Visitor.Title.Dtos;
 using Abp.Linq.Extensions;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
+using Visitor.Dto;
+using Visitor.Appointment;
+using Visitor.Appointment.Exporting;
 
 namespace Visitor.Title
 {
@@ -21,11 +24,13 @@ namespace Visitor.Title
     {
 
         private readonly IRepository<TitleEnt, Guid> _titleRepository;
+        private readonly ITitleExcelExporter _titleExcelExporter;
 
 
-        public TitlesAppService(IRepository<TitleEnt, Guid> titleRepository)
+        public TitlesAppService(IRepository<TitleEnt, Guid> titleRepository , ITitleExcelExporter titleExcelExporter)
         {
             _titleRepository = titleRepository;
+            _titleExcelExporter = titleExcelExporter;
 
         }
 
@@ -126,6 +131,26 @@ namespace Visitor.Title
         public async Task Delete(EntityDto<Guid> input)
         {
             await _titleRepository.DeleteAsync(input.Id);
+        }
+
+        public async Task<FileDto> GetAllTitleToExcel(GetAllTitleForExcelInput input)
+        {
+            var filteredTitles = _titleRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.VisitorTitle.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.VisitorTitle == input.TitleFilter);
+
+            var query = (from o in filteredTitles
+                         select new GetTitleForViewDto()
+                         {
+                             Title = new TitleDto
+                             {
+                                 Id = o.Id,
+                                 VisitorTitle = o.VisitorTitle,                                
+                             }
+                         });
+            var title = await query.ToListAsync();
+
+            return _titleExcelExporter.ExportToFile(title);
         }
     }
 }
