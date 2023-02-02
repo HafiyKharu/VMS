@@ -2482,6 +2482,474 @@ export class AppointmentsServiceProxy {
         }
         return _observableOf<FileDto>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @param identityCardFilter (optional) 
+     * @param phoneNoFilter (optional) 
+     * @param emailFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param companyNameFilter (optional) 
+     * @param officerToMeetFilter (optional) 
+     * @param purposeOfVisitFilter (optional) 
+     * @param departmentFilter (optional) 
+     * @param towerFilter (optional) 
+     * @param levelFilter (optional) 
+     * @param minAppDateTimeFilter (optional) 
+     * @param maxAppDateTimeFilter (optional) 
+     * @param minRegDateTimeFilter (optional) 
+     * @param maxRegDateTimeFilter (optional) 
+     * @param emailOfficerToMeet (optional) 
+     * @param phoneNoOfficerToMeet (optional) 
+     * @param statusFilter (optional) 
+     * @param passNumberFilter (optional) 
+     * @param appRefNoFilter (optional) 
+     * @return Success
+     */
+    getAllTodayAppointmentsToExcel(filter: string | undefined, fullNameFilter: string | undefined, identityCardFilter: string | undefined, phoneNoFilter: string | undefined, emailFilter: string | undefined, titleFilter: string | undefined, companyNameFilter: string | undefined, officerToMeetFilter: string | undefined, purposeOfVisitFilter: string | undefined, departmentFilter: string | undefined, towerFilter: string | undefined, levelFilter: string | undefined, minAppDateTimeFilter: DateTime | undefined, maxAppDateTimeFilter: DateTime | undefined, minRegDateTimeFilter: DateTime | undefined, maxRegDateTimeFilter: DateTime | undefined, emailOfficerToMeet: string | undefined, phoneNoOfficerToMeet: string | undefined, statusFilter: number | undefined, passNumberFilter: string | undefined, appRefNoFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Appointments/GetAllTodayAppointmentsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (identityCardFilter === null)
+            throw new Error("The parameter 'identityCardFilter' cannot be null.");
+        else if (identityCardFilter !== undefined)
+            url_ += "IdentityCardFilter=" + encodeURIComponent("" + identityCardFilter) + "&";
+        if (phoneNoFilter === null)
+            throw new Error("The parameter 'phoneNoFilter' cannot be null.");
+        else if (phoneNoFilter !== undefined)
+            url_ += "PhoneNoFilter=" + encodeURIComponent("" + phoneNoFilter) + "&";
+        if (emailFilter === null)
+            throw new Error("The parameter 'emailFilter' cannot be null.");
+        else if (emailFilter !== undefined)
+            url_ += "EmailFilter=" + encodeURIComponent("" + emailFilter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        if (officerToMeetFilter === null)
+            throw new Error("The parameter 'officerToMeetFilter' cannot be null.");
+        else if (officerToMeetFilter !== undefined)
+            url_ += "OfficerToMeetFilter=" + encodeURIComponent("" + officerToMeetFilter) + "&";
+        if (purposeOfVisitFilter === null)
+            throw new Error("The parameter 'purposeOfVisitFilter' cannot be null.");
+        else if (purposeOfVisitFilter !== undefined)
+            url_ += "PurposeOfVisitFilter=" + encodeURIComponent("" + purposeOfVisitFilter) + "&";
+        if (departmentFilter === null)
+            throw new Error("The parameter 'departmentFilter' cannot be null.");
+        else if (departmentFilter !== undefined)
+            url_ += "DepartmentFilter=" + encodeURIComponent("" + departmentFilter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        if (minAppDateTimeFilter === null)
+            throw new Error("The parameter 'minAppDateTimeFilter' cannot be null.");
+        else if (minAppDateTimeFilter !== undefined)
+            url_ += "MinAppDateTimeFilter=" + encodeURIComponent(minAppDateTimeFilter ? "" + minAppDateTimeFilter.toJSON() : "") + "&";
+        if (maxAppDateTimeFilter === null)
+            throw new Error("The parameter 'maxAppDateTimeFilter' cannot be null.");
+        else if (maxAppDateTimeFilter !== undefined)
+            url_ += "MaxAppDateTimeFilter=" + encodeURIComponent(maxAppDateTimeFilter ? "" + maxAppDateTimeFilter.toJSON() : "") + "&";
+        if (minRegDateTimeFilter === null)
+            throw new Error("The parameter 'minRegDateTimeFilter' cannot be null.");
+        else if (minRegDateTimeFilter !== undefined)
+            url_ += "MinRegDateTimeFilter=" + encodeURIComponent(minRegDateTimeFilter ? "" + minRegDateTimeFilter.toJSON() : "") + "&";
+        if (maxRegDateTimeFilter === null)
+            throw new Error("The parameter 'maxRegDateTimeFilter' cannot be null.");
+        else if (maxRegDateTimeFilter !== undefined)
+            url_ += "MaxRegDateTimeFilter=" + encodeURIComponent(maxRegDateTimeFilter ? "" + maxRegDateTimeFilter.toJSON() : "") + "&";
+        if (emailOfficerToMeet === null)
+            throw new Error("The parameter 'emailOfficerToMeet' cannot be null.");
+        else if (emailOfficerToMeet !== undefined)
+            url_ += "EmailOfficerToMeet=" + encodeURIComponent("" + emailOfficerToMeet) + "&";
+        if (phoneNoOfficerToMeet === null)
+            throw new Error("The parameter 'phoneNoOfficerToMeet' cannot be null.");
+        else if (phoneNoOfficerToMeet !== undefined)
+            url_ += "PhoneNoOfficerToMeet=" + encodeURIComponent("" + phoneNoOfficerToMeet) + "&";
+        if (statusFilter === null)
+            throw new Error("The parameter 'statusFilter' cannot be null.");
+        else if (statusFilter !== undefined)
+            url_ += "StatusFilter=" + encodeURIComponent("" + statusFilter) + "&";
+        if (passNumberFilter === null)
+            throw new Error("The parameter 'passNumberFilter' cannot be null.");
+        else if (passNumberFilter !== undefined)
+            url_ += "PassNumberFilter=" + encodeURIComponent("" + passNumberFilter) + "&";
+        if (appRefNoFilter === null)
+            throw new Error("The parameter 'appRefNoFilter' cannot be null.");
+        else if (appRefNoFilter !== undefined)
+            url_ += "AppRefNoFilter=" + encodeURIComponent("" + appRefNoFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllTodayAppointmentsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTodayAppointmentsToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllTodayAppointmentsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @param identityCardFilter (optional) 
+     * @param phoneNoFilter (optional) 
+     * @param emailFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param companyNameFilter (optional) 
+     * @param officerToMeetFilter (optional) 
+     * @param purposeOfVisitFilter (optional) 
+     * @param departmentFilter (optional) 
+     * @param towerFilter (optional) 
+     * @param levelFilter (optional) 
+     * @param minAppDateTimeFilter (optional) 
+     * @param maxAppDateTimeFilter (optional) 
+     * @param minRegDateTimeFilter (optional) 
+     * @param maxRegDateTimeFilter (optional) 
+     * @param emailOfficerToMeet (optional) 
+     * @param phoneNoOfficerToMeet (optional) 
+     * @param statusFilter (optional) 
+     * @param passNumberFilter (optional) 
+     * @param appRefNoFilter (optional) 
+     * @return Success
+     */
+    getAllTomorrowAppointmentsToExcel(filter: string | undefined, fullNameFilter: string | undefined, identityCardFilter: string | undefined, phoneNoFilter: string | undefined, emailFilter: string | undefined, titleFilter: string | undefined, companyNameFilter: string | undefined, officerToMeetFilter: string | undefined, purposeOfVisitFilter: string | undefined, departmentFilter: string | undefined, towerFilter: string | undefined, levelFilter: string | undefined, minAppDateTimeFilter: DateTime | undefined, maxAppDateTimeFilter: DateTime | undefined, minRegDateTimeFilter: DateTime | undefined, maxRegDateTimeFilter: DateTime | undefined, emailOfficerToMeet: string | undefined, phoneNoOfficerToMeet: string | undefined, statusFilter: number | undefined, passNumberFilter: string | undefined, appRefNoFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Appointments/GetAllTomorrowAppointmentsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (identityCardFilter === null)
+            throw new Error("The parameter 'identityCardFilter' cannot be null.");
+        else if (identityCardFilter !== undefined)
+            url_ += "IdentityCardFilter=" + encodeURIComponent("" + identityCardFilter) + "&";
+        if (phoneNoFilter === null)
+            throw new Error("The parameter 'phoneNoFilter' cannot be null.");
+        else if (phoneNoFilter !== undefined)
+            url_ += "PhoneNoFilter=" + encodeURIComponent("" + phoneNoFilter) + "&";
+        if (emailFilter === null)
+            throw new Error("The parameter 'emailFilter' cannot be null.");
+        else if (emailFilter !== undefined)
+            url_ += "EmailFilter=" + encodeURIComponent("" + emailFilter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        if (officerToMeetFilter === null)
+            throw new Error("The parameter 'officerToMeetFilter' cannot be null.");
+        else if (officerToMeetFilter !== undefined)
+            url_ += "OfficerToMeetFilter=" + encodeURIComponent("" + officerToMeetFilter) + "&";
+        if (purposeOfVisitFilter === null)
+            throw new Error("The parameter 'purposeOfVisitFilter' cannot be null.");
+        else if (purposeOfVisitFilter !== undefined)
+            url_ += "PurposeOfVisitFilter=" + encodeURIComponent("" + purposeOfVisitFilter) + "&";
+        if (departmentFilter === null)
+            throw new Error("The parameter 'departmentFilter' cannot be null.");
+        else if (departmentFilter !== undefined)
+            url_ += "DepartmentFilter=" + encodeURIComponent("" + departmentFilter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        if (minAppDateTimeFilter === null)
+            throw new Error("The parameter 'minAppDateTimeFilter' cannot be null.");
+        else if (minAppDateTimeFilter !== undefined)
+            url_ += "MinAppDateTimeFilter=" + encodeURIComponent(minAppDateTimeFilter ? "" + minAppDateTimeFilter.toJSON() : "") + "&";
+        if (maxAppDateTimeFilter === null)
+            throw new Error("The parameter 'maxAppDateTimeFilter' cannot be null.");
+        else if (maxAppDateTimeFilter !== undefined)
+            url_ += "MaxAppDateTimeFilter=" + encodeURIComponent(maxAppDateTimeFilter ? "" + maxAppDateTimeFilter.toJSON() : "") + "&";
+        if (minRegDateTimeFilter === null)
+            throw new Error("The parameter 'minRegDateTimeFilter' cannot be null.");
+        else if (minRegDateTimeFilter !== undefined)
+            url_ += "MinRegDateTimeFilter=" + encodeURIComponent(minRegDateTimeFilter ? "" + minRegDateTimeFilter.toJSON() : "") + "&";
+        if (maxRegDateTimeFilter === null)
+            throw new Error("The parameter 'maxRegDateTimeFilter' cannot be null.");
+        else if (maxRegDateTimeFilter !== undefined)
+            url_ += "MaxRegDateTimeFilter=" + encodeURIComponent(maxRegDateTimeFilter ? "" + maxRegDateTimeFilter.toJSON() : "") + "&";
+        if (emailOfficerToMeet === null)
+            throw new Error("The parameter 'emailOfficerToMeet' cannot be null.");
+        else if (emailOfficerToMeet !== undefined)
+            url_ += "EmailOfficerToMeet=" + encodeURIComponent("" + emailOfficerToMeet) + "&";
+        if (phoneNoOfficerToMeet === null)
+            throw new Error("The parameter 'phoneNoOfficerToMeet' cannot be null.");
+        else if (phoneNoOfficerToMeet !== undefined)
+            url_ += "PhoneNoOfficerToMeet=" + encodeURIComponent("" + phoneNoOfficerToMeet) + "&";
+        if (statusFilter === null)
+            throw new Error("The parameter 'statusFilter' cannot be null.");
+        else if (statusFilter !== undefined)
+            url_ += "StatusFilter=" + encodeURIComponent("" + statusFilter) + "&";
+        if (passNumberFilter === null)
+            throw new Error("The parameter 'passNumberFilter' cannot be null.");
+        else if (passNumberFilter !== undefined)
+            url_ += "PassNumberFilter=" + encodeURIComponent("" + passNumberFilter) + "&";
+        if (appRefNoFilter === null)
+            throw new Error("The parameter 'appRefNoFilter' cannot be null.");
+        else if (appRefNoFilter !== undefined)
+            url_ += "AppRefNoFilter=" + encodeURIComponent("" + appRefNoFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllTomorrowAppointmentsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTomorrowAppointmentsToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllTomorrowAppointmentsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @param identityCardFilter (optional) 
+     * @param phoneNoFilter (optional) 
+     * @param emailFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param companyNameFilter (optional) 
+     * @param officerToMeetFilter (optional) 
+     * @param purposeOfVisitFilter (optional) 
+     * @param departmentFilter (optional) 
+     * @param towerFilter (optional) 
+     * @param levelFilter (optional) 
+     * @param minAppDateTimeFilter (optional) 
+     * @param maxAppDateTimeFilter (optional) 
+     * @param minRegDateTimeFilter (optional) 
+     * @param maxRegDateTimeFilter (optional) 
+     * @param emailOfficerToMeet (optional) 
+     * @param phoneNoOfficerToMeet (optional) 
+     * @param statusFilter (optional) 
+     * @param passNumberFilter (optional) 
+     * @param appRefNoFilter (optional) 
+     * @return Success
+     */
+    getAllYesterdayAppointmentsToExcel(filter: string | undefined, fullNameFilter: string | undefined, identityCardFilter: string | undefined, phoneNoFilter: string | undefined, emailFilter: string | undefined, titleFilter: string | undefined, companyNameFilter: string | undefined, officerToMeetFilter: string | undefined, purposeOfVisitFilter: string | undefined, departmentFilter: string | undefined, towerFilter: string | undefined, levelFilter: string | undefined, minAppDateTimeFilter: DateTime | undefined, maxAppDateTimeFilter: DateTime | undefined, minRegDateTimeFilter: DateTime | undefined, maxRegDateTimeFilter: DateTime | undefined, emailOfficerToMeet: string | undefined, phoneNoOfficerToMeet: string | undefined, statusFilter: number | undefined, passNumberFilter: string | undefined, appRefNoFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Appointments/GetAllYesterdayAppointmentsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (identityCardFilter === null)
+            throw new Error("The parameter 'identityCardFilter' cannot be null.");
+        else if (identityCardFilter !== undefined)
+            url_ += "IdentityCardFilter=" + encodeURIComponent("" + identityCardFilter) + "&";
+        if (phoneNoFilter === null)
+            throw new Error("The parameter 'phoneNoFilter' cannot be null.");
+        else if (phoneNoFilter !== undefined)
+            url_ += "PhoneNoFilter=" + encodeURIComponent("" + phoneNoFilter) + "&";
+        if (emailFilter === null)
+            throw new Error("The parameter 'emailFilter' cannot be null.");
+        else if (emailFilter !== undefined)
+            url_ += "EmailFilter=" + encodeURIComponent("" + emailFilter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        if (officerToMeetFilter === null)
+            throw new Error("The parameter 'officerToMeetFilter' cannot be null.");
+        else if (officerToMeetFilter !== undefined)
+            url_ += "OfficerToMeetFilter=" + encodeURIComponent("" + officerToMeetFilter) + "&";
+        if (purposeOfVisitFilter === null)
+            throw new Error("The parameter 'purposeOfVisitFilter' cannot be null.");
+        else if (purposeOfVisitFilter !== undefined)
+            url_ += "PurposeOfVisitFilter=" + encodeURIComponent("" + purposeOfVisitFilter) + "&";
+        if (departmentFilter === null)
+            throw new Error("The parameter 'departmentFilter' cannot be null.");
+        else if (departmentFilter !== undefined)
+            url_ += "DepartmentFilter=" + encodeURIComponent("" + departmentFilter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        if (minAppDateTimeFilter === null)
+            throw new Error("The parameter 'minAppDateTimeFilter' cannot be null.");
+        else if (minAppDateTimeFilter !== undefined)
+            url_ += "MinAppDateTimeFilter=" + encodeURIComponent(minAppDateTimeFilter ? "" + minAppDateTimeFilter.toJSON() : "") + "&";
+        if (maxAppDateTimeFilter === null)
+            throw new Error("The parameter 'maxAppDateTimeFilter' cannot be null.");
+        else if (maxAppDateTimeFilter !== undefined)
+            url_ += "MaxAppDateTimeFilter=" + encodeURIComponent(maxAppDateTimeFilter ? "" + maxAppDateTimeFilter.toJSON() : "") + "&";
+        if (minRegDateTimeFilter === null)
+            throw new Error("The parameter 'minRegDateTimeFilter' cannot be null.");
+        else if (minRegDateTimeFilter !== undefined)
+            url_ += "MinRegDateTimeFilter=" + encodeURIComponent(minRegDateTimeFilter ? "" + minRegDateTimeFilter.toJSON() : "") + "&";
+        if (maxRegDateTimeFilter === null)
+            throw new Error("The parameter 'maxRegDateTimeFilter' cannot be null.");
+        else if (maxRegDateTimeFilter !== undefined)
+            url_ += "MaxRegDateTimeFilter=" + encodeURIComponent(maxRegDateTimeFilter ? "" + maxRegDateTimeFilter.toJSON() : "") + "&";
+        if (emailOfficerToMeet === null)
+            throw new Error("The parameter 'emailOfficerToMeet' cannot be null.");
+        else if (emailOfficerToMeet !== undefined)
+            url_ += "EmailOfficerToMeet=" + encodeURIComponent("" + emailOfficerToMeet) + "&";
+        if (phoneNoOfficerToMeet === null)
+            throw new Error("The parameter 'phoneNoOfficerToMeet' cannot be null.");
+        else if (phoneNoOfficerToMeet !== undefined)
+            url_ += "PhoneNoOfficerToMeet=" + encodeURIComponent("" + phoneNoOfficerToMeet) + "&";
+        if (statusFilter === null)
+            throw new Error("The parameter 'statusFilter' cannot be null.");
+        else if (statusFilter !== undefined)
+            url_ += "StatusFilter=" + encodeURIComponent("" + statusFilter) + "&";
+        if (passNumberFilter === null)
+            throw new Error("The parameter 'passNumberFilter' cannot be null.");
+        else if (passNumberFilter !== undefined)
+            url_ += "PassNumberFilter=" + encodeURIComponent("" + passNumberFilter) + "&";
+        if (appRefNoFilter === null)
+            throw new Error("The parameter 'appRefNoFilter' cannot be null.");
+        else if (appRefNoFilter !== undefined)
+            url_ += "AppRefNoFilter=" + encodeURIComponent("" + appRefNoFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllYesterdayAppointmentsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllYesterdayAppointmentsToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllYesterdayAppointmentsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -3445,6 +3913,67 @@ export class BlacklistsServiceProxy {
         }
         return _observableOf<boolean>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @return Success
+     */
+    getAllBlacklistToExcel(filter: string | undefined, fullNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Blacklists/GetAllBlacklistToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllBlacklistToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllBlacklistToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllBlacklistToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4266,6 +4795,67 @@ export class CompaniesServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param companyNameFilter (optional) 
+     * @return Success
+     */
+    getAllCompanyToExcel(filter: string | undefined, companyNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Companies/GetAllCompanyToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCompanyToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCompanyToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllCompanyToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
     }
 
     /**
@@ -5663,6 +6253,67 @@ export class DepartmentsServiceProxy {
             }));
         }
         return _observableOf<PagedResultDtoOfGetDepartmentForViewDto>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param departmentNameFilter (optional) 
+     * @return Success
+     */
+    getAllDepartmentToExcel(filter: string | undefined, departmentNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Departments/GetAllDepartmentToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (departmentNameFilter === null)
+            throw new Error("The parameter 'departmentNameFilter' cannot be null.");
+        else if (departmentNameFilter !== undefined)
+            url_ += "DepartmentNameFilter=" + encodeURIComponent("" + departmentNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllDepartmentToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllDepartmentToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllDepartmentToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -9894,6 +10545,67 @@ export class LevelsServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param levelFilter (optional) 
+     * @return Success
+     */
+    getAllLevelToExcel(filter: string | undefined, levelFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Levels/GetAllLevelToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllLevelToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllLevelToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllLevelToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
     }
 }
 
@@ -14181,6 +14893,67 @@ export class PurposeOfVisitsServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param pOFFilter (optional) 
+     * @return Success
+     */
+    getAllPurposeOfVisitToExcel(filter: string | undefined, pOFFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/PurposeOfVisits/GetAllPurposeOfVisitToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (pOFFilter === null)
+            throw new Error("The parameter 'pOFFilter' cannot be null.");
+        else if (pOFFilter !== undefined)
+            url_ += "POFFilter=" + encodeURIComponent("" + pOFFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllPurposeOfVisitToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllPurposeOfVisitToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllPurposeOfVisitToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -16818,6 +17591,67 @@ export class TitlesServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param filter (optional) 
+     * @param titleFilter (optional) 
+     * @return Success
+     */
+    getAllTitleToExcel(filter: string | undefined, titleFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Titles/GetAllTitleToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllTitleToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTitleToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllTitleToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -17688,6 +18522,67 @@ export class TowersServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param towerFilter (optional) 
+     * @return Success
+     */
+    getAllTowerToExcel(filter: string | undefined, towerFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Towers/GetAllTowerToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllTowerToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTowerToExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllTowerToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
     }
 }
 

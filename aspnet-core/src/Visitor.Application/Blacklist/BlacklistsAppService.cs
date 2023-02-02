@@ -22,6 +22,8 @@ using Visitor.Migrations;
 using NPOI.POIFS.Storage;
 using PayPalCheckoutSdk.Orders;
 using Twilio.Types;
+using Visitor.Company.Dtos;
+using Visitor.Blacklist.Exporting;
 
 namespace Visitor.Blacklist
 {
@@ -29,11 +31,13 @@ namespace Visitor.Blacklist
     public class BlacklistsAppService : VisitorAppServiceBase, IBlacklistsAppService
     {
         private readonly IRepository<BlacklistEnt, Guid> _blacklistRepository;
+        private readonly IBlacklistExcelExporter _blacklistExcelExporter;
 
 
-        public BlacklistsAppService(IRepository<BlacklistEnt, Guid> blacklistRepository)
+        public BlacklistsAppService(IRepository<BlacklistEnt, Guid> blacklistRepository , IBlacklistExcelExporter blacklistExcelExporter)
         {
             _blacklistRepository = blacklistRepository;
+            _blacklistExcelExporter = blacklistExcelExporter;
 
         }
 
@@ -154,6 +158,28 @@ namespace Visitor.Blacklist
                 return false;
             }
 
+        }
+        public async Task<FileDto> GetAllBlacklistToExcel(GetAllBlacklistForExcelInput input)
+        {
+            var filteredBlacklists = _blacklistRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.BlacklistFullName.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.FullNameFilter), e => e.BlacklistFullName == input.FullNameFilter);
+
+            var query = (from o in filteredBlacklists
+                         select new GetBlacklistForViewDto()
+                         {
+                             Blacklist = new Dtos.BlacklistDto()
+                             {
+                                 Id = o.Id,
+                                 BlacklistFullName = o.BlacklistFullName,
+                                 BlacklistIdentityCard = o.BlacklistIdentityCard,
+                                 BlacklistPhoneNumber = o.BlacklistPhoneNumber,
+                                 BlacklistRemarks = o.BlacklistRemarks,
+                             }
+                         });
+            var blacklist = await query.ToListAsync();
+
+            return _blacklistExcelExporter.ExportToFile(blacklist);
         }
     }
 }
