@@ -12,6 +12,7 @@ import { EntityTypeHistoryModalComponent } from '@app/shared/common/entityHistor
 import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { FileDownloadService } from '@shared/utils/file-download.service';
 
 @Component({
     templateUrl: './appointment_Tomorrows.component.html',
@@ -68,6 +69,7 @@ export class AppointmentsComponent extends AppComponentBase {
         private _appointmentsServiceProxy: AppointmentsServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService:TokenService,
+        private _fileDownloadService: FileDownloadService
     ) {
         super(injector);
     }
@@ -199,5 +201,34 @@ export class AppointmentsComponent extends AppComponentBase {
             return true;
         else
             return false;
+    }
+    exportToExcel(): void {
+        this._appointmentsServiceProxy
+            .getAllTomorrowAppointmentsToExcel(
+                this.filterText,
+                this.fullNameFilter,
+                this.identityCardFilter,
+                this.phoneNoFilter,
+                this.emailFilter,
+                this.titleFilter,
+                this.companyNameFilter,
+                this.officerToMeetFilter,
+                this.purposeOfVisitFilter,
+                this.departmentFilter,
+                this.towerFilter,
+                this.levelFilter,
+                this.minAppDateTimeFilter,
+                this.maxAppDateTimeFilter,
+                this.minRegDateTimeFilter,
+                this.maxRegDateTimeFilter,  
+                this.emailOfficerToMeetFilter,
+                this.phoneNoOfficerToMeetFilter,
+                this.statusFilter,
+                this.passNumberFilter,
+                this.appRefNoFilter
+            )
+            .subscribe((result) => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
     }
 }

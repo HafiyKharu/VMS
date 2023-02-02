@@ -32,5 +32,8 @@ namespace Visitor.Appointment
         Task ChangeStatusToIn(CreateOrEditAppointmentDto input);
         Task ChangeStatusToOut(CreateOrEditAppointmentDto input);
         Task<FileDto> GetAllAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllTodayAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllTomorrowAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllYesterdayAppointmentsToExcel(GetAllAppointmentForExcelInput input);
     }
 }

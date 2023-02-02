@@ -2,6 +2,9 @@
     <div class="content d-flex flex-column flex-column-fluid">
         <sub-header [title]="'Appointments' | localize" [description]="'AppointmentsHeaderInfo' | localize">
             <div role="actions">
+                <button (click)="exportToExcel()" class="btn btn-outline-success">
+                    <i class="fa fa-file-excel"></i> {{ l("ExportToExcel") }}
+                </button>
                 <button *ngIf="isGranted('Pages.Appointments.Create')" (click)="createAppointment()"
                     class="btn btn-primary blue">
                     <i class="fa fa-plus"></i>
