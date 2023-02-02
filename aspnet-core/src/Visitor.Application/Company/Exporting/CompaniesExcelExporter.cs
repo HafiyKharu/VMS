@@ -5,6 +5,7 @@ using Visitor.DataExporting.Excel.NPOI;
 using Visitor.Company.Dtos;
 using Visitor.Dto;
 using Visitor.Storage;
+using Visitor.Departments;
 
 namespace Visitor.Company.Exporting
 {
@@ -35,14 +36,23 @@ namespace Visitor.Company.Exporting
 
                     AddHeader(
                         sheet,
-                        L("CompanyName")
+                        L("CompanyName"),
+                        L("CompanyEmail"),
+                        L("OfficePhoneNumber"),
+                        L("CompanyAddress")
                         );
 
                     AddObjects(
                         sheet, companies,
-                        _ => _.Company.CompanyName
+                        _ => _.Company.CompanyName,
+                        _ => _.Company.CompanyEmail,
+                        _ => _.Company.OfficePhoneNumber,
+                        _ => _.Company.CompanyAddress
                         );
-
+                    for (var i = 0; i <= 4; i++)
+                    {
+                        sheet.AutoSizeColumn(i);
+                    }
                 });
         }
     }
