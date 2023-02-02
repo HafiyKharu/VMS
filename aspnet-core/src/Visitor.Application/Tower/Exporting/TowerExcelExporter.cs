@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using Visitor.DataExporting.Excel.NPOI;
 using Visitor.Dto;
 using Visitor.Storage;
-using Visitor.Title.Dtos;
+using Visitor.Tower.Dtos;
 
-namespace Visitor.Appointment.Exporting
+namespace Visitor.Tower.Exporting
 {
-    public class TitleExcelExporter : NpoiExcelExporterBase , ITitleExcelExporter
+    public class TowerExcelExporter : NpoiExcelExporterBase , ITowerExcelExporter
     {
         private readonly ITimeZoneConverter _timeZoneConverter;
         private readonly IAbpSession _abpSession;
 
-        public TitleExcelExporter(
+        public TowerExcelExporter(
             ITimeZoneConverter timeZoneConverter,
             IAbpSession abpSession,
             ITempFileCacheManager tempFileCacheManager) :
@@ -22,22 +22,22 @@ namespace Visitor.Appointment.Exporting
             _timeZoneConverter = timeZoneConverter;
             _abpSession = abpSession;
         }
-        public FileDto ExportToFile(List<GetTitleForViewDto> titles)
+        public FileDto ExportToFile(List<GetTowerForViewDto> towers)
         {
             return CreateExcelPackage(
-                "Title.xlsx",
+                "Tower.xlsx",
                 excelPackage =>
                 {
-                    var sheet = excelPackage.CreateSheet(L("Titles"));
+                    var sheet = excelPackage.CreateSheet(L("Towers"));
 
                     AddHeader(
                         sheet,
-                        L("Title"));
+                        L("Tower"));
                     AddObjects(
-                        sheet, titles,
-                        _ => _.Title.VisitorTitle);
+                        sheet, towers,
+                        _ => _.Tower.TowerBankRakyat);
 
-                    for (var i = 0; i <= titles.Count; i++)
+                    for (var i = 0; i <= towers.Count; i++)
                     {
                         sheet.AutoSizeColumn(i);
                     }

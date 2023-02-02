@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Visitor.Dto;
 using Visitor.Title.Dtos;
 
-namespace Visitor.Appointment.Exporting
+namespace Visitor.Title.Exporting
 {
     public interface ITitleExcelExporter
     {

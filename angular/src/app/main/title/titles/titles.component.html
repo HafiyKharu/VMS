@@ -2,9 +2,13 @@
     <div class="content d-flex flex-column flex-column-fluid">
         <sub-header [title]="'Titles' | localize" [description]="'TitlesHeaderInfo' | localize">
             <div role="actions"> 
-                <button (click)="exportToExcel()" class="btn btn-outline-success">
-                    <i class="fa fa-file-excel"></i> {{ l("ExportToExcel") }}
-                </button>           
+                <button
+                    (click)="exportToExcel()"
+                    class="btn btn-outline btn-outline-success btn-active-light-success me-1"
+                >
+                    <i class="fa fa-file-excel"></i>
+                    {{ l('ExportToExcel') }}
+                </button>          
                 <button
                     *ngIf="isGranted('Pages.Titles.Create')"
                     (click)="createTitle()"

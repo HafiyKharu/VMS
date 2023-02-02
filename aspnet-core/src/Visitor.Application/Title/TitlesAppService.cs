@@ -15,7 +15,7 @@ using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using Visitor.Dto;
 using Visitor.Appointment;
-using Visitor.Appointment.Exporting;
+using Visitor.Title.Exporting;
 
 namespace Visitor.Title
 {
