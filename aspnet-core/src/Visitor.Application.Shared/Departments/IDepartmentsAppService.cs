@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Visitor.Departments.Dtos;
+using Visitor.Dto;
+using Visitor.Level.Dtos;
 
 namespace Visitor.Departments
 {
@@ -14,6 +16,7 @@ namespace Visitor.Departments
         Task<GetDepartmentForEditDto> GetDepartmentForEdit(EntityDto<Guid> input);
         Task<PagedResultDto<GetDepartmentForViewDto>> GetAll(GetAllDepartmentsInput input);
         Task CreateOrEdit(CreateOrEditDepartmentDto input);
+        Task<FileDto> GetAllDepartmentToExcel(GetAllDepartmentForExcelInput input);
 
     }
 }
