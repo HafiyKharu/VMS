@@ -121,5 +121,10 @@ export class LevelsComponent extends AppComponentBase {
             }
         });
     }
+    exportToExcel(): void {
+        this._levelsServiceProxy.getAllLevelToExcel(this.filterText, this.fullNameFilter).subscribe((result) => {
+            this._fileDownloadService.downloadTempFile(result);
+        });
+    }
 
 }
