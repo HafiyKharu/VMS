@@ -21,6 +21,8 @@ export class CreateOrEditLevelModalComponent extends AppComponentBase implements
 
     level: CreateOrEditLevelDto = new CreateOrEditLevelDto();
 
+    
+
     constructor(
         injector: Injector,
         private _levelsServiceProxy: LevelsServiceProxy,

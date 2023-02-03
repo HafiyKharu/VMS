@@ -1023,10 +1023,37 @@ namespace Visitor.Appointment
 
             return new List<GetTowerForViewDto>(results);
         }
+        /* public List<GetLevelForViewDto> GetLevel()
+         {
+             var query = _levelRepository.GetAll();
+             var qLevel = from a in query
+                          select new
+                          {
+                              Id = a.Id,
+                              a.LevelBankRakyat
+                          };
+             var dblist = qLevel.ToList();
+             var results = new List<GetLevelForViewDto>();
+             foreach (var db in dblist)
+             {
+                 var res = new GetLevelForViewDto()
+                 {
+                     Level = new LevelDto
+                     {
+                         Id = db.Id,
+                         LevelBankRakyat = db.LevelBankRakyat
+                     }
+                 };
+                 results.Add(res);
+             }
+             return new List<GetLevelForViewDto>(results);
+         }*/
+
         public List<GetLevelForViewDto> GetLevel()
         {
             var query = _levelRepository.GetAll();
             var qLevel = from a in query
+                         orderby Convert.ToInt32(a.LevelBankRakyat) ascending
                          select new
                          {
                              Id = a.Id,
@@ -1048,6 +1075,7 @@ namespace Visitor.Appointment
             }
             return new List<GetLevelForViewDto>(results);
         }
+
         public List<GetCompanyForViewDto> GetCompanyName()
         {
             var query = _companyRepository.GetAll();
