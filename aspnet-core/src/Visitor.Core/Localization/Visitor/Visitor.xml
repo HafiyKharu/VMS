@@ -73,6 +73,9 @@
     <text name="EditBlacklist">Edit blacklist</text>
     <text name="DeleteBlacklist">Delete blacklist</text>
     <text name="Blacklists">Blacklists</text>
+    <text name="IcPassportFilter">Identity card number / Passport number</text>
+    <text name="PhoneNumberFilter">Phone number</text>
+    <text name="RemarkFilter">Remark</text>
 
     <text name="Level">Level</text>
     <text name="Visitor.Level.Level">Level</text>

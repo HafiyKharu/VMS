@@ -49,13 +49,49 @@
 
                                 <div class="col-md-3">
                                     <div class="my-3">
-                                        <label for="fullNameFilter">{{ l('fullNameFilter') }}</label>
+                                        <label for="fullNameFilter">{{ l('FullName') }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="fullNameFilter"
                                             name="blacklist.fullNameFilter"
                                             [(ngModel)]="fullNameFilter"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="icPassportFilter">{{ l('IcPassportFilter') }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="IcPassportFilter"
+                                            name="blacklist.IcPassportFilter"
+                                            [(ngModel)]="icPassportFilter"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="phoneNumberFilter">{{ l('PhoneNumberFilter') }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="phoneNumberFilter"
+                                            name="blacklist.phoneNumberFilter"
+                                            [(ngModel)]="phoneNumberFilter"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="remarkFilter">{{ l('RemarkFilter') }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="remarkFilter"
+                                            name="blacklist.remarkFilter"
+                                            [(ngModel)]="remarkFilter"
                                         />
                                     </div>
                                 </div>

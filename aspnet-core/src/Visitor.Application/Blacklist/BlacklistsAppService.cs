@@ -45,8 +45,11 @@ namespace Visitor.Blacklist
         {
 
             var filteredBlacklists = _blacklistRepository.GetAll()
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.BlacklistFullName.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.FullNameFilter), e => e.BlacklistFullName == input.FullNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.BlacklistFullName.Contains(input.Filter) || e.BlacklistIdentityCard.Contains(input.Filter) || e.BlacklistPhoneNumber.Contains(input.Filter) || e.BlacklistRemarks.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.FullNameFilter), e => e.BlacklistFullName == input.FullNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.IcPassportFilter), e => e.BlacklistIdentityCard == input.IcPassportFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PhoneNumberFilter), e => e.BlacklistPhoneNumber == input.PhoneNumberFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.RemarkFilter), e => e.BlacklistRemarks == input.RemarkFilter);
 
             var pagedAndFilteredBlacklists = filteredBlacklists
                 .OrderBy(input.Sorting ?? "id asc")
@@ -148,7 +151,7 @@ namespace Visitor.Blacklist
 
         public bool IsExisted(GetAllBlacklistsInput input)
         {
-            var bl = _blacklistRepository.GetAll().Where(c => input.FullNameFilter == c.BlacklistIdentityCard);
+            var bl = _blacklistRepository.GetAll().Where(c => input.IcPassportFilter == c.BlacklistIdentityCard);
             if (bl.Any())
             {
                 return true;
