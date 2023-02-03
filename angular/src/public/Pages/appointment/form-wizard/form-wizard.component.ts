@@ -46,6 +46,12 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
     // ];
 
 
+    // arrayLevelString: any[];
+    get sortedArrayLevelString(): any[] {
+        return this.arrayLevelString.sort((a, b) => Number(a.levelBankRakyat) - Number(b.levelBankRakyat));
+      }
+      
+      
 
 
 
@@ -391,6 +397,7 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
         this.minDate = new Date();
         this.maxDate = new Date();
         this.maxDate.setMonth(this.maxDate.getMonth() + 3);
+        
         //window.location.
     }
     ngAfterViewInit() {

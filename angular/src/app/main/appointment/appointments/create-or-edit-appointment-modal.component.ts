@@ -28,6 +28,10 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
+    // get sortedArrayLevelString(): any[] {
+    //     return this.arrayLevelString.sort((a, b) => Number(a.levelBankRakyat) - Number(b.levelBankRakyat));
+    //   }
+
     active = false;
     saving = false;
     tempGuid: any;

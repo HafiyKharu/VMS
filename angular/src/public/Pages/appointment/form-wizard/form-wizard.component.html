@@ -187,30 +187,17 @@
                             </div>
                         </div>
 
-                        <div class="my-3">
+                        <!-- <div class="my-3">
                             <label class="form-label" for="Appointment_Level">{{ l('Level') }}
                                 <div class="text-danger" style="display: inline;"> *</div>
                             </label>
-                            <!-- <select #Appointment_Level="ngModel" id="Appointment_Level" [(ngModel)]="appointment.level"
-                                name="Level" class="form-control">
-                                <option value="" disabled selected>Select</option>
-                                <ng-container *ngFor="let l of arrLevel">
-                                    <option name="Level" *ngFor="let level of l" [value]="level.level.levelBankRakyat">
 
-                                        {{level.level.levelBankRakyat}}
-                                    </option>
-                                </ng-container>
-                            </select> -->
                             <div>
                                 <p-dropdown #Appointment_Level="ngModel" id="Appointment_Level" name="Level"
                                     [options]="arrayLevelString" [(ngModel)]="appointment.level"
                                     optionValue="levelBankRakyat" optionLabel="levelBankRakyat" [filter]="true"
                                     filterBy="levelBankRakyat" [showClear]="true" placeholder="Select a Level">
-                                    <!-- <ng-template pTemplate="selectedItem">
-                                    <div class="department-item department-item-value" *ngIf="selectedDepartment">
-                                        <div>{{selectedDepartment}}</div>
-                                    </div>
-                                </ng-template> -->
+
                                     <ng-template let-level pTemplate="item">
                                         <div class="level-item">
                                             <div>{{level.levelBankRakyat}}</div>
@@ -218,7 +205,30 @@
                                     </ng-template>
                                 </p-dropdown>
                             </div>
+                        </div> -->
+
+                        <div class="my-3">
+                            <label class="form-label" for="Appointment_Level">{{ l('Level') }}
+                                <div class="text-danger" style="display: inline;"> *</div>
+                            </label>
+
+                            <div>
+                                <p-dropdown #Appointment_Level="ngModel" id="Appointment_Level" name="Level"
+                                    [options]="sortedArrayLevelString" [(ngModel)]="appointment.level"
+                                    optionValue="levelBankRakyat" optionLabel="levelBankRakyat" [filter]="true"
+                                    filterBy="levelBankRakyat" [showClear]="true" placeholder="Select a Level">
+
+                                    <ng-template let-level pTemplate="item">
+                                        <div class="level-item">
+                                            <div>{{level.levelBankRakyat}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+
                         </div>
+
+
 
                         <div class="my-3">
                             <label class="form-label" for="Appointment_OfficerToMeet">{{ l('OfficerToMeet') }}
@@ -239,22 +249,25 @@
                             <div>
                                 <input type="text" placeholder="Please enter the officer's email address"
                                     #Appointment_EmailOfficerToMeet="ngModel" id="Appointment_EmailOfficerToMeet"
-                                    class="form-control" [(ngModel)]="appointment.emailOfficerToMeet" name="EmailOfficerToMeet"
-                                    required pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" />
+                                    class="form-control" [(ngModel)]="appointment.emailOfficerToMeet"
+                                    name="EmailOfficerToMeet" required
+                                    pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" />
                                 <validation-messages [formCtrl]="Appointment_EmailOfficerToMeet"></validation-messages>
                             </div>
                         </div>
                         <div class="my-3">
-                            <label class="form-label" for="Appointment_PhoneNoOfficerToMeet">{{ l('PhoneNoOfficerToMeet') }}
+                            <label class="form-label" for="Appointment_PhoneNoOfficerToMeet">{{
+                                l('PhoneNoOfficerToMeet') }}
                                 <div class="text-danger" style="display: inline;"> *</div>
                             </label>
                             <div>
                                 <input type="text" placeholder="Please enter the officer's phone number"
                                     #Appointment_PhoneNoOfficerToMeet="ngModel" id="Appointment_PhoneNoOfficerToMeet"
-                                    class="form-control" [(ngModel)]="appointment.phoneNoOfficerToMeet" name="PhoneNoOfficerToMeet"
-                                    minlength="10" maxlength="11"
+                                    class="form-control" [(ngModel)]="appointment.phoneNoOfficerToMeet"
+                                    name="PhoneNoOfficerToMeet" minlength="10" maxlength="11"
                                     pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]|[0-9]" required />
-                                <validation-messages [formCtrl]="Appointment_PhoneNoOfficerToMeet"></validation-messages>
+                                <validation-messages
+                                    [formCtrl]="Appointment_PhoneNoOfficerToMeet"></validation-messages>
                             </div>
                         </div>
                         <div class="mt-3 mb-4">
@@ -274,7 +287,8 @@
                                     [options]="arrayPOVString" [(ngModel)]="appointment.purposeOfVisit"
                                     name="PurposeOfVisit" [editable]="true" optionLabel="purposeOfVisitApp"
                                     optionValue="purposeOfVisitApp"></p-dropdown>
-                                    <span style="font-size:smaller;color:gray;"> *If there is none option above, please specify</span>
+                                <span style="font-size:smaller;color:gray;"> *If there is none option above, please
+                                    specify</span>
                             </div>
                         </div>
                         <div class="my-3">
@@ -284,10 +298,10 @@
                             <div>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" #uploadPictureInputLabel id="uploadPicture" name="uploadPicture"
-                                            (change)="fileChangeEvent($event)" required/> <label
+                                        <input type="file" #uploadPictureInputLabel id="uploadPicture"
+                                            name="uploadPicture" (change)="fileChangeEvent($event)" required /> <label
                                             class="custom-file-label" #uploadPictureInputLabel for="uploadPicture">
-                                            <!-- {{ 'ChooseAFile' | localize }}--> </label> 
+                                            <!-- {{ 'ChooseAFile' | localize }}--> </label>
                                     </div>
                                 </div>
                             </div>
