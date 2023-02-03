@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { AppointmentsServiceProxy, CreateOrEditAppointmentDto, StatusType } from '@shared/service-proxies/service-proxies';
+import { AppointmentsServiceProxy, BlacklistsServiceProxy, CreateOrEditAppointmentDto, StatusType } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -17,7 +17,6 @@ import { base64ToFile, ImageCroppedEvent } from 'ngx-image-cropper';
     templateUrl: './create-or-edit-appointment_Tomorrow-modal.component.html',
 })
 export class CreateOrEditAppointmentModalComponent extends AppComponentBase implements OnInit {
-
 
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('uploadPictureInputLabel') uploadPictureInputLabel: ElementRef;
@@ -50,7 +49,7 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
     arrDepartment: Array<any> = [];
     fv: string = "0x0A";
     myDefaultValue: number = 1;
-    sampleDateTime: DateTime;
+    sampleDateTime: DateTimeService;
     dateFormat = 'dd-LL-yyyy HH:mm:ss';
     r: any;
     detailItems: any[] = [{ title: 'user01', name: "user01" }, { title: 'user02', name: 'user02' }];
@@ -69,7 +68,7 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
         private _appointmentsServiceProxy: AppointmentsServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService,
-        //public datepipe: DatePipe
+        private _blacklistAppService: BlacklistsServiceProxy,
         //public datepipe: DatePipe
     ) {
         super(injector);
@@ -149,11 +148,6 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
             const resp = <IAjaxResponse>JSON.parse(response);
             if (resp.success) {
                 this.updatePicture(resp.result.fileToken);
-
-                //this.appointment.imageId = resp.result.fileToken;
-                //this.idPicture = resp.result.fileToken;
-                //this.appointment.imageId = resp.result.fileToken;
-
             }
             else {
                 this.message.error(resp.error.message);
@@ -163,11 +157,33 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
     }
 
     updatePicture(fileToken: string): void {
+        // const input = new UpdatePictureInput();
         this.appointment.fileToken = fileToken;
         this.appointment.x = 0;
         this.appointment.y = 0;
         this.appointment.width = 0;
         this.appointment.height = 0;
+        // input.fileToken = fileToken;
+        // input.x = 0;
+        // input.y = 0;
+        // input.width = 0;
+        // input.height = 0;
+
+        //this.saving = true;
+        // this._appointmentsServiceProxy.updatePictureForAppointment(input)
+        //     .pipe(
+        //         //tap(result => this.appointment.imageId = result.toString())
+        //         // finalize(() => {
+        //         //     this.saving = false;
+        //         // })
+        //         map((data) => data.toString())
+        //     )
+        //     .subscribe((result) => {
+        //         //this.active = true;
+        //         this.appointment.imageId = result.toString();
+        //         //abp.event.trigger('pictureChanged');
+        //     })
+        // return this.appointment;
     }
 
     guid(): string {
@@ -189,41 +205,6 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
                 this.image = 'data:image/jpg;base64,' + this.imageBlob;
             });
     }
-
-    // checkPictureExistOrNot(imageId: string) {
-    //     if(!imageId) {
-    //         return "You dont have any image";
-    //     }
-    //     else {
-    //         this._appointmentsServiceProxy.getFilePictureByIdOrNull(imageId)
-    //         .subscribe((result) => {
-    //             this.convertFromBase64ToBlob(result);
-    //         })
-    //         this.uploadedFile = new File([this.imageBlob], "Appointment.png",{type: "png/jpeg"});
-    //         return this.uploadedFile;
-    //     }
-    // }
-
-    // convertFromBase64ToBlob(base64: string) {
-    //     var contentType = contentType || '';
-    //     const sliceSize = 512;
-    //     const byteCharacters = window.atob(base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
-    //     const byteArrays = [];
-
-    //     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize){
-    //         const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    //         const byteNumbers = new Array(slice.length);
-    //         for (let i = 0; i < slice.length; i++){
-    //             byteNumbers[i] = slice.charCodeAt(i);
-    //         }
-
-    //         const byteArray = new Uint8Array(byteNumbers);
-    //         byteArrays.push(byteArray);
-    //     }
-    //     this.imageBlob = new Blob(byteArrays, {type: contentType});
-    //     return this.imageBlob;
-    // }
 
     // checkPictureExistOrNot(imageId: string) {
     //     if(!imageId) {
@@ -299,27 +280,61 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
         }
     }
 
-    upload(): void {
-        this.uploader.uploadAll();
-        this.notify.info(this.l('UploadSuccessfully'));
-    }
+    // upload(): void {
+    //     this.uploader.uploadAll();
+    //     this.notify.info(this.l('UploadSuccessfully'));
+    // }
 
-    save(): void {
-        this.saving = true;
-        //this.uploader.uploadAll();
-        this._appointmentsServiceProxy
-            .createOrEdit(this.appointment)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe((result) => {
-                this.notify.info(this.l('SavedSuccessfully'));
+    save(icOrPassportNumber : string): void {
+        this._blacklistAppService.isExisted(icOrPassportNumber).subscribe(x => {
+            if (x) 
+            {
+                this.message.error( this.l('BlacklistInfo1'));
+                this.saving = false;
                 this.close();
-                this.modalSave.emit(null);
-                this.appId = result;
-            });
+            }
+            else
+            {
+                this.saving = true;
+                this.uploader.uploadAll();
+                this._appointmentsServiceProxy
+                    .createOrEdit(this.appointment)
+                    .pipe(
+                        finalize(() => {
+                            this.saving = false;
+                        })
+                    )
+                    .subscribe(() => {
+                        // var pic = this._appointmentsServiceProxy.updatePictureForAppointment(this.resInput)
+                        // .subscribe((result) => {
+                        //     this.appointment.imageId = result.toString();
+                        // })
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+        
+                //another approach for image upload
+                // this._appointmentsServiceProxy
+                // .updatePictureForAppointment(this.resInput)
+                // .subscribe((result) => {
+                //     this.appointment.imageId = result.toString();
+                //     this._appointmentsServiceProxy
+                //     .createOrEdit(this.appointment)
+                //     .pipe(
+                //         finalize(() => {
+                //             this.saving = false;
+                //         })
+                //     )
+                //     .subscribe(() => {
+                //         this.notify.info(this.l('SavedSuccessfully'));
+                //         this.close();
+                //         this.modalSave.emit(null);
+                //     })
+                // })
+            }
+        
+        })
 
     }
 
@@ -328,10 +343,6 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
         this.active = false;
         this.imageChangedEvent = '';
         this.modal.hide();
-    }
-    setDate(): void {
-        let date: Date = new Date();
-        console.log("Date = " + date);
     }
 
     ngOnInit(): void {

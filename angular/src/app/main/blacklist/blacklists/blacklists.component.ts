@@ -36,6 +36,9 @@ export class BlacklistsComponent extends AppComponentBase {
     advancedFiltersAreShown = false;
     filterText = '';
     fullNameFilter = '';
+    icPassportFilter = '';
+    phoneNumberFilter = '';
+    remarkFilter = '';
 
     _entityTypeFullName = 'Visitor.Blacklist.BlacklistEnt';
     entityHistoryEnabled = false;
@@ -83,6 +86,9 @@ export class BlacklistsComponent extends AppComponentBase {
             .getAll(
                 this.filterText,
                 this.fullNameFilter,
+                this.icPassportFilter,
+                this.phoneNumberFilter,
+                this.remarkFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
                 this.primengTableHelper.getSkipCount(this.paginator, event)

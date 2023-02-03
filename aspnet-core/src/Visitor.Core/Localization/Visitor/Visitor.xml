@@ -73,6 +73,11 @@
     <text name="EditBlacklist">Edit blacklist</text>
     <text name="DeleteBlacklist">Delete blacklist</text>
     <text name="Blacklists">Blacklists</text>
+    <text name="IcPassportFilter">Identity card number / Passport number</text>
+    <text name="PhoneNumberFilter">Phone number</text>
+    <text name="RemarkFilter">Remark</text>
+    <text name ="BlacklistInfo1">Unfortunately, this registration could not be completed as this visitor are on our blacklist. Please check table blacklist for more information.</text>
+    <text name ="BlacklistInfo2">Unfortunately, your registration could not be completed as you are on our blacklist. Please contact our support team for more information.</text>
 
     <text name="Level">Level</text>
     <text name="Visitor.Level.Level">Level</text>

@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { PortalsServiceProxy, CreateOrEditAppointmentDto, AppointmentsServiceProxy, StatusType, GetAppointmentForViewDto, AppointmentDto, DepartmentDto, GetDepartmentForViewDto } from '@shared/service-proxies/service-proxies';
+import { PortalsServiceProxy, CreateOrEditAppointmentDto, AppointmentsServiceProxy, StatusType, GetAppointmentForViewDto, AppointmentDto, DepartmentDto, GetDepartmentForViewDto, BlacklistsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { DateTime } from 'luxon';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
@@ -128,7 +128,8 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
         private _tokenService: TokenService,
         private _reCaptchaV3Service: ReCaptchaV3Service, private router: Router,
         private _passService: PassService,
-        private _arrayService: ConvertToArrayOfStringsService) {
+        private _arrayService: ConvertToArrayOfStringsService,
+        private _blacklistAppService: BlacklistsServiceProxy) {
         super(injector);
 
         //event for edit
@@ -287,28 +288,37 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
         });
     }
 
-    save(): void {
-        this.showMainSpinner();
-
-        if (this.appointment.purposeOfVisit == "Other")
-            this.appointment.purposeOfVisit = this.appointment.purposeOfVisit + " : " + this.desc;
-
-        this.saving = true;
-        this._portalAppService
-            .createOrEdit(this.appointment)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                }),
-                pluck('result')
-            )
-            .subscribe((result) => {
-                this.notify.info(this.l('AppointmentCreatedSuccessfully'));
-                this.modalSave.emit(null);
-                this._passService.appointmentId = result;
-                this.viewDetails();
-                this.hideMainSpinner();
-            });
+    save(icOrPassportNumber : string, form: NgForm): void {
+        this._blacklistAppService.isExisted(icOrPassportNumber).subscribe(x => {
+            if (x) 
+            {
+                this.message.error( this.l('BlacklistInfo2'));
+                this.saving = false;
+                this.uploadPictureInputLabel.nativeElement.innerText = "";
+                this.uploadPictureInputLabel.nativeElement.value = "";
+                this.imageChangedEvent = null;
+                form.reset();
+            }
+            else
+            {
+                this.saving = true;
+                this._portalAppService
+                    .createOrEdit(this.appointment)
+                    .pipe(
+                        finalize(() => {
+                            this.saving = false;
+                        }),
+                        pluck('result')
+                    )
+                    .subscribe((result) => {
+                        this.notify.info(this.l('AppointmentCreatedSuccessfully'));
+                        this.modalSave.emit(null);
+                        this._passService.appointmentId = result;
+                        this.viewDetails();
+                        this.hideMainSpinner();
+                    });
+            }
+        })
     }
 
     getArray(): void {

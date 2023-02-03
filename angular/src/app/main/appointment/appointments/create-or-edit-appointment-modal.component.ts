@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize, map, min, switchMap, tap } from 'rxjs/operators';
-import { AppointmentsServiceProxy, CreateOrEditAppointmentDto, DepartmentDto, GetDepartmentForViewDto, StatusType, } from '@shared/service-proxies/service-proxies';
+import { AppointmentsServiceProxy, BlacklistsServiceProxy, CreateOrEditAppointmentDto, DepartmentDto, GetDepartmentForViewDto, StatusType, } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 import { DatePipe } from '@angular/common'
@@ -77,6 +77,7 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
         private _appointmentsServiceProxy: AppointmentsServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService,
+        private _blacklistAppService: BlacklistsServiceProxy,
         //public datepipe: DatePipe
     ) {
         super(injector);
@@ -293,45 +294,56 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
     //     this.notify.info(this.l('UploadSuccessfully'));
     // }
 
-    save(): void {
-        this.saving = true;
-        this.uploader.uploadAll();
-        this._appointmentsServiceProxy
-            .createOrEdit(this.appointment)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
-                // var pic = this._appointmentsServiceProxy.updatePictureForAppointment(this.resInput)
+    save(icOrPassportNumber : string): void {
+        this._blacklistAppService.isExisted(icOrPassportNumber).subscribe(x => {
+            if (x) 
+            {
+                this.message.error( this.l('BlacklistInfo1'));
+                this.saving = false;
+                this.close();
+            }
+            else
+            {
+                this.saving = true;
+                this.uploader.uploadAll();
+                this._appointmentsServiceProxy
+                    .createOrEdit(this.appointment)
+                    .pipe(
+                        finalize(() => {
+                            this.saving = false;
+                        })
+                    )
+                    .subscribe(() => {
+                        // var pic = this._appointmentsServiceProxy.updatePictureForAppointment(this.resInput)
+                        // .subscribe((result) => {
+                        //     this.appointment.imageId = result.toString();
+                        // })
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+        
+                //another approach for image upload
+                // this._appointmentsServiceProxy
+                // .updatePictureForAppointment(this.resInput)
                 // .subscribe((result) => {
                 //     this.appointment.imageId = result.toString();
+                //     this._appointmentsServiceProxy
+                //     .createOrEdit(this.appointment)
+                //     .pipe(
+                //         finalize(() => {
+                //             this.saving = false;
+                //         })
+                //     )
+                //     .subscribe(() => {
+                //         this.notify.info(this.l('SavedSuccessfully'));
+                //         this.close();
+                //         this.modalSave.emit(null);
+                //     })
                 // })
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
-
-        //another approach for image upload
-        // this._appointmentsServiceProxy
-        // .updatePictureForAppointment(this.resInput)
-        // .subscribe((result) => {
-        //     this.appointment.imageId = result.toString();
-        //     this._appointmentsServiceProxy
-        //     .createOrEdit(this.appointment)
-        //     .pipe(
-        //         finalize(() => {
-        //             this.saving = false;
-        //         })
-        //     )
-        //     .subscribe(() => {
-        //         this.notify.info(this.l('SavedSuccessfully'));
-        //         this.close();
-        //         this.modalSave.emit(null);
-        //     })
-        // })
-
+            }
+        
+        })
 
     }
 

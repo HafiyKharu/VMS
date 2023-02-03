@@ -16,5 +16,6 @@ namespace Visitor.Blacklist
         Task<GetBlacklistForEditOutput> GetblacklistForEdit(EntityDto<Guid> id);
         Task CreateOrEdit(CreateOrEditBlacklistDto input);
         Task Delete(EntityDto<Guid> id);
+        bool IsExisted(string input);
     }
 }

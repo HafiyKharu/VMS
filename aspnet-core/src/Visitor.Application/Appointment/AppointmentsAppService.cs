@@ -46,6 +46,8 @@ using Visitor.core.Portal;
 using Visitor.Appointment.ExpiredUrl;
 using Visitor.Dto;
 using Visitor.Appointment.Exporting;
+using Visitor.Blacklist;
+using IdentityServer4.Models;
 /*using StatusEnum = Visitor.Appointments.StatusEnum;*/
 
 namespace Visitor.Appointment
@@ -68,6 +70,8 @@ namespace Visitor.Appointment
         private readonly IRepository<ExpiredUrlEnt, Guid> _expiredUrlRepository;
         private readonly IExpiredUrlsAppService _expiredUrl;
         private readonly IAppointmentExcelExporter _appointmentExcelExporter;
+        private readonly IBlacklistsAppService _blacklistAppService;
+        private readonly IRepository<BlacklistEnt , Guid> _blacklistRepository;
 
 
         public AppointmentsAppService
@@ -85,7 +89,9 @@ namespace Visitor.Appointment
             IPortalEmailer portalEmailer,
             IRepository<ExpiredUrlEnt, Guid> expiredUrlsRepository,
             IExpiredUrlsAppService expiredUrl,
-            IAppointmentExcelExporter appointmentExcelExporter
+            IAppointmentExcelExporter appointmentExcelExporter,
+            IBlacklistsAppService blacklistsAppService,
+            IRepository<BlacklistEnt, Guid> blacklistRepository
             )
         {
             _appointmentRepository = appointmentRepository;
@@ -102,8 +108,8 @@ namespace Visitor.Appointment
             _expiredUrlRepository = expiredUrlsRepository;
             _expiredUrl = expiredUrl;
             _appointmentExcelExporter = appointmentExcelExporter;
-
-
+            _blacklistAppService = blacklistsAppService;
+            _blacklistRepository = blacklistRepository;
 
         }
         protected DateTime GetToday()
@@ -759,175 +765,101 @@ namespace Visitor.Appointment
                 await Update(input);
             }
         }
-
-        /*public async Task Validation()
+        public bool test()
         {
-            var currentDate = GetToday();
-            int total = _appointmentRepository.Count();
+            var ic = "02011510056";
+            return _blacklistAppService.IsExisted(ic);
             
-            for(int i = 1; i <= total ; i++)
-            {
-
-                var bookhCheck = _appointmentRepository.GetAll().Where(e => e.CheckInDateTime < currentDate && e.Status == StatusType.In);
-                *//*if (bookhCheck?.Id != null)
-                {
-                    var appointment = await _appointmentRepository.GetAsync((Guid)bookhCheck.Id);
-                    appointment.Status = StatusType.Overstayed;
-                }*//*
-            }
-            
-        }*/
-
-
-
+        }
 
         [AbpAuthorize(AppPermissions.Pages_Appointments_Create)]
         protected virtual async Task Create(CreateOrEditAppointmentDto input)
         {
+                //refferal number
+                var rand = new Random();
+                int num = rand.Next(1000);
+                var date = input.AppDateTime.Date.ToString("yyMMdd");
+                input.Status = 0;
+                input.AppRefNo = "AR" + date + num;
 
-            var pn = input.PhoneNo;
-            var ic = input.IdentityCard;
-            //input.MobileNumber = "+6" + input.MobileNumber; 
-            var rand = new Random();
-            int num = rand.Next(1000);
-            var date = input.AppDateTime.Date.ToString("yyMMdd");
-            var lang = Thread.CurrentThread.CurrentCulture;
-            input.Status = 0;
-            /*string lastFourDigitsPN = pn.Substring(pn.Length - 4, 4);
-            string lastFourDigitsIC = ic.Substring(pn.Length - 2, 4);*/
-            //input.AppointmentDate = input.AppointmentDate.ToShortDateString();
-            input.AppRefNo = "AR" + date + num;
-            /*var appointment = ObjectMapper.Map<AppointmentEnt>(input);*/
-            /* var idImage = UpdatePictureForAppointment();
-             input.ImageId = idImage.ToString();*/
-            /*var res = await UpdatePictureForAppointment(input.FileToken, input.X, input.Y, input.Width, input.Height);
-            input.ImageId = res.ToString();*/
+                byte[] byteArray;
+                var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
 
-            byte[] byteArray;
-            var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
-
-            if (input.Tower == "Tower 1")
-            {
-                input.CompanyName = "Bank Rakyat";
-            }
-
-            if (imageBytes == null)
-            {
-                throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
-            }
-
-            using (var image = Image.Load(imageBytes, out IImageFormat format))
-            {
-                var width = (input.Width == 0 || input.Width > image.Width) ? image.Width : input.Width;
-                var height = (input.Height == 0 || input.Height > image.Height) ? image.Height : input.Height;
-
-                var bmCrop = image.Clone(i =>
-                    i.Crop(new Rectangle(input.X, input.Y, width, height))
-                );
-
-                await using (var stream = new MemoryStream())
+                if (input.Tower == "Tower 1")
                 {
-                    await bmCrop.SaveAsync(stream, format);
-                    byteArray = stream.ToArray();
-                }
-            }
-
-            if (byteArray.Length > MaxPictureBytes)
-            {
-                throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit",
-                    AppConsts.ResizedMaxProfilePictureBytesUserFriendlyValue));
-            }
-            var storedFile = new BinaryObject(AbpSession.TenantId, byteArray, $"Appointment picture at {DateTime.UtcNow}");
-            await _binaryObjectManager.SaveAsync(storedFile);
-
-            input.ImageId = storedFile.Id.ToString();
-
-
-            var checker = true;
-            while (checker)
-            {
-                var bookhCheck = _appointmentRepository.FirstOrDefault(e => e.AppRefNo == input.AppRefNo);
-                if (bookhCheck?.Id != null)
-                {
-                    /*string PhoneNo = "";*/
-
-                    //if duplicate booking ref no
-                    checker = true;
-                    num = rand.Next(1000);
-                    /*string lastFourDigits = pn.Substring(pn.Length - 4, 4);*/
-                    input.AppRefNo = "AR" + date + num;
-
-                }
-                else
-                {
-                    checker = false;
-                    break;
-                }
-            };
-
-
-
-            var appointment = ObjectMapper.Map<AppointmentEnt>(input);
-            await _appointmentRepository.InsertAsync(appointment);
-            /*await UpdateSlot(input.BranchSlotSettingId, input.AppointmentSlot);*/
-            /*var bookingDetail = await _bookingRepository.InsertAsync(booking);
-            var branch = await _lookup_branchRepository.GetAsync(input.BranchId.Value);*/
-
-            /*if (input.Email != null)
-            {
-                try
-                {
-                    await _portalEmailer.SendEmailDetailBookingAsync(ObjectMapper.Map<Booking>(bookingDetail), branch, service);
-                }
-                catch
-                {
-                    //To do
-                }
-            }
-
-            try
-            {
-                await SendSms(input);
-            }
-            catch
-            {
-
-            }*/
-
-            /*if (input.Email != null)
-            {
-                try
-                {
-                    await _portalEmailer.SendEmailDetailBookingAsync(ObjectMapper.Map<Booking>(bookingDetail), branch, service);
-                }
-                catch
-                {
-                    //To do
-                }
-            }
-
-            try
-            {
-                await SendSms(input);
-            }
-            catch
-            {
-
-            }*/
-            var appointmentDetail = await _appointmentRepository.InsertAsync(appointment);
-
-            if (input.Email != null)
-            {
-                try
-                {
-                    await _portalEmailer.SendEmailDetailAppointmentAsync(ObjectMapper.Map<AppointmentEnt>(appointmentDetail));
-                }
-                catch
-                {
-                    //To do 20210815
+                    input.CompanyName = "Bank Rakyat";
                 }
 
-            }
+                if (imageBytes == null)
+                {
+                    throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
+                }
+
+                using (var image = Image.Load(imageBytes, out IImageFormat format))
+                {
+                    var width = (input.Width == 0 || input.Width > image.Width) ? image.Width : input.Width;
+                    var height = (input.Height == 0 || input.Height > image.Height) ? image.Height : input.Height;
+
+                    var bmCrop = image.Clone(i =>
+                        i.Crop(new Rectangle(input.X, input.Y, width, height))
+                    );
+
+                    await using (var stream = new MemoryStream())
+                    {
+                        await bmCrop.SaveAsync(stream, format);
+                        byteArray = stream.ToArray();
+                    }
+                }
+
+                if (byteArray.Length > MaxPictureBytes)
+                {
+                    throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit",
+                        AppConsts.ResizedMaxProfilePictureBytesUserFriendlyValue));
+                }
+                var storedFile = new BinaryObject(AbpSession.TenantId, byteArray, $"Appointment picture at {DateTime.UtcNow}");
+                await _binaryObjectManager.SaveAsync(storedFile);
+
+                input.ImageId = storedFile.Id.ToString();
+
+                //check duplicate refferal number
+                var checker = true;
+                while (checker)
+                {
+                    var bookhCheck = _appointmentRepository.FirstOrDefault(e => e.AppRefNo == input.AppRefNo);
+                    if (bookhCheck?.Id != null)
+                    {
+                        checker = true;
+                        num = rand.Next(1000);
+                        input.AppRefNo = "AR" + date + num;
+
+                    }
+                    else
+                    {
+                        checker = false;
+                        break;
+                    }
+                };
+
+                var appointment = ObjectMapper.Map<AppointmentEnt>(input);
+
+                //send visitor detail and appointment detail to email
+                await _appointmentRepository.InsertAsync(appointment);
+                var appointmentDetail = await _appointmentRepository.InsertAsync(appointment);
+
+                if (input.Email != null)
+                {
+                    try
+                    {
+                        await _portalEmailer.SendEmailDetailAppointmentAsync(ObjectMapper.Map<AppointmentEnt>(appointmentDetail));
+                    }
+                    catch
+                    {
+                        //To do 20210815
+                    }
+
+                }
+            
+
         }
 
         [AbpAuthorize(AppPermissions.Pages_Appointments_Edit)]
@@ -1135,46 +1067,7 @@ namespace Visitor.Appointment
         }
 
 
-        // Upload image services (referring to profile services)
-        /*protected async Task<Guid> UpdatePictureForAppointment(string inputFileToken, int xInput, int yInput, int widthInput, int heightInput)
-        {
-
-            byte[] byteArray;
-            var imageBytes = _tempFileCacheManager.GetFile(inputFileToken);
-
-            if (imageBytes == null)
-            {
-                throw new UserFriendlyException("There is no such image file with the token: " + inputFileToken);
-            }
-
-            using(var image = Image.Load(imageBytes, out IImageFormat format))
-            {
-                var width = (widthInput == 0 || widthInput > image.Width) ? image.Width : widthInput;
-                var height = (heightInput == 0 || heightInput > image.Height) ? image.Height : heightInput;
-
-                var bmCrop = image.Clone(i =>
-                    i.Crop(new Rectangle(xInput, yInput, width, height))
-                );
-
-                await using (var stream = new MemoryStream())
-                {
-                    await bmCrop.SaveAsync(stream, format);
-                    byteArray = stream.ToArray();
-                }
-            }
-
-            if (byteArray.Length > MaxPictureBytes)
-            {
-                throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit",
-                    AppConsts.ResizedMaxProfilePictureBytesUserFriendlyValue));
-            }
-            var storedFile = new BinaryObject(AbpSession.TenantId, byteArray, $"Appointment picture at {DateTime.UtcNow}");
-            await _binaryObjectManager.SaveAsync(storedFile);
-
-            var picId = storedFile.Id;
-            return picId;
-        }*/
-
+        
         public async Task<byte[]> GetPictureByIdOrNull(Guid imageId)
         {
             var file = await _binaryObjectManager.GetOrNullAsync(imageId);
@@ -1188,11 +1081,6 @@ namespace Visitor.Appointment
         public async Task<string> GetFilePictureByIdOrNull(Guid imageId)
         {
             var output = await _binaryObjectManager.GetOrNullAsync(imageId);
-            //var memoryStream = new MemoryStream(output.Bytes);
-            //return ImageDrawing.FromStream(memoryStream);
-            //byte[] bytes = output.Bytes;
-            //return File(bytes);
-            //Blob blob = new Blob(memoryStream.GetBuffer());
 
             using (MemoryStream ms = new MemoryStream(output.Bytes))
             {
