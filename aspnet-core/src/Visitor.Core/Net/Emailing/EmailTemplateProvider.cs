@@ -57,9 +57,7 @@ namespace Visitor.Net.Emailing
         public string GetConfirmCancelEmailTemplate(int? tenantId)
         {
             var tenancyKey = tenantId.HasValue ? tenantId.Value.ToString() : "host";
-
-            return _defaultTemplates.GetOrAdd(tenancyKey, key =>
-            {
+            
                 using (var stream = typeof(EmailTemplateProvider).GetAssembly().GetManifestResourceStream("Visitor.Net.Emailing.EmailTemplates.confirmCancelAppointment.html"))
                 {
                     var bytes = stream.GetAllBytes();
@@ -67,8 +65,8 @@ namespace Visitor.Net.Emailing
                     template = template.Replace("{THIS_YEAR}", DateTime.Now.Year.ToString());
                     return template.Replace("{EMAIL_LOGO_URL}", GetTenantLogoUrl(tenantId));
                 }
-            });
         }
+
         /*public string GetCancelAppointmentEmailTemplate(int? tenantId)
         {
             var tenancyKey = tenantId.HasValue ? tenantId.Value.ToString() : "host";

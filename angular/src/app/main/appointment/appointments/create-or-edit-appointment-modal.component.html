@@ -2,7 +2,7 @@
     aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #appointmentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+            <form *ngIf="active" #appointmentForm="ngForm" novalidate (ngSubmit)="save(appointment.identityCard)" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="appointment.id">{{ l('EditAppointment') }}</span>

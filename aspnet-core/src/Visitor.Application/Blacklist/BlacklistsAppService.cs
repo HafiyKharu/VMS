@@ -27,7 +27,7 @@ using Visitor.Blacklist.Exporting;
 
 namespace Visitor.Blacklist
 {
-    [AbpAuthorize(AppPermissions.Pages_Blacklists)]
+   // [AbpAuthorize(AppPermissions.Pages_Blacklists)]
     public class BlacklistsAppService : VisitorAppServiceBase, IBlacklistsAppService
     {
         private readonly IRepository<BlacklistEnt, Guid> _blacklistRepository;
@@ -149,9 +149,9 @@ namespace Visitor.Blacklist
             await _blacklistRepository.DeleteAsync(input.Id);
         }
 
-        public bool IsExisted(GetAllBlacklistsInput input)
+        public bool IsExisted(String input)
         {
-            var bl = _blacklistRepository.GetAll().Where(c => input.IcPassportFilter == c.BlacklistIdentityCard);
+            var bl = _blacklistRepository.GetAll().Where(c => input == c.BlacklistIdentityCard);
             if (bl.Any())
             {
                 return true;

@@ -1,6 +1,6 @@
 <div class="container mb-3">
     <!-- <div class="card card-custom bg-custom-2"> -->
-    <form #appointmentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <form #appointmentForm="ngForm" novalidate (ngSubmit)="save(appointment.identityCard,appointmentForm)" autocomplete="off">
         <div class="card card-shadow card-custom bg-custom-1">
             <div class="card-header border-1">
                 <div class="card-title">
