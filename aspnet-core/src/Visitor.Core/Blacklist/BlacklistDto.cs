@@ -9,8 +9,9 @@ namespace Visitor.Blacklist
     public class BlacklistDto : EntityDto<Guid>
     {
 
-        public string FullName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Remarks { get; set; }
+        public string BlacklistFullName { get; set; }
+        public string BlacklistIdentityCard { get; set; }
+        public string BlacklistPhoneNumber { get; set; }
+        public string BlacklistRemarks { get; set; }
     }
 }

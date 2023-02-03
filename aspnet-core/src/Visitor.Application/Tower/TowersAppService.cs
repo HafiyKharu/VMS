@@ -2,17 +2,17 @@
 using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
-using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Visitor.Authorization;
 using Visitor.Tower.Dtos;
 using Abp.Linq.Extensions;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
+using Visitor.Dto;
+using Visitor.Tower.Exporting;
 
 namespace Visitor.Tower
 {
@@ -21,12 +21,13 @@ namespace Visitor.Tower
     {
 
         private readonly IRepository<TowerEnt, Guid> _towerRepository;
+        private readonly ITowerExcelExporter _towerExcelExporter;
 
 
-        public TowersAppService(IRepository<TowerEnt, Guid> towerRepository)
+        public TowersAppService(IRepository<TowerEnt, Guid> towerRepository , ITowerExcelExporter towerExcelExporter)
         {
             _towerRepository = towerRepository;
-
+            _towerExcelExporter = towerExcelExporter;
         }
 
         public async Task<PagedResultDto<GetTowerForViewDto>> GetAll(GetAllTowersInput input)
@@ -126,6 +127,25 @@ namespace Visitor.Tower
         public async Task Delete(EntityDto<Guid> input)
         {
             await _towerRepository.DeleteAsync(input.Id);
+        }
+        public async Task<FileDto> GetAllTowerToExcel(GetAllTowerForExcelInput input)
+        {
+            var filteredTitles = _towerRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.TowerBankRakyat.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TowerFilter), e => e.TowerBankRakyat == input.TowerFilter);
+
+            var query = (from o in filteredTitles
+                         select new GetTowerForViewDto()
+                         {
+                             Tower = new TowerDto
+                             {
+                                 Id = o.Id,
+                                 TowerBankRakyat = o.TowerBankRakyat,
+                             }
+                         });
+            var tower = await query.ToListAsync();
+
+            return _towerExcelExporter.ExportToFile(tower);
         }
     }
 }

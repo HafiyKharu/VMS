@@ -3,6 +3,13 @@
         <sub-header [title]="'Blacklists' | localize" [description]="'BlacklistsHeaderInfo' | localize">
             <div role="actions">
                 <button
+                    (click)="exportToExcel()"
+                    class="btn btn-outline btn-outline-success btn-active-light-success me-1"
+                >
+                    <i class="fa fa-file-excel"></i>
+                    {{ l('ExportToExcel') }}
+                </button>
+                <button
                     *ngIf="isGranted('Pages.Blacklists.Create')"
                     (click)="createBlacklist()"
                     class="btn btn-primary blue"

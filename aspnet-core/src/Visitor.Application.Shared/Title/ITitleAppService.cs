@@ -1,10 +1,12 @@
-﻿using Abp.Application.Services.Dto;
+﻿
+using Abp.Application.Services.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Visitor.Title.Dtos;
 using Abp.Application.Services;
+using Visitor.Dto;
 
 namespace Visitor.Title
 {
@@ -15,5 +17,6 @@ namespace Visitor.Title
         Task<GetTitleForEditOutput> GetTitleForEdit(EntityDto<Guid> id);
         Task CreateOrEdit(CreateOrEditTitleDto input);
         Task Delete(EntityDto<Guid> id);
+        Task<FileDto> GetAllTitleToExcel(GetAllTitleForExcelInput input);
     }
 }

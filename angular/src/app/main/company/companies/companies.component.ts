@@ -122,8 +122,8 @@ export class CompaniesComponent extends AppComponentBase {
     }
 
     exportToExcel(): void {
-        // this._companiesServiceProxy.getCompaniesToExcel(this.filterText, this.companyNameFilter).subscribe((result) => {
-        //     this._fileDownloadService.downloadTempFile(result);
-        // });
+        this._companiesServiceProxy.getAllCompanyToExcel(this.filterText, this.companyNameFilter).subscribe((result) => {
+            this._fileDownloadService.downloadTempFile(result);
+        });
     }
 }

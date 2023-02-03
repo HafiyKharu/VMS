@@ -12,6 +12,9 @@ using Visitor.Level;
 using Abp.Linq.Extensions;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
+using Visitor.Dto;
+using Visitor.PurposeOfVisit.Dtos;
+using Visitor.Level.Exporting;
 
 namespace Visitor.Level
 {
@@ -20,12 +23,13 @@ namespace Visitor.Level
     {
 
         private readonly IRepository<LevelEnt, Guid> _levelRepository;
+        private readonly ILevelExcelExporter _levelExcelExporter;
 
 
-        public LevelsAppService(IRepository<LevelEnt, Guid> levelRepository)
+        public LevelsAppService(IRepository<LevelEnt, Guid> levelRepository , ILevelExcelExporter levelExcelExporter)
         {
             _levelRepository = levelRepository;
-
+            _levelExcelExporter = levelExcelExporter;
         }
 
         public async Task<PagedResultDto<GetLevelForViewDto>> GetAll(GetAllLevelsInput input)
@@ -125,6 +129,26 @@ namespace Visitor.Level
         public async Task Delete(EntityDto<Guid> input)
         {
             await _levelRepository.DeleteAsync(input.Id);
+        }
+        public async Task<FileDto> GetAllLevelToExcel(GetAllLevelForExcelInput input)
+        {
+            var filteredLevels = _levelRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.LevelBankRakyat.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.LevelFilter), e => e.LevelBankRakyat == input.LevelFilter);
+
+            var query = (from o in filteredLevels
+                         select new GetLevelForViewDto()
+                         {
+                             Level = new LevelDto
+                             {
+                                 Id = o.Id,
+                                 LevelBankRakyat = o.LevelBankRakyat,
+                             }
+                         });
+            var level = await query.ToListAsync();
+
+            return _levelExcelExporter.ExportToFile(level);
+
         }
     }
 }

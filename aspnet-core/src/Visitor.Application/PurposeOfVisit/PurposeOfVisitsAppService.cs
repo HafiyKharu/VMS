@@ -14,6 +14,9 @@ using Abp.Collections.Extensions;
 using Abp.Linq.Extensions;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
+using Visitor.PurposeOfVisit.Exporting;
+using Visitor.Dto;
+using Visitor.Title.Dtos;
 
 namespace Visitor.PurposeOfVisit
 {
@@ -22,11 +25,13 @@ namespace Visitor.PurposeOfVisit
     public class PurposeOfVisitsAppService: VisitorAppServiceBase
     {
         private readonly IRepository<PurposeOfVisitEnt, Guid> _purposeOfVisitRepository;
+        private readonly IPurposeOfVisitExcelExporter _purposeOfVisitExcelExporter;
 
 
-        public PurposeOfVisitsAppService(IRepository<PurposeOfVisitEnt, Guid> purposeOfVisitRepository)
+        public PurposeOfVisitsAppService(IRepository<PurposeOfVisitEnt, Guid> purposeOfVisitRepository , IPurposeOfVisitExcelExporter purposeOfVisitExcelExporter)
         {
             _purposeOfVisitRepository = purposeOfVisitRepository;
+            _purposeOfVisitExcelExporter = purposeOfVisitExcelExporter;
 
         }
 
@@ -127,6 +132,25 @@ namespace Visitor.PurposeOfVisit
         public async Task Delete(EntityDto<Guid> input)
         {
             await _purposeOfVisitRepository.DeleteAsync(input.Id);
+        }
+        public async Task<FileDto> GetAllPurposeOfVisitToExcel(GetAllPurposeOfVisitForExcelInput input)
+        {
+            var filteredPurposeOfVisits = _purposeOfVisitRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PurposeOfVisitApp.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.POFFilter), e => e.PurposeOfVisitApp == input.POFFilter);
+
+            var query = (from o in filteredPurposeOfVisits
+                         select new GetPurposeOfVisitForViewDto()
+                         {
+                             PurposeOfVisit = new PurposeOfVisitDto
+                             {
+                                 Id = o.Id,
+                                 PurposeOfVisitApp = o.PurposeOfVisitApp,
+                             }
+                         });
+            var POV = await query.ToListAsync();
+
+            return _purposeOfVisitExcelExporter.ExportToFile(POV);
         }
     }
 }

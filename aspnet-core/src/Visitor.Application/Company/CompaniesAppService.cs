@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using Visitor.Storage;
 using Microsoft.AspNetCore.Http;
+using Visitor.Departments.Dtos;
 
 namespace Visitor.Company
 {
@@ -136,6 +137,28 @@ namespace Visitor.Company
             await _companyRepository.DeleteAsync(input.Id);
         }
 
+        public async Task<FileDto> GetAllCompanyToExcel(GetAllCompaniesForExcelInput input)
+        {
+            var filteredCompanies = _companyRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.CompanyName.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CompanyNameFilter), e => e.CompanyName == input.CompanyNameFilter); // Filter condition usign depricate or lambda expression
+
+            var query = (from o in filteredCompanies
+                         select new GetCompanyForViewDto()
+                         {
+                             Company = new CompanyDto
+                             {
+                                 Id = o.Id,
+                                 CompanyName = o.CompanyName,
+                                 CompanyEmail = o.CompanyEmail,
+                                 OfficePhoneNumber = o.OfficePhoneNumber,
+                                 CompanyAddress = o.CompanyAddress,
+                             }
+                         });
+            var company = await query.ToListAsync();
+
+            return _companiesExcelExporter.ExportToFile(company);
+        }
         public bool IsExisted(GetAllCompaniesInput input)
         {
             var query = _companyRepository.GetAll().Where(c => input.CompanyNameFilter == c.OfficePhoneNumber);

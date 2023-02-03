@@ -122,8 +122,8 @@
         }
 
         exportToExcel(): void {
-            // this._departmentsServiceProxy.getDepartmentsToExcel(this.filterText, this.departmentNameFilter).subscribe((result) => {
-            //     this._fileDownloadService.downloadTempFile(result);
-            // });
+            this._departmentsServiceProxy.getAllDepartmentToExcel(this.filterText, this.departmentNameFilter).subscribe((result) => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
         }
     }

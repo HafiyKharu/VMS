@@ -14,16 +14,21 @@ using System.Threading.Tasks;
 using Twilio.Rest.Verify.V2.Service;
 using Visitor.Authorization;
 using Visitor.Departments.Dtos;
+using Visitor.Departments.Exporting;
+using Visitor.Dto;
+using Visitor.Level.Dtos;
 
 namespace Visitor.Departments
 {
     public class DepartmentsAppService : VisitorAppServiceBase, IDepartmentsAppService
     {
         private readonly IRepository<Department, Guid> _departmentsRepository;
+        private readonly IDepartmentExcelExporter _departmentsExcelExporter;
 
-        public DepartmentsAppService(IRepository<Department, Guid> departmentsRepository)
+        public DepartmentsAppService(IRepository<Department, Guid> departmentsRepository , IDepartmentExcelExporter departmentExcelExporter)
         {
             _departmentsRepository = departmentsRepository;
+            _departmentsExcelExporter = departmentExcelExporter;
         }
 
         [AbpAuthorize(AppPermissions.Pages_Departments_Create)]
@@ -99,6 +104,23 @@ namespace Visitor.Departments
             return new PagedResultDto<GetDepartmentForViewDto>(
                 totalCount, results);
         }
+        public async Task<FileDto> GetAllDepartmentToExcel(GetAllDepartmentForExcelInput input)
+        {
+            var filteredDepartments = _departmentsRepository.GetAll().WhereIf(!string.IsNullOrWhiteSpace(input.Filter), d => false || d.DepartmentName.Contains(input.Filter))
+                .WhereIf(!string.IsNullOrWhiteSpace(input.DepartmentNameFilter), d => d.DepartmentName == input.DepartmentNameFilter);
 
+            var query = (from o in filteredDepartments
+                         select new GetDepartmentForViewDto()
+                         {
+                             Department = new DepartmentDto
+                             {
+                                 Id = o.Id,
+                                 DepartmentName = o.DepartmentName,
+                             }
+                         });
+            var department = await query.ToListAsync();
+
+            return _departmentsExcelExporter.ExportToFile(department);
+        }
     }
 }

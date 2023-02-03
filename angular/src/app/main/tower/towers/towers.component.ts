@@ -123,8 +123,8 @@ export class TowersComponent extends AppComponentBase {
     }
 
     exportToExcel(): void {
-        // this._towersServiceProxy.getTowersToExcel(this.filterText, this.towerNameFilter).subscribe((result) => {
-        //     this._fileDownloadService.downloadTempFile(result);
-        // });
+        this._towersServiceProxy.getAllTowerToExcel(this.filterText, this.towerFilter).subscribe((result) => {
+            this._fileDownloadService.downloadTempFile(result);
+        });
     }
 }

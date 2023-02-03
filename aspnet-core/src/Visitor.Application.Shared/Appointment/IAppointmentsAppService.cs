@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Visitor.Authorization.Users.Profile.Dto;
 using Visitor.Departments.Dtos;
+using Visitor.Dto;
 
 namespace Visitor.Appointment
 {
@@ -30,5 +31,9 @@ namespace Visitor.Appointment
         Task<GetPictureOutput> GetPictureByAppointment(Guid appId);
         Task ChangeStatusToIn(CreateOrEditAppointmentDto input);
         Task ChangeStatusToOut(CreateOrEditAppointmentDto input);
+        Task<FileDto> GetAllAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllTodayAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllTomorrowAppointmentsToExcel(GetAllAppointmentForExcelInput input);
+        Task<FileDto> GetAllYesterdayAppointmentsToExcel(GetAllAppointmentForExcelInput input);
     }
 }

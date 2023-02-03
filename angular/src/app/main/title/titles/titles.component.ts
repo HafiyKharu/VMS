@@ -35,7 +35,7 @@ export class TitlesComponent extends AppComponentBase {
 
     advancedFiltersAreShown = false;
     filterText = '';
-    fullNameFilter = '';
+    titleFilter = '';
 
     _entityTypeFullName = 'Visitor.Title.TitleEnt';
     entityHistoryEnabled = false;
@@ -82,7 +82,7 @@ export class TitlesComponent extends AppComponentBase {
         this._titlesServiceProxy
             .getAll(
                 this.filterText,
-                this.fullNameFilter,
+                this.titleFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
                 this.primengTableHelper.getSkipCount(this.paginator, event)
@@ -121,5 +121,15 @@ export class TitlesComponent extends AppComponentBase {
             }
         });
     }
+    exportToExcel(): void {
+        this._titlesServiceProxy
+            .getAllTitleToExcel(
+                this.filterText,
+                this.titleFilter
+            )
+            .subscribe((result) => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
+        }
 
 }
