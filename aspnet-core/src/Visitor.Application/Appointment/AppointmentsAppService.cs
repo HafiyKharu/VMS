@@ -48,6 +48,7 @@ using Visitor.Dto;
 using Visitor.Appointment.Exporting;
 using Visitor.Blacklist;
 using IdentityServer4.Models;
+using Visitor.Blacklist.Dtos;
 /*using StatusEnum = Visitor.Appointments.StatusEnum;*/
 
 namespace Visitor.Appointment
@@ -764,12 +765,6 @@ namespace Visitor.Appointment
             {
                 await Update(input);
             }
-        }
-        public bool test()
-        {
-            var ic = "02011510056";
-            return _blacklistAppService.IsExisted(ic);
-            
         }
 
         [AbpAuthorize(AppPermissions.Pages_Appointments_Create)]
@@ -1505,6 +1500,20 @@ namespace Visitor.Appointment
             var test = await query.ToListAsync();
 
             return _appointmentExcelExporter.ExportToFile(test);
+        }
+
+        public async Task AddVisitorToBlacklist(Guid id , string remark)
+        {
+            var appointment = await _appointmentRepository.GetAsync(id);
+            var output = new CreateOrEditBlacklistDto
+            {
+                    BlacklistFullName = appointment.FullName,
+                    BlacklistIdentityCard = appointment.IdentityCard,
+                    BlacklistPhoneNumber = appointment.PhoneNo,
+                    BlacklistRemarks = remark
+            };
+            await _blacklistAppService.CreateOrEdit(output);
+            await _appointmentRepository.DeleteAsync(id);
         }
     }
 }

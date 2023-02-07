@@ -78,6 +78,8 @@
     <text name="RemarkFilter">Remark</text>
     <text name ="BlacklistInfo1">Unfortunately, this registration could not be completed as this visitor are on our blacklist. Please check table blacklist for more information.</text>
     <text name ="BlacklistInfo2">Unfortunately, your registration could not be completed as you are on our blacklist. Please contact our support team for more information.</text>
+    <text name ="AddToBlacklistInfo">Please provide a detailed explanation for the reason behind blacklisting this individual in accordance with company policy</text>
+    <text name ="AddVisitorToBlacklist">Add visitor to blacklist</text>
 
     <text name="Level">Level</text>
     <text name="Visitor.Level.Level">Level</text>
