@@ -354,6 +354,13 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a href="javascript:;"
+                                                            class="dropdown-item"
+                                                            (click)="addVisitorToBlacklist.show(record.appointment.id)">
+                                                            {{ l('AddVisitorToBlacklist') }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a href="javascript:;" *ngIf="entityHistoryEnabled"
                                                             class="dropdown-item"
                                                             (click)="showHistory(record.appointment)">
@@ -476,5 +483,6 @@
         </createOrEditAppointmentModal>
         <viewAppointmentModal #viewAppointmentModal></viewAppointmentModal>
         <entityTypeHistoryModal #entityTypeHistoryModal></entityTypeHistoryModal>
+        <app-add-visitor-to-blacklist #addVisitorToBlacklist></app-add-visitor-to-blacklist>
     </div>
 </div>
