@@ -18,14 +18,23 @@ export class ViewAppointmentModalComponent extends AppComponentBase {
     @ViewChild('checkIn', { static: true }) checkIn: CheckIn;
     
 
-    active = false;
-    saving = false;
-
     currentDateTime = new Date();
+    appDateTime = new Date();
+    regDateTime = new Date();
+    checkInDateTime = new Date();
+    checkOutDateTime = new Date();
+    cancelDateTime = new Date();
 
     parseDate(dateString: string): Date {
         return new Date(Date.parse(dateString));
     }
+
+
+    
+    
+
+    active = false;
+    saving = false;
 
     imageUrl: any;
     imageBlob: any;
@@ -60,6 +69,11 @@ export class ViewAppointmentModalComponent extends AppComponentBase {
         this._appointmentsServiceProxy.getAppointmentForEdit(item.appointment.id).subscribe((result) => {
             this.appointment = result.appointment;
             this.appointment.id = item.appointment.id;
+            this.appDateTime = new Date(item.appointment.appDateTime.toString());
+            this.regDateTime = new Date(item.appointment.creationTime.toString());
+            this.checkInDateTime = new Date(item.appointment.checkInDateTime.toString());
+            this.checkOutDateTime = new Date(item.appointment.checkOutDateTime.toString());
+            this.cancelDateTime = new Date(item.appointment.cancelDateTime.toString());
         });
         this.active = true;
         this.displayImage(this.item.appointment.imageId);

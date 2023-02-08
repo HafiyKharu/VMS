@@ -1,5 +1,5 @@
 ﻿import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { AppointmentsServiceProxy, AppointmentDto, CreateOrEditAppointmentDto, StatusType, GetAppointmentForViewDto} from '@shared/service-proxies/service-proxies';
+import { AppointmentsServiceProxy, AppointmentDto, CreateOrEditAppointmentDto, StatusType, GetAppointmentForViewDto } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CreateOrEditAppointmentModalComponent } from './create-or-edit-appointment-modal.component';
@@ -33,9 +33,9 @@ export class AppointmentsComponent extends AppComponentBase {
     imageSrc: any;
     imageId: any;
     image: any;
-
+    date = new Date();
     appointment: CreateOrEditAppointmentDto = new CreateOrEditAppointmentDto();
-    
+
     advancedFiltersAreShown = false;
     filterText = '';
     fullNameFilter = '';
@@ -58,8 +58,9 @@ export class AppointmentsComponent extends AppComponentBase {
     appRefNoFilter = "";
     emailOfficerToMeetFilter = "";
     phoneNoOfficerToMeetFilter = "";
+    isOverstayed = false;
 
-    test:any;
+    test: any;
 
 
     _entityTypeFullName = 'Visitor.Appointment.Appointment';
@@ -68,13 +69,14 @@ export class AppointmentsComponent extends AppComponentBase {
         injector: Injector,
         private _appointmentsServiceProxy: AppointmentsServiceProxy,
         private _dateTimeService: DateTimeService,
-        private _tokenService:TokenService,
+        private _tokenService: TokenService,
         private _fileDownloadService: FileDownloadService
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
+
         this.getStatus();
         this.entityHistoryEnabled = this.setIsEntityHistoryEnabled();
     }
@@ -119,7 +121,7 @@ export class AppointmentsComponent extends AppComponentBase {
                 this.minAppDateTimeFilter,
                 this.maxAppDateTimeFilter,
                 this.minRegDateTimeFilter,
-                this.maxRegDateTimeFilter,  
+                this.maxRegDateTimeFilter,
                 this.emailOfficerToMeetFilter,
                 this.phoneNoOfficerToMeetFilter,
                 this.statusFilter,
@@ -172,36 +174,54 @@ export class AppointmentsComponent extends AppComponentBase {
             }
         });
     }
-    getStatus(appointmentId?: string):void
-    {
-        this._appointmentsServiceProxy.getAppointmentForEdit(appointmentId).subscribe((result) => 
+    getStatus(appointmentId?: string): void {
+        this._appointmentsServiceProxy.getAppointmentForEdit(appointmentId).subscribe((result) =>
             this.appointment = result.appointment);
     }
-    isStatusRegistered(status:any): boolean {
-        if (status == StatusType.Registered){
+    isStatusRegistered(status: any): boolean {
+        if (status == StatusType.Registered) {
             return true;
         }
         else
             return false;
     }
-    isStatusIn(status:any): boolean {
+    isStatusIn(status: any): boolean {
         if (status == StatusType.In)
             return true;
         else
             return false;
     }
-    isStatusOut(status:any): boolean {
+    isStatusOut(status: any): boolean {
         if (status == StatusType.Out)
             return true;
         else
             return false;
     }
-    isStatusCancel(status:any): boolean {
+    isStatusCancel(status: any): boolean {
         if (status == StatusType.Cancel)
             return true;
         else
             return false;
     }
+
+    isStatusOverstayed(CheckInDateTime: any): boolean {
+
+        let dateOnlyString = new Date(CheckInDateTime);
+        let dateOnly = new Date(dateOnlyString);
+        let time = new Date();
+        let dateNow = new Date();
+        time.setHours(19);
+        time.setMinutes(0);
+        time.setSeconds(0);
+
+        let combinedDate = new Date(dateOnly.getFullYear(), dateOnly.getMonth(), dateOnly.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
+
+        if(dateNow >= combinedDate)
+            return true;
+        else
+            return false;
+    }
+
     exportToExcel(): void {
         this._appointmentsServiceProxy
             .getAllAppointmentsToExcel(
@@ -220,7 +240,7 @@ export class AppointmentsComponent extends AppComponentBase {
                 this.minAppDateTimeFilter,
                 this.maxAppDateTimeFilter,
                 this.minRegDateTimeFilter,
-                this.maxRegDateTimeFilter,  
+                this.maxRegDateTimeFilter,
                 this.emailOfficerToMeetFilter,
                 this.phoneNoOfficerToMeetFilter,
                 this.statusFilter,

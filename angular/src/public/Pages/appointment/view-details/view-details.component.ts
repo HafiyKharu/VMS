@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 import { FormWizardComponent } from '../form-wizard/form-wizard.component';
 import { tap } from 'rxjs/operators';
 import { result } from 'lodash-es';
-import {  formatDate  } from '@angular/common';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -42,6 +42,8 @@ export class ViewDetailsComponent extends AppComponentBase implements OnInit, Af
     // item: GetAppointmentForViewDto;
 
     wizard: FormWizardComponent;
+    appDateTime: Date;
+    regDateTime: Date;
 
     constructor(injector: Injector, private route: ActivatedRoute, private _portalAppService: PortalsServiceProxy, private _appointmentAppService: AppointmentsServiceProxy, private _passService: PassService, @Inject(LOCALE_ID) public locale: string) {
         super(injector);
@@ -67,8 +69,8 @@ export class ViewDetailsComponent extends AppComponentBase implements OnInit, Af
         this.showMainSpinner();
         this.appointmentId = this._passService.appointmentId;
         this.getAppointment(this.appointmentId);
-        this._portalAppService.createOrEditExpiredUrl(this.appointmentId, 'Cancel').subscribe(()=> 
-         this.hideMainSpinner());
+        this._portalAppService.createOrEditExpiredUrl(this.appointmentId, 'Cancel').subscribe(() =>
+            this.hideMainSpinner());
     }
     ngAfterViewInit() { }
 
@@ -89,7 +91,9 @@ export class ViewDetailsComponent extends AppComponentBase implements OnInit, Af
                     result.appointment;
                     this.item.appointment = result.appointment;
                     this.item.appointment.creationTime;
-                    this.reg = formatDate(this.item.appointment.creationTime.toISO(), 'dd/MM/yy, hh:mm a', this.locale,);
+                    this.appDateTime = new Date(this.item.appointment.appDateTime.toString());
+                    this.regDateTime = new Date(this.item.appointment.creationTime.toString());
+                    //this.reg = formatDate(this.item.appointment.creationTime.toISO(), 'dd/MM/yy, hh:mm a', this.locale,);
                     // this.item.appointment.appRefNo = result.appointment.appRefNo;
                 }
             );

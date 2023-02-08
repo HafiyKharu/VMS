@@ -1,6 +1,6 @@
 <div class="container mb-3">
     <!-- <div class="card card-custom bg-custom-2"> -->
-    <form #appointmentForm="ngForm" novalidate (ngSubmit)="save(appointment.identityCard,appointmentForm)" autocomplete="off">
+    <form #appointmentForm="ngForm" novalidate (ngSubmit)="save(this.identityCardOrPassportNumber,appointmentForm)" autocomplete="off">
         <div class="card card-shadow card-custom bg-custom-1">
             <div class="card-header border-1">
                 <div class="card-title">
@@ -51,7 +51,7 @@
                                 <input type="text" placeholder="e.g. 112233445566" #Appointment_IdentityCard="ngModel"
                                     id="Appointment_IdentityCard" class="form-control"
                                     [(ngModel)]="appointment.identityCard" name="IdentityCard" minlength="9"
-                                    maxlength="12" required />
+                                    maxlength="12" required [(ngModel)]="this.identityCardOrPassportNumber" />
                                 <validation-messages [formCtrl]="Appointment_IdentityCard"></validation-messages>
                             </div>
                         </div>

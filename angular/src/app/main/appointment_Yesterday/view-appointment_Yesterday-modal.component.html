@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <h6>{{ l('AppDateTime') }} :</h6>
-                        {{ item.appointment.appDateTime }}
+                        {{ this.appDateTime | date:'medium' }}
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <h6>{{ l('RegDateTime') }} :</h6>
-                        {{ item.appointment.regDateTime }}
+                        {{ this.regDateTime | date:'medium' }}
                     </div>
                 </div>
             </div>
@@ -179,7 +179,7 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <h6>{{ l('checkInDateTime') }} :</h6>
-                        {{ item.appointment.checkInDateTime}}
+                        {{ this.checkInDateTime | date:'medium'}}
                     </div>
                 </div>
             </div>
@@ -187,7 +187,7 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <h6>{{ l('checkOutDateTime') }} :</h6>
-                        {{ item.appointment.checkOutDateTime}}
+                        {{ this.checkOutDateTime | date:'medium'}}
                     </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <h6>{{ l('cancelDateTime') }} :</h6>
-                        {{ item.appointment.cancelDateTime}}
+                        {{ this.cancelDateTime | date:'medium'}}
                     </div>
                 </div>
             </div>
@@ -213,7 +213,7 @@
                                 {{ l('CheckIn') }}
                             </button>
                         </div> -->
-                        <div *ngIf="isStatusRegistered() && parseDate(item.appointment.appDateTime) > currentDateTime">
+                        <div *ngIf="isStatusRegistered() ">
                             <button type="button" style="margin-right: 10px;" class="btn btn-primary blue" (click)="checkIn.show(item.appointment.id)">
                                 {{ l('CheckIn') }}
                             </button>
