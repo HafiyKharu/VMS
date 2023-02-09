@@ -355,8 +355,7 @@
                                                     </li>
                                                     <li>
                                                         <a href="javascript:;"class="dropdown-item"
-                                                        *ngIf="isStatusOverstayed(record.appointment.checkInDateTime) 
-                                                        && isStatusIn(record.appointment.status)" 
+                                                        *ngIf="checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)" 
                                                             (click)="addVisitorToBlacklist.show(record.appointment.id)">
                                                             {{ l('AddVisitorToBlacklist') }}
                                                         </a>
@@ -431,7 +430,20 @@
                                             <span class="p-column-title">{{ l('RegDateTime') }}</span>
                                             {{ record.appointment.regDateTime | date:'medium'}}
                                         </td>
-                                        <td style="width: 150px">
+                                        <td *ngIf="checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 3 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 5 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="!checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)
+                                        && !isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
                                             <span class="p-column-title">{{ l('Status') }}</span>
                                             <ng-container>
                                                 {{ l('Enum:StatusType:' + record.appointment.status ) }}

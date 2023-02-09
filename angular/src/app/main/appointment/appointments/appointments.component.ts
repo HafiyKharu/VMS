@@ -60,9 +60,6 @@ export class AppointmentsComponent extends AppComponentBase {
     phoneNoOfficerToMeetFilter = "";
     isOverstayed = false;
 
-    test: any;
-
-
     _entityTypeFullName = 'Visitor.Appointment.Appointment';
     entityHistoryEnabled = false;
     constructor(
@@ -203,25 +200,33 @@ export class AppointmentsComponent extends AppComponentBase {
         else
             return false;
     }
+    checkStatusOverstayed(CheckInDateTime: any, status: any): boolean {
+        if (status == StatusType.In) {
+            let dateOnlyString = new Date(CheckInDateTime);
+            let dateOnly = new Date(dateOnlyString);
+            let time = new Date();
+            let dateNow = new Date();
+            time.setHours(1);
+            time.setMinutes(0);
+            time.setSeconds(0);
 
-    isStatusOverstayed(CheckInDateTime: any): boolean {
+            let combinedDate = new Date(dateOnly.getFullYear(), dateOnly.getMonth(), dateOnly.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
 
-        let dateOnlyString = new Date(CheckInDateTime);
-        let dateOnly = new Date(dateOnlyString);
-        let time = new Date();
-        let dateNow = new Date();
-        time.setHours(19);
-        time.setMinutes(0);
-        time.setSeconds(0);
-
-        let combinedDate = new Date(dateOnly.getFullYear(), dateOnly.getMonth(), dateOnly.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
-
-        if(dateNow >= combinedDate)
-            return true;
-        else
-            return false;
+            if (dateNow >= combinedDate)
+                return true;
+            
+        }
     }
+    isStatusExpired(AppDateTime: any, status: any): boolean {
+        if (status == StatusType.Registered) {
+            let appDateTime = new Date(AppDateTime);
+            let dateNow = new Date();
 
+            if (dateNow.getDate >= appDateTime.getDate)
+                return true;
+            
+        }
+    }
     exportToExcel(): void {
         this._appointmentsServiceProxy
             .getAllAppointmentsToExcel(
