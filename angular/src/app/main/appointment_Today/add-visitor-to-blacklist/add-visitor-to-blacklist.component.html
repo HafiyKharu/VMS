@@ -1,0 +1,36 @@
+<div bsModal #addVisitorToBlacklist="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addVisitorToBlacklist"
+aria-hidden="true" [config]="{ backdrop: 'static' }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #appointmentForm="ngForm" >
+                <div class="modal-body">
+                    <div class="my-3">
+                <h3 style="text-align:center ;">{{l('AddToBlacklistInfo')}}</h3>
+                    </div>
+                    <hr>    
+                </div>
+                   
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label">{{ l('BlacklistRemarks') }}*</label>
+                        <input type="text"class="form-control"[(ngModel)]="this.remarks" name="remarks" 
+                        #this.remarks="ngModel" [id]="this.remarks"placeholder="{{l('Required')}}"
+                        required minlength="5" maxlength="99"  />
+                        <validation-messages [formCtrl]="this.remarks"></validation-messages>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" style="color: white; background-color: red; margin-right: 10px;"
+                    class="btn btn-primary" (click)="AddVisitorToBlacklist(this.remarks)"
+                    [disabled]="!appointmentForm.form.valid">
+                        {{ l('Confirm') }}
+                    </button>
+                    <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()" >
+                        {{ l('Close') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

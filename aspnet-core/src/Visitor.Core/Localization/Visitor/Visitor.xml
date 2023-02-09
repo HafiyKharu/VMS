@@ -155,6 +155,7 @@
     <text name="Enum:StatusType:2">Check Out</text>
     <text name="Enum:StatusType:3">Overstayed</text>
     <text name="Enum:StatusType:4">Cancel</text>
+    <text name="Enum:StatusType:5">Expired</text>
     <text name="AreYouSureCancelAppointment">Are you sure to cancel the appointment?</text>
     <text name="SuccessfullyCancelAppointment">Succesfully cancel the appointment</text>
     <text name="CancelAppointment">Cancel appointment</text>

@@ -64,6 +64,7 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
     imageBlob: any;
     image: any;
     uploadUrl: string;
+    identityCardOrPassportNumber: string;
 
     //statusenum : Array<any> = []
     keys = Object.keys(StatusType);

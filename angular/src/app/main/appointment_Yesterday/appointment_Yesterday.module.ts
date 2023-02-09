@@ -6,9 +6,10 @@ import { AppointmentsComponent } from './appointment_Yesterdays.component';
 import { CreateOrEditAppointmentModalComponent } from './create-or-edit-appointment_Yesterday-modal.component';
 import { ViewAppointmentModalComponent } from './view-appointment_Yesterday-modal.component';
 import{CheckIn}from './check-in.component'
+import { AddVisitorToBlacklistComponent } from './add-visitor-to-blacklist/add-visitor-to-blacklist.component'
 
 @NgModule({
-    declarations: [AppointmentsComponent, CreateOrEditAppointmentModalComponent, ViewAppointmentModalComponent, CheckIn],
+    declarations: [AppointmentsComponent, CreateOrEditAppointmentModalComponent, ViewAppointmentModalComponent, CheckIn, AddVisitorToBlacklistComponent],
     imports: [AppSharedModule, AppointmentRoutingModule, AdminSharedModule],
 })
 export class AppointmentYesterdayModule {}

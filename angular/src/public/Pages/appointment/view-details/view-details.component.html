@@ -54,7 +54,7 @@
                         {{ l('AppDateTime') }} :
                     </div>
                     <div class="data text-center p-5">
-                        {{ item.appointment.appDateTime }}
+                        {{ this.appDateTime | date:'medium' }}
                     </div>
                 </div>
                 <div class="flexInnerData d-flex">
@@ -62,7 +62,7 @@
                         {{ l('RegDateTime') }} :
                     </div>
                     <div class="data text-center p-5">
-                        {{ reg }}
+                        {{ this.regDateTime | date:'medium' }}
                     </div>
                 </div>
             </div>

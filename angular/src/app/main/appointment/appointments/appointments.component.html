@@ -354,8 +354,8 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;"
-                                                            class="dropdown-item"
+                                                        <a href="javascript:;"class="dropdown-item"
+                                                        *ngIf="checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)" 
                                                             (click)="addVisitorToBlacklist.show(record.appointment.id)">
                                                             {{ l('AddVisitorToBlacklist') }}
                                                         </a>
@@ -424,13 +424,26 @@
                                         </td>
                                         <td style="width: 150px">
                                             <span class="p-column-title">{{ l('AppDateTime') }}</span>
-                                            {{ record.appointment.appDateTime }}
+                                            {{ record.appointment.appDateTime | date:'medium'}}
                                         </td>
                                         <td style="width: 150px">
                                             <span class="p-column-title">{{ l('RegDateTime') }}</span>
-                                            {{ record.appointment.regDateTime }}
+                                            {{ record.appointment.regDateTime | date:'medium'}}
                                         </td>
-                                        <td style="width: 150px">
+                                        <td *ngIf="checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 3 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 5 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="!checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)
+                                        && !isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
                                             <span class="p-column-title">{{ l('Status') }}</span>
                                             <ng-container>
                                                 {{ l('Enum:StatusType:' + record.appointment.status ) }}
@@ -447,7 +460,7 @@
                                         </td>
                                         <td *ngIf="!isStatusRegistered(record.appointment.status) && !isStatusCancel(record.appointment.status)" style="width: 150px" >
                                             <span class="p-column-title">{{ l('checkInDateTime') }}</span>
-                                            {{record.appointment.checkInDateTime }}
+                                            {{record.appointment.checkInDateTime | date:'medium' }}
                                         </td>
                                         <td *ngIf="isStatusRegistered(record.appointment.status) || isStatusIn(record.appointment.status) || isStatusCancel(record.appointment.status)" style="width: 150px" >
                                             <span class="p-column-title">{{ l('checkOutDateTime') }}</span>
@@ -455,7 +468,7 @@
                                         </td>
                                         <td *ngIf="!isStatusRegistered(record.appointment.status) && !isStatusIn(record.appointment.status) && !isStatusCancel(record.appointment.status)" style="width: 150px" >
                                             <span class="p-column-title">{{ l('checkOutDateTime') }}</span>
-                                            {{ record.appointment.checkOutDateTime }}
+                                            {{ record.appointment.checkOutDateTime | date:'medium' }}
                                         </td>
 
                                     </tr>
