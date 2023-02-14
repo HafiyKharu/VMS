@@ -50,7 +50,7 @@ export class AppNavigationService {
                     new AppMenuItem('Purpose Of Visits', 'Pages.PurposeOfVisits', 'flaticon-list-3', '/app/main/purposeOfVisit/purposeOfVisits'),
                     //new AppMenuItem('Status', 'Pages.Statuses', 'flaticon-list-3', '/app/main/status/statuses'),
                     new AppMenuItem('Visitor Title', 'Pages.Titles', 'flaticon-list-3', '/app/main/title/titles'),
-                    new AppMenuItem('Level', 'Pages.Levels', 'flaticon-list-3', '/app/main/level/levels'),
+                    new AppMenuItem('Floor Level', 'Pages.Levels', 'flaticon-list-3', '/app/main/level/levels'),
                     new AppMenuItem('Bank Rakyat Companies', 'Pages.Companies', 'flaticon-list-3', '/app/main/company/companies'),                    
                     new AppMenuItem('Bank Rakyat Departments', 'Pages.Departments', 'flaticon-list-3', '/app/main/department/departments'),
                 ]
