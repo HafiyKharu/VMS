@@ -2950,6 +2950,63 @@ export class AppointmentsServiceProxy {
         }
         return _observableOf<FileDto>(<any>null);
     }
+
+    /**
+     * @param id (optional) 
+     * @param remark (optional) 
+     * @return Success
+     */
+    addVisitorToBlacklist(id: string | undefined, remark: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Appointments/AddVisitorToBlacklist?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (remark === null)
+            throw new Error("The parameter 'remark' cannot be null.");
+        else if (remark !== undefined)
+            url_ += "remark=" + encodeURIComponent("" + remark) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddVisitorToBlacklist(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddVisitorToBlacklist(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddVisitorToBlacklist(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -3569,12 +3626,15 @@ export class BlacklistsServiceProxy {
     /**
      * @param filter (optional) 
      * @param fullNameFilter (optional) 
+     * @param icPassportFilter (optional) 
+     * @param phoneNumberFilter (optional) 
+     * @param remarkFilter (optional) 
      * @param sorting (optional) 
      * @param maxResultCount (optional) 
      * @param skipCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, fullNameFilter: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfGetBlacklistForViewDto> {
+    getAll(filter: string | undefined, fullNameFilter: string | undefined, icPassportFilter: string | undefined, phoneNumberFilter: string | undefined, remarkFilter: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfGetBlacklistForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Blacklists/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -3584,6 +3644,18 @@ export class BlacklistsServiceProxy {
             throw new Error("The parameter 'fullNameFilter' cannot be null.");
         else if (fullNameFilter !== undefined)
             url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (icPassportFilter === null)
+            throw new Error("The parameter 'icPassportFilter' cannot be null.");
+        else if (icPassportFilter !== undefined)
+            url_ += "IcPassportFilter=" + encodeURIComponent("" + icPassportFilter) + "&";
+        if (phoneNumberFilter === null)
+            throw new Error("The parameter 'phoneNumberFilter' cannot be null.");
+        else if (phoneNumberFilter !== undefined)
+            url_ += "PhoneNumberFilter=" + encodeURIComponent("" + phoneNumberFilter) + "&";
+        if (remarkFilter === null)
+            throw new Error("The parameter 'remarkFilter' cannot be null.");
+        else if (remarkFilter !== undefined)
+            url_ += "RemarkFilter=" + encodeURIComponent("" + remarkFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -3859,21 +3931,21 @@ export class BlacklistsServiceProxy {
     }
 
     /**
-     * @param body (optional) 
+     * @param input (optional) 
      * @return Success
      */
-    isExisted(body: GetAllBlacklistsInput | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/Blacklists/IsExisted";
+    isExisted(input: string | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Blacklists/IsExisted?";
+        if (input === null)
+            throw new Error("The parameter 'input' cannot be null.");
+        else if (input !== undefined)
+            url_ += "input=" + encodeURIComponent("" + input) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
                 "Accept": "text/plain"
             })
         };
@@ -21524,17 +21596,17 @@ export class AppointmentDto implements IAppointmentDto {
     department!: string | undefined;
     tower!: string | undefined;
     level!: string | undefined;
-    appDateTime!: string | undefined;
-    regDateTime!: string | undefined;
+    appDateTime!: DateTime;
+    regDateTime!: DateTime;
     status!: StatusType;
     imageId!: string | undefined;
     appRefNo!: string | undefined;
     passNumber!: string | undefined;
-    checkInDateTime!: string | undefined;
-    checkOutDateTime!: string | undefined;
+    checkInDateTime!: DateTime;
+    checkOutDateTime!: DateTime;
     emailOfficerToMeet!: string | undefined;
     phoneNoOfficerToMeet!: string | undefined;
-    cancelDateTime!: string | undefined;
+    cancelDateTime!: DateTime;
     isDeleted!: boolean;
     deleterUserId!: number | undefined;
     deletionTime!: DateTime | undefined;
@@ -21566,17 +21638,17 @@ export class AppointmentDto implements IAppointmentDto {
             this.department = _data["department"];
             this.tower = _data["tower"];
             this.level = _data["level"];
-            this.appDateTime = _data["appDateTime"];
-            this.regDateTime = _data["regDateTime"];
+            this.appDateTime = _data["appDateTime"] ? DateTime.fromISO(_data["appDateTime"].toString()) : <any>undefined;
+            this.regDateTime = _data["regDateTime"] ? DateTime.fromISO(_data["regDateTime"].toString()) : <any>undefined;
             this.status = _data["status"];
             this.imageId = _data["imageId"];
             this.appRefNo = _data["appRefNo"];
             this.passNumber = _data["passNumber"];
-            this.checkInDateTime = _data["checkInDateTime"];
-            this.checkOutDateTime = _data["checkOutDateTime"];
+            this.checkInDateTime = _data["checkInDateTime"] ? DateTime.fromISO(_data["checkInDateTime"].toString()) : <any>undefined;
+            this.checkOutDateTime = _data["checkOutDateTime"] ? DateTime.fromISO(_data["checkOutDateTime"].toString()) : <any>undefined;
             this.emailOfficerToMeet = _data["emailOfficerToMeet"];
             this.phoneNoOfficerToMeet = _data["phoneNoOfficerToMeet"];
-            this.cancelDateTime = _data["cancelDateTime"];
+            this.cancelDateTime = _data["cancelDateTime"] ? DateTime.fromISO(_data["cancelDateTime"].toString()) : <any>undefined;
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? DateTime.fromISO(_data["deletionTime"].toString()) : <any>undefined;
@@ -21608,17 +21680,17 @@ export class AppointmentDto implements IAppointmentDto {
         data["department"] = this.department;
         data["tower"] = this.tower;
         data["level"] = this.level;
-        data["appDateTime"] = this.appDateTime;
-        data["regDateTime"] = this.regDateTime;
+        data["appDateTime"] = this.appDateTime ? this.appDateTime.toString() : <any>undefined;
+        data["regDateTime"] = this.regDateTime ? this.regDateTime.toString() : <any>undefined;
         data["status"] = this.status;
         data["imageId"] = this.imageId;
         data["appRefNo"] = this.appRefNo;
         data["passNumber"] = this.passNumber;
-        data["checkInDateTime"] = this.checkInDateTime;
-        data["checkOutDateTime"] = this.checkOutDateTime;
+        data["checkInDateTime"] = this.checkInDateTime ? this.checkInDateTime.toString() : <any>undefined;
+        data["checkOutDateTime"] = this.checkOutDateTime ? this.checkOutDateTime.toString() : <any>undefined;
         data["emailOfficerToMeet"] = this.emailOfficerToMeet;
         data["phoneNoOfficerToMeet"] = this.phoneNoOfficerToMeet;
-        data["cancelDateTime"] = this.cancelDateTime;
+        data["cancelDateTime"] = this.cancelDateTime ? this.cancelDateTime.toString() : <any>undefined;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toString() : <any>undefined;
@@ -21643,17 +21715,17 @@ export interface IAppointmentDto {
     department: string | undefined;
     tower: string | undefined;
     level: string | undefined;
-    appDateTime: string | undefined;
-    regDateTime: string | undefined;
+    appDateTime: DateTime;
+    regDateTime: DateTime;
     status: StatusType;
     imageId: string | undefined;
     appRefNo: string | undefined;
     passNumber: string | undefined;
-    checkInDateTime: string | undefined;
-    checkOutDateTime: string | undefined;
+    checkInDateTime: DateTime;
+    checkOutDateTime: DateTime;
     emailOfficerToMeet: string | undefined;
     phoneNoOfficerToMeet: string | undefined;
-    cancelDateTime: string | undefined;
+    cancelDateTime: DateTime;
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: DateTime | undefined;
@@ -26035,58 +26107,6 @@ export interface IGetAllAvailableWebhooksOutput {
     name: string | undefined;
     displayName: string | undefined;
     description: string | undefined;
-}
-
-export class GetAllBlacklistsInput implements IGetAllBlacklistsInput {
-    filter!: string | undefined;
-    fullNameFilter!: string | undefined;
-    sorting!: string | undefined;
-    maxResultCount!: number;
-    skipCount!: number;
-
-    constructor(data?: IGetAllBlacklistsInput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.filter = _data["filter"];
-            this.fullNameFilter = _data["fullNameFilter"];
-            this.sorting = _data["sorting"];
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-        }
-    }
-
-    static fromJS(data: any): GetAllBlacklistsInput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetAllBlacklistsInput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["filter"] = this.filter;
-        data["fullNameFilter"] = this.fullNameFilter;
-        data["sorting"] = this.sorting;
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        return data; 
-    }
-}
-
-export interface IGetAllBlacklistsInput {
-    filter: string | undefined;
-    fullNameFilter: string | undefined;
-    sorting: string | undefined;
-    maxResultCount: number;
-    skipCount: number;
 }
 
 export class GetAllCompaniesInput implements IGetAllCompaniesInput {

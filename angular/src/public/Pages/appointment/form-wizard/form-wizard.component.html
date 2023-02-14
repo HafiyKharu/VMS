@@ -35,12 +35,15 @@
                                 <div class="text-danger" style="display: inline;"> *</div>
                             </label>
                             <div>
-                                <input type="text" placeholder="Please enter your full name"
-                                    #Appointment_FullName="ngModel" id="Appointment_FullName" class="form-control"
+                                <input type="text" placeholder="Please enter your full name" pattern="[a-z]+"
+                                    #Appointment_FullName="ngModel" id="Appointment_FullName" class="form-control" 
                                     [(ngModel)]="appointment.fullName" name="FullName" required style="flex-grow: 1;" />
                                 <validation-messages [formCtrl]="Appointment_FullName"></validation-messages>
                             </div>
                         </div>
+
+                        
+                        
                     </div>
                     <div class="side_normal">
                         <div class="my-3">
@@ -235,7 +238,7 @@
                                 <div class="text-danger" style="display: inline;"> *</div>
                             </label>
                             <div>
-                                <input type="text" placeholder="Please enter the officer's name"
+                                <input type="text" placeholder="Please enter the officer's name" pattern="[a-z]+"
                                     #Appointment_OfficerToMeet="ngModel" id="Appointment_OfficerToMeet"
                                     class="form-control" [(ngModel)]="appointment.officerToMeet" name="OfficerToMeet"
                                     required />

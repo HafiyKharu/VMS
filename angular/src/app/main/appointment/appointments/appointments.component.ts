@@ -206,7 +206,7 @@ export class AppointmentsComponent extends AppComponentBase {
             let dateOnly = new Date(dateOnlyString);
             let time = new Date();
             let dateNow = new Date();
-            time.setHours(1);
+            time.setHours(19);
             time.setMinutes(0);
             time.setSeconds(0);
 
@@ -222,7 +222,7 @@ export class AppointmentsComponent extends AppComponentBase {
             let appDateTime = new Date(AppDateTime);
             let dateNow = new Date();
 
-            if (dateNow.getDate >= appDateTime.getDate)
+            if (dateNow.getDate > appDateTime.getDate)
                 return true;
             
         }
