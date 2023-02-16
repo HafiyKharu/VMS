@@ -55,6 +55,7 @@ export class AppNavigationService {
                     new AppMenuItem('Departments', 'Pages.Departments', 'flaticon-list-3', '/app/main/department/departments'),
                 ]
             ),
+            new AppMenuItem('Dashhboardaru', 'Pages.VMSDashboards', 'flaticon-more', '/app/main/vmsDashboard'),
             new AppMenuItem('Blacklists', 'Pages.Blacklists', 'flaticon-more', '/app/main/blacklist/blacklists'),
             new AppMenuItem(
                 'Administration',

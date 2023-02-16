@@ -20195,6 +20195,424 @@ export class UserLoginServiceProxy {
 }
 
 @Injectable()
+export class VMSDashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param fullName (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, fullName: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetVMSDashboardForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullName === null)
+            throw new Error("The parameter 'fullName' cannot be null.");
+        else if (fullName !== undefined)
+            url_ += "FullName=" + encodeURIComponent("" + fullName) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetVMSDashboardForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetVMSDashboardForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetVMSDashboardForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetVMSDashboardForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetVMSDashboardForViewDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getVMSDashboardForView(id: number | undefined): Observable<GetVMSDashboardForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetVMSDashboardForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetVMSDashboardForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetVMSDashboardForView(<any>response_);
+                } catch (e) {
+                    return <Observable<GetVMSDashboardForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetVMSDashboardForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetVMSDashboardForView(response: HttpResponseBase): Observable<GetVMSDashboardForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetVMSDashboardForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetVMSDashboardForViewDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getVMSDashboardForEdit(id: number | undefined): Observable<GetVMSDashboardForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetVMSDashboardForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetVMSDashboardForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetVMSDashboardForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<GetVMSDashboardForEditOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetVMSDashboardForEditOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetVMSDashboardForEdit(response: HttpResponseBase): Observable<GetVMSDashboardForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetVMSDashboardForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetVMSDashboardForEditOutput>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditVMSDashboardDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllAppointmentForTableDropdown(): Observable<VMSDashboardAppoitnmentLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetAllAppointmentForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAppointmentForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllAppointmentForTableDropdown(<any>response_);
+                } catch (e) {
+                    return <Observable<VMSDashboardAppoitnmentLookupTableDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<VMSDashboardAppoitnmentLookupTableDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllAppointmentForTableDropdown(response: HttpResponseBase): Observable<VMSDashboardAppoitnmentLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(VMSDashboardAppoitnmentLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<VMSDashboardAppoitnmentLookupTableDto[]>(<any>null);
+    }
+
+    /**
+     * @param appointDate (optional) 
+     * @return Success
+     */
+    getTotalAppointment(appointDate: DateTime | undefined): Observable<VMSDashboardAppoitnmentLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetTotalAppointment?";
+        if (appointDate === null)
+            throw new Error("The parameter 'appointDate' cannot be null.");
+        else if (appointDate !== undefined)
+            url_ += "appointDate=" + encodeURIComponent(appointDate ? "" + appointDate.toJSON() : "") + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTotalAppointment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTotalAppointment(<any>response_);
+                } catch (e) {
+                    return <Observable<VMSDashboardAppoitnmentLookupTableDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<VMSDashboardAppoitnmentLookupTableDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTotalAppointment(response: HttpResponseBase): Observable<VMSDashboardAppoitnmentLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = VMSDashboardAppoitnmentLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<VMSDashboardAppoitnmentLookupTableDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class WebhookEventServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -23262,6 +23680,46 @@ export class CreateOrEditTowerDto implements ICreateOrEditTowerDto {
 export interface ICreateOrEditTowerDto {
     towerBankRakyat: string | undefined;
     id: string | undefined;
+}
+
+export class CreateOrEditVMSDashboardDto implements ICreateOrEditVMSDashboardDto {
+    appointmentId!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditVMSDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.appointmentId = _data["appointmentId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditVMSDashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditVMSDashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["appointmentId"] = this.appointmentId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ICreateOrEditVMSDashboardDto {
+    appointmentId: string | undefined;
+    id: number | undefined;
 }
 
 export class CreateOrUpdateLanguageInput implements ICreateOrUpdateLanguageInput {
@@ -28817,6 +29275,86 @@ export interface IGetUsersInput {
     skipCount: number;
 }
 
+export class GetVMSDashboardForEditOutput implements IGetVMSDashboardForEditOutput {
+    vmsDashboard!: CreateOrEditVMSDashboardDto;
+    fulName!: string | undefined;
+
+    constructor(data?: IGetVMSDashboardForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.vmsDashboard = _data["vmsDashboard"] ? CreateOrEditVMSDashboardDto.fromJS(_data["vmsDashboard"]) : <any>undefined;
+            this.fulName = _data["fulName"];
+        }
+    }
+
+    static fromJS(data: any): GetVMSDashboardForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetVMSDashboardForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["vmsDashboard"] = this.vmsDashboard ? this.vmsDashboard.toJSON() : <any>undefined;
+        data["fulName"] = this.fulName;
+        return data; 
+    }
+}
+
+export interface IGetVMSDashboardForEditOutput {
+    vmsDashboard: CreateOrEditVMSDashboardDto;
+    fulName: string | undefined;
+}
+
+export class GetVMSDashboardForViewDto implements IGetVMSDashboardForViewDto {
+    vmsDashboard!: VMSDashboardDto;
+    fullName!: string | undefined;
+
+    constructor(data?: IGetVMSDashboardForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.vmsDashboard = _data["vmsDashboard"] ? VMSDashboardDto.fromJS(_data["vmsDashboard"]) : <any>undefined;
+            this.fullName = _data["fullName"];
+        }
+    }
+
+    static fromJS(data: any): GetVMSDashboardForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetVMSDashboardForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["vmsDashboard"] = this.vmsDashboard ? this.vmsDashboard.toJSON() : <any>undefined;
+        data["fullName"] = this.fullName;
+        return data; 
+    }
+}
+
+export interface IGetVMSDashboardForViewDto {
+    vmsDashboard: VMSDashboardDto;
+    fullName: string | undefined;
+}
+
 export class GoogleExternalLoginProviderSettings implements IGoogleExternalLoginProviderSettings {
     clientId!: string | undefined;
     clientSecret!: string | undefined;
@@ -32378,6 +32916,54 @@ export class PagedResultDtoOfGetTowerForViewDto implements IPagedResultDtoOfGetT
 export interface IPagedResultDtoOfGetTowerForViewDto {
     totalCount: number;
     items: GetTowerForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetVMSDashboardForViewDto implements IPagedResultDtoOfGetVMSDashboardForViewDto {
+    totalCount!: number;
+    items!: GetVMSDashboardForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetVMSDashboardForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetVMSDashboardForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetVMSDashboardForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetVMSDashboardForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetVMSDashboardForViewDto {
+    totalCount: number;
+    items: GetVMSDashboardForViewDto[] | undefined;
 }
 
 export class PagedResultDtoOfLanguageTextListDto implements IPagedResultDtoOfLanguageTextListDto {
@@ -37460,6 +38046,130 @@ export class UsersToOrganizationUnitInput implements IUsersToOrganizationUnitInp
 export interface IUsersToOrganizationUnitInput {
     userIds: number[] | undefined;
     organizationUnitId: number;
+}
+
+export class VMSDashboardAppoitnmentLookupTableDto implements IVMSDashboardAppoitnmentLookupTableDto {
+    id!: string | undefined;
+    fullName!: string | undefined;
+    registerAppointment!: number;
+    checkInAppointment!: number;
+    cancelAppointment!: number;
+    missAppointment!: number;
+    todayAppointment!: number;
+    totalAppointment!: number;
+    checkOutAppointment!: number;
+    openAppointmentTotal!: number;
+    openAppointment!: number;
+    openAppointmentComplete!: number;
+    role!: string | undefined;
+
+    constructor(data?: IVMSDashboardAppoitnmentLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.fullName = _data["fullName"];
+            this.registerAppointment = _data["registerAppointment"];
+            this.checkInAppointment = _data["checkInAppointment"];
+            this.cancelAppointment = _data["cancelAppointment"];
+            this.missAppointment = _data["missAppointment"];
+            this.todayAppointment = _data["todayAppointment"];
+            this.totalAppointment = _data["totalAppointment"];
+            this.checkOutAppointment = _data["checkOutAppointment"];
+            this.openAppointmentTotal = _data["openAppointmentTotal"];
+            this.openAppointment = _data["openAppointment"];
+            this.openAppointmentComplete = _data["openAppointmentComplete"];
+            this.role = _data["role"];
+        }
+    }
+
+    static fromJS(data: any): VMSDashboardAppoitnmentLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new VMSDashboardAppoitnmentLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["fullName"] = this.fullName;
+        data["registerAppointment"] = this.registerAppointment;
+        data["checkInAppointment"] = this.checkInAppointment;
+        data["cancelAppointment"] = this.cancelAppointment;
+        data["missAppointment"] = this.missAppointment;
+        data["todayAppointment"] = this.todayAppointment;
+        data["totalAppointment"] = this.totalAppointment;
+        data["checkOutAppointment"] = this.checkOutAppointment;
+        data["openAppointmentTotal"] = this.openAppointmentTotal;
+        data["openAppointment"] = this.openAppointment;
+        data["openAppointmentComplete"] = this.openAppointmentComplete;
+        data["role"] = this.role;
+        return data; 
+    }
+}
+
+export interface IVMSDashboardAppoitnmentLookupTableDto {
+    id: string | undefined;
+    fullName: string | undefined;
+    registerAppointment: number;
+    checkInAppointment: number;
+    cancelAppointment: number;
+    missAppointment: number;
+    todayAppointment: number;
+    totalAppointment: number;
+    checkOutAppointment: number;
+    openAppointmentTotal: number;
+    openAppointment: number;
+    openAppointmentComplete: number;
+    role: string | undefined;
+}
+
+export class VMSDashboardDto implements IVMSDashboardDto {
+    appointmentId!: string | undefined;
+    id!: number;
+
+    constructor(data?: IVMSDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.appointmentId = _data["appointmentId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): VMSDashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new VMSDashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["appointmentId"] = this.appointmentId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IVMSDashboardDto {
+    appointmentId: string | undefined;
+    id: number;
 }
 
 export class VerifySmsCodeInputDto implements IVerifySmsCodeInputDto {
