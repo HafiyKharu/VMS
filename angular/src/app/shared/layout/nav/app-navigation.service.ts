@@ -32,37 +32,37 @@ export class AppNavigationService {
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
-                'Visitor Appointments',
+                'Visitor Registration',
                 '',
                 'flaticon-interface-8',
                 '',
                 [],
                 [
                     
-                    new AppMenuItem('All Appointments', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment/appointments'),
-                    new AppMenuItem('Appointments Today', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Today'),
-                    new AppMenuItem('Appointments Tomorrow', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Tomorrow'),
-                    new AppMenuItem('Appointments Yesterday', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Yesterday'),
+                    new AppMenuItem('All Registration', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment/appointments'),
+                    new AppMenuItem('Registrations Today', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Today'),
+                    new AppMenuItem('Registrations Tomorrow', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Tomorrow'),
+                    new AppMenuItem('Registrations Yesterday', 'Pages.Appointments', 'flaticon-list-3', '/app/main/appointment_Yesterday'),
                 ]
             ),
             new AppMenuItem(
-                'Visitor Maintainance',
+                'Visitor Maintenance',
                 '',
                 'flaticon-interface-8',
                 '',
                 [],
                 [
                     
-                    new AppMenuItem('Towers', 'Pages.Towers', 'flaticon-list-3', '/app/main/tower/towers'),
-                    new AppMenuItem('PurposeOfVisits', 'Pages.PurposeOfVisits', 'flaticon-list-3', '/app/main/purposeOfVisit/purposeOfVisits'),
+                    new AppMenuItem('Bank Rakyat Towers', 'Pages.Towers', 'flaticon-list-3', '/app/main/tower/towers'),
+                    new AppMenuItem('Purpose Of Visits', 'Pages.PurposeOfVisits', 'flaticon-list-3', '/app/main/purposeOfVisit/purposeOfVisits'),
                     //new AppMenuItem('Status', 'Pages.Statuses', 'flaticon-list-3', '/app/main/status/statuses'),
-                    new AppMenuItem('Title', 'Pages.Titles', 'flaticon-list-3', '/app/main/title/titles'),
-                    new AppMenuItem('Level', 'Pages.Levels', 'flaticon-list-3', '/app/main/level/levels'),
-                    new AppMenuItem('Companies', 'Pages.Companies', 'flaticon-list-3', '/app/main/company/companies'),                    
-                    new AppMenuItem('Departments', 'Pages.Departments', 'flaticon-list-3', '/app/main/department/departments'),
+                    new AppMenuItem('Visitor Title', 'Pages.Titles', 'flaticon-list-3', '/app/main/title/titles'),
+                    new AppMenuItem('Floor Level', 'Pages.Levels', 'flaticon-list-3', '/app/main/level/levels'),
+                    new AppMenuItem('Bank Rakyat Companies', 'Pages.Companies', 'flaticon-list-3', '/app/main/company/companies'),                    
+                    new AppMenuItem('Bank Rakyat Departments', 'Pages.Departments', 'flaticon-list-3', '/app/main/department/departments'),
                 ]
             ),
-            new AppMenuItem('Blacklists', 'Pages.Blacklists', 'flaticon-more', '/app/main/blacklist/blacklists'),
+            new AppMenuItem('Blacklisted Visitor', 'Pages.Blacklists', 'flaticon-more', '/app/main/blacklist/blacklists'),
             new AppMenuItem(
                 'Administration',
                 '',

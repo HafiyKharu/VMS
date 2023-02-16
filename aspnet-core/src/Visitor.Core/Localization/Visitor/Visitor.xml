@@ -99,7 +99,7 @@
     <text name="Appointment">Appointment</text>
     <text name="Visitor.Appointment.Appointment">Appointment</text>
     <text name="AppointmentsHeaderInfo">Appointment header info</text>
-    <text name="CreateNewAppointment">Create new appointment</text>
+    <text name="CreateNewAppointment">Create registration form</text>
     <text name="EditAppointment">Edit appointment</text>
     <text name="DeleteAppointment">Delete appointment</text>
     <text name="Appointments">Appointments</text>

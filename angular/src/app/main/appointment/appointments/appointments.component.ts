@@ -222,7 +222,7 @@ export class AppointmentsComponent extends AppComponentBase {
             let appDateTime = new Date(AppDateTime);
             let dateNow = new Date();
 
-            if (dateNow.getDate >= appDateTime.getDate)
+            if (dateNow.getDate > appDateTime.getDate)
                 return true;
             
         }

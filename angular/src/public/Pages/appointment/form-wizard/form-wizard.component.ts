@@ -1,4 +1,4 @@
-import { Injector, Output } from '@angular/core';
+import { HostListener, Injector, Output } from '@angular/core';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,13 +18,16 @@ import { ViewDetailsComponent } from '../view-details/view-details.component';
 import { pluck } from 'rxjs/operators';
 import { ThemesLayoutBaseComponent } from '@app/shared/layout/themes/themes-layout-base.component';
 import { ConvertToArrayOfStringsService } from 'public/services/convert-to-array-of-strings.service'
+// import { ToUppercaseDirective } from './to-uppercase.directive';
+
 
 @Component({
     selector: 'app-form-wizard',
     templateUrl: './form-wizard.component.html',
-    styleUrls: ['./form-wizard.component.scss']
+    styleUrls: ['./form-wizard.component.scss'],
+    
 })
-export class FormWizardComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class FormWizardComponent extends AppComponentBase implements OnInit, AfterViewInit  {
 
     @ViewChild('wizard', { static: true }) el: ElementRef;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
@@ -38,6 +41,12 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
     saving = false;
     tempGuid: any;
     appId: any;
+    
+    // @HostListener('input', ['$event']) onInputChange(event) {
+    //     const initialValue = this.el.nativeElement.value;
+    //     this.el.nativeElement.value = initialValue.toUpperCase();
+    //     event.stopPropagation();
+    //   }
 
     // appointment = { level: '' };
     // arrLevel = [    [{ level: { levelBankRakyat: 'option1' } }],
@@ -402,6 +411,7 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
         //window.location.
     }
     ngAfterViewInit() {
+        this.identityCardOrPassportNumber = null;
     }
 
 
