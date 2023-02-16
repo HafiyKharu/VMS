@@ -1,16 +1,8 @@
 <div [@routerTransition]>
     <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'Daily Dashboards' | localize"
-            [description]="'Daily Monitoring Dashboard for visitor of Bank Rakyat' | localize">
+        <sub-header [title]=" l('TitleVMSDashboards') | localize"
+            [description]="l('DashboardDesc') | localize">
             <div role="actions">
-                <!-- <button (click)="exportToExcel()" class="btn btn-outline-success">
-                    <i class="fa fa-file-excel"></i> {{ l("ExportToExcel") }}
-                </button>
-
-                <button *ngIf="isGranted('Pages.CMSDashboards.Create')" (click)="createCMSDashboard()"
-                    class="btn btn-primary blue">
-                    <i class="fa fa-plus"></i> {{ l("CreateNewCMSDashboard") }}
-                </button> -->
             </div>
         </sub-header>
 
@@ -21,9 +13,9 @@
                         <div class="card-body">
                             <a href="app/main/appointment_Today"
                                 class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
-                                Total Appointment
+                                {{ l('TotalAppointment') }}
                             </a>
-                            <div class="text-left text-primary font-weight-bolder font-size-h2 mr-2">
+                            <div class="text-left text-primary font-weight-bolder fs-2" >
                                 <span counto class="text-primary font-weight-bolder">
                                     {{total.toFixed(0)}}
                                 </span>
@@ -33,7 +25,7 @@
                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <div class="text-left text-dark-75 mt-1 status-title">
-                                Total Appointment
+                                {{ l('TotalAppointment') }}
                                 <!-- {{selectedDateRange[0] | luxonFormat: 'D'}} -
                                 {{selectedDateRange[1] | luxonFormat: 'D'}} -->
                             </div>
@@ -43,21 +35,28 @@
                 <div class="col">
                     <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
                         <div class="card-body">
-                            <a href="app/main/appointment/Appointments?AppointmentID={{branchIdFilter}}&status=1"
+                            <a href="app/main/appointment_Today"
                                 class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
-                                Check In
+                                {{ l('Enum:StatusType:0') }}
                             </a>
-                            <div class="text-left text-info font-weight-bolder font-size-h2 mr-2">
-                                <!-- <span>...</span> -->
-                                <span>{{ checkIn.toFixed(0) }}</span>
+                            <div class="text-left text-info font-weight-bolder fs-2">
+                                <!-- <span *ngIf="!topStatsData">...</span> -->
+                                <span>
+                                    {{registered | number: "1.0-0"}}
+
+                                </span>
                             </div>
                             <div class="progress progress-xs mt-7 bg-info-o-60">
-                                <div class="progress-bar bg-info" role="progressbar" [style.width.%]="arriveFrac"
-                                    attr.aria-valuenow="arriveFrac" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-info" role="progressbar" [style.width.%]="registeredFrac"
+                                    attr.aria-valuenow="registeredFrac" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                            <div class="text-left text-dark-75 mt-1 status-title">
-                                Visitor Check In
-                                <span class="counterup">{{arriveFrac.toFixed(2)}}</span>%
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted mr-2 font-size-sm font-weight-bold">
+                                    {{ l('Enum:StatusType:0') }} :
+                                </span>
+                                <span class="text-muted font-size-sm font-weight-bold">
+                                    <span class="counterup">{{registeredFrac.toFixed(2)}}</span>%
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -65,11 +64,40 @@
                 <div class="col">
                     <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
                         <div class="card-body">
-                            <a href="app/main/appointment/Appointments?AppointmentID={{branchIdFilter}}&status=2"
+                            <a href="app/main/appointment_Today"
                                 class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
-                                Check Out
+                                {{ l('Enum:StatusType:1') }}
                             </a>
-                            <div class="text-left text-success font-weight-bolder font-size-h2 mr-2">
+                            <div class="text-left text-info font-weight-bolder fs-2">
+                                <!-- <span *ngIf="!topStatsData">...</span> -->
+                                <span>
+                                    {{checkIn | number: "1.0-0"}}
+
+                                </span>
+                            </div>
+                            <div class="progress progress-xs mt-7 bg-info-o-60">
+                                <div class="progress-bar bg-info" role="progressbar" [style.width.%]="checkInFrac"
+                                    attr.aria-valuenow="checkInFrac" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2" >
+                                <span class="text-muted mr-2 font-size-sm font-weight-bold">
+                                    {{ l('Enum:StatusType:1') }} :
+                                </span>
+                                <span class="text-muted font-size-sm font-weight-bold">
+                                    <span class="counterup">{{checkInFrac.toFixed(2)}}</span>%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+                        <div class="card-body">
+                            <a href="app/main/appointment_Today"
+                                class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
+                                {{ l('Enum:StatusType:2') }}
+                            </a>
+                            <div class="text-left text-success font-weight-bolder fs-2">
                                 <!-- <span *ngIf="!topStatsData">...</span> -->
                                 <span>
                                     {{checkOut | number: "1.0-0"}}
@@ -77,15 +105,15 @@
                                 </span>
                             </div>
                             <div class="progress progress-xs mt-7 bg-success-o-60">
-                                <div class="progress-bar bg-success" role="progressbar" [style.width.%]="completeFrac"
-                                    attr.aria-valuenow="completefrac" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" [style.width.%]="checkOutFrac"
+                                    attr.aria-valuenow="checkOutFrac" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2" >
                                 <span class="text-muted mr-2 font-size-sm font-weight-bold">
-                                    Appointment Completed
+                                    {{ l('Enum:StatusType:2') }} :
                                 </span>
                                 <span class="text-muted font-size-sm font-weight-bold">
-                                    <span class="counterup">{{completeFrac.toFixed(2)}}</span>%
+                                    <span class="counterup">{{checkOutFrac.toFixed(2)}}</span>%
                                 </span>
                             </div>
                         </div>
@@ -94,11 +122,11 @@
                 <div class="col">
                     <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
                         <div class="card-body">
-                            <a href="app/main/appointment/Appointments?AppointmentID={{branchIdFilter}}&status=3"
+                            <a href="app/main/appointment_Today"
                                 class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
-                                Cancel
+                                {{ l('Enum:StatusType:4') }}
                             </a>
-                            <div class="text-left text-warning font-weight-bolder font-size-h2 mr-2">
+                            <div class="text-left text-warning font-weight-bolder fs-2">
                                 <span>
                                     {{cancel | number: "1.0-0"}}</span>
                             </div>
@@ -108,7 +136,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="text-muted mr-2 font-size-sm font-weight-bold">
-                                    Appointment Cancel
+                                    {{ l('Enum:StatusType:4') }} :
                                 </span>
                                 <span class="text-muted font-size-sm font-weight-bold">
                                     <span class="counterup">{{cancelFrac.toFixed(2)}}</span>%
@@ -117,295 +145,496 @@
                         </div>
                     </div>
                 </div>
-                <!-- Add new -->
-                <div class="col">
-                    <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
-                        <div class="card-body">
-                            <a href="app/main/appointment/Appointments?AppointmentID={{branchIdFilter}}&status=4"
-                                class="card-title text-left font-weight-bolder text-dark font-size-h6 mb-4 text-hover-state-dark d-block">
-                                Miss
-                            </a>
-                            <div class="text-left text-danger font-weight-bolder font-size-h2 mr-2">
-                                <span>
-                                    {{miss | number: "1.0-0"}}</span>
-                            </div>
-                            <div class="progress progress-xs mt-7 bg-danger-o-60">
-                                <div class="progress-bar bg-danger" role="progressbar" [style.width.%]="cancelFrac"
-                                    attr.aria-valuenow="cancelfrac" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="text-muted mr-2 font-size-sm font-weight-bold">
-                                    Appointment Miss
-                                </span>
-                                <span class="text-muted font-size-sm font-weight-bold">
-                                    <span class="counterup">{{missFrac.toFixed(2)}}</span>%
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="row row-no-padding row-col-separator-xl h-100">
-                <div class="col">
-                    <div class="card card-custom gutter-b">
-                        <div class="card-body">
-                            <form class="form" autocomplete="off">
-                                <div>
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-12">
-                                            <div class="form-group m-form__group">
-                                                <h6 style="color: blue">Appointment Information on {{appointmentDate}}
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12">
-                                            <div class="form-group m-form__group align-items-center">
-                                                <div class="input-group">
-                                                    <input [(ngModel)]="filterText" name="filterText" autoFocus
-                                                        class="form-control m-input" [placeholder]="
-                                                            l('SearchWithThreeDot')
-                                                        " type="text" />
-                                                    <span class="input-group-btn">
-                                                        <button (click)="
-                                                                getVMSDashboards()
-                                                            " class="btn btn-primary" type="submit">
-                                                            <i class="flaticon-search-1"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-md-4">
-                                            <div class="form-group m-form__group">
-                                                <label for="BranchBranchName">{{
-                                                    l("Branch")
-                                                    }}</label>
-                                                <div class="input-group">
-                                                    <input class="form-control" id="branchBranchNameFilter"
-                                                    [(ngModel)]="branchBranchNameFilter" name="branchBranchNameFilter" type="text" disabled />
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary blue"  type="button" (click)="openSelectBranchModal()">
-                                                            <i class="fa fa-search"></i>
-                                                            {{ l("Pick") }}
-                                                        </button>
-                                                    </div>
-                                                    <div class="input-group-prepend">
-                                                        <button class="btn btn-danger btn-icon" type="button"  (click)="setBranchIdNull()">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <input class="form-control" name="branchIdFilter" type="text" hidden />
-                                        </div> -->
-                                        <div class="col-md-4">
-                                            <div class="form-group m-form__group">
-                                                <label for="FullName">{{
-                                                    l("FullName")
-                                                    }}</label>
-                                                <div class="input-group">
-                                                    <input class="form-control" id="fullName" [(ngModel)]="fullName"
-                                                        name="fullName" type="text" disabled />
-                                                </div>
-                                            </div>
-                                            <input class="form-control" name="branchIdFilter" type="text" hidden />
-                                        </div>
-
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="MinAppointmentDateFilter">{{
-                                                    l("AppointmentDate")
-                                                    }}</label>
-                                                <div class="input-group">
-                                                    <input class="form-control m-input" id="MinAppointmentDateFilter" [(ngModel)]="minAppointmentDateFilter"
-                                                        name="MinAppointmentDateFilter" type="datetime" bsDatepicker
-                                                        placeholder="{{
-                                                            l('Date')
-                                                        }}" />
-
-                                                        <span style="line-height: 40px;padding: 0 15px 0 15px;">
-                                                            &mdash;
-                                                        </span>
-                                                        <input class="form-control m-input" id="MaxAppointmentDateFilter"
-                                                            name="MaxAppointmentDateFilter" type="datetime" bsDatepicker
-                                                            placeholder="{{l('MaxValue')}}" [(ngModel)]="maxAppointmentDateFilter" />
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group m-form__group">
-                                                <label for="ServiceServiceName">{{
-                                                    l("Service")
-                                                    }}</label>
-                                                <div class="input-group">
-                                                    <input class="form-control" id="serviceServiceNameFilter"
-                                                        name="serviceServiceNameFilter" [(ngModel)]="
-                                                            serviceServiceNameFilter
-                                                        " type="text" disabled />
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary blue" (click)="
-                                                                openSelectServiceModal()
-                                                            " type="button">
-                                                            <i class="fa fa-search"></i>
-                                                            {{ l("Pick") }}
-                                                        </button>
-                                                    </div>
-                                                    <div class="input-group-prepend">
-                                                        <button class="btn btn-danger btn-icon" type="button"
-                                                            (click)="setServiceIdNull()">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <input class="form-control" name="serviceIdFilter" [(ngModel)]="serviceIdFilter"
-                                                type="text" hidden />
-                                          </div>
-
-                                          <div class="col-md-3">
-                                            <div class="form-group m-form__group">
-                                                <label for="BranchBranchName">{{
-                                                    l("RegionCode")
-                                                    }}</label>
-                                                    <select name="Branch_RegionCode" id="Branch_RegionCode" class="form-control" 
-                                                     [(ngModel)]="branchCodeIdFilter">
-                                                        <option value="" selected>Select Region</option>
-                                                        <option *ngFor="let item of regionCodeList" value="{{item.regionCode.code}}">
-                                                            {{item.regionCode.region}}</option>
-                                                    </select>
-                                            </div>
-                                            <input class="form-control" name="branchIdFilter" [(ngModel)]="branchCodeIdFilter"
-                                                type="text" hidden />
-                                        </div> -->
-
-                                    </div>
-                                </div>
-                            </form>
-
+        </div>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <form class="form" autocomplete="off">
+                        <div>
                             <div class="row align-items-center">
-                                <!--<Primeng-Datatable-Start>-->
-                                <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                                    <p-table #dataTable (onLazyLoad)="getVMSDashboards($event)"
-                                        [value]="primengTableHelper.records"
-                                        rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false"
-                                        [lazy]="true" [scrollable]="true" ScrollWidth="100%"
-                                        [responsive]="primengTableHelper.isResponsive"
-                                        [resizableColumns]="primengTableHelper.resizableColumns">
-                                        <ng-template pTemplate="header">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th style="width: 130px">
-                                                        {{ l("Actions") }}
-                                                    </th>
-                                                    <!-- <th style="width: 150px" pSortableColumn="branchFk.branchName">
-                                                    {{ l("BranchName") }}
-                                                    <p-sortIcon field="branchBranchName"></p-sortIcon>
-                                                </th>
-                                                <th style="width: 150px" pSortableColumn="serviceFk.serviceName">
-                                                    {{ l("ServiceName") }}
-                                                    <p-sortIcon field="serviceServiceName"></p-sortIcon>
-                                                </th>
-                                                <th style="width: 150px" pSortableColumn="appointmentDate">
-                                                    {{ l("AppointmentDate") }}
-                                                    <p-sortIcon field="branchAppointmentSetting.appointmentDate"></p-sortIcon>
-                                                </th> -->
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                                <tr>
-                                                    <td style="width: 130px">
-                                                        <div class="btn-group dropdown" dropdown container="body">
-                                                            <button class="dropdown-toggle btn btn-sm btn-primary"
-                                                                dropdownToggle>
-                                                                <i class="fa fa-cog"></i><span class="caret"></span>
-                                                                {{ l("Actions") }}
-                                                            </button>
-                                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                                <li>
-                                                                    <!-- <a href="javascript:;" class="dropdown-item" (click)="
-                                                                        viewBranchAppointmentSettingModal.show(
-                                                                            record
-                                                                        )
-                                                                    ">{{ l("View") }}</a> -->
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 150px">
-                                                        <span class="ui-column-title">
-                                                            {{ l("FullName") }}</span>
-                                                        {{ record.fullName }}
-                                                    </td>
-                                                    <td style="width: 150px">
-                                                        <span class="ui-column-title">
-                                                            {{ l("ServiceName") }}</span>
-                                                        {{ record.serviceServiceName }}
-                                                    </td>
-                                                    <td style="width: 150px">
-                                                        <span class="ui-column-title">
-                                                            {{ l("AppointmentDate") }}</span>
-                                                        <span *ngIf="
-                                                            record
-                                                                .branchAppointmentSetting
-                                                                .appointmentDate
-                                                        ">
-                                                            {{
-                                                            record
-                                                            .branchAppointmentSetting
-                                                            .appointmentDate
-                                                            | luxonFormat: "dd/MM/yyyy"
-                                                            }}
-                                                        </span>
-                                                        <span *ngIf="
-                                                            !record
-                                                                .branchAppointmentSetting
-                                                                .appointmentDate
-                                                        ">-</span>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </ng-template>
-                                    </p-table>
-                                    <div class="primeng-no-data" *ngIf="
-                                            primengTableHelper.totalRecordsCount == 0
-                                        ">
-                                        {{ l("NoData") }}
-                                    </div>
-                                    <div class="primeng-paging-container">
-                                        <p-paginator [rows]="
-                                                primengTableHelper.defaultRecordsCountPerPage
-                                            " #paginator (onPageChange)="
-                                            getVMSDashboards($event)
-                                            " [totalRecords]="
-                                                primengTableHelper.totalRecordsCount
-                                            " [rowsPerPageOptions]="
-                                                primengTableHelper.predefinedRecordsCountPerPage
-                                            ">
-                                        </p-paginator>
-                                        <span class="total-records-count">
-                                            {{
-                                            l(
-                                            "TotalRecordsCount",
-                                            primengTableHelper.totalRecordsCount
-                                            )
-                                            }}
-                                        </span>
+                                <div class="col-xl-12">
+                                    <div class="my-3">
+                                        <div class="input-group mb-3">
+                                            <input [(ngModel)]="filterText" name="filterText" autoFocus type="text"
+                                                class="form-control" [placeholder]="l('SearchWithThreeDot')" />
+                                            <button class="btn btn-primary" type="submit" (click)="getVMSDashboards()">
+                                                <i class="flaticon-search-1"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <!--<Primeng-Datatable-End>-->
+                            </div>
+                            <div class="row" [hidden]="!advancedFiltersAreShown">
+                                <div class="col-md-12"></div>
+
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="FullNameFilter">{{ l('FullName') }}</label>
+                                        <input type="text" class="form-control" id="FullNameFilter"
+                                            name="fullNameFilter" [(ngModel)]="fullNameFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="IdentityCardFilter">{{ l('IdentityCard') }}</label>
+                                        <input type="text" class="form-control" id="IdentityCardFilter"
+                                            name="identityCardFilter" [(ngModel)]="identityCardFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="PhoneNoFilter">{{ l('PhoneNo') }}</label>
+                                        <input type="text" class="form-control" id="PhoneNoFilter" name="phoneNoFilter"
+                                            [(ngModel)]="phoneNoFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="EmailFilter">{{ l('Email') }}</label>
+                                        <input type="email" class="form-control" id="EmailFilter" name="emailFilter"
+                                            [(ngModel)]="emailFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="TitleFilter">{{ l('Title') }}</label>
+                                        <input type="text" class="form-control" id="TitleFilter" name="titleFilter"
+                                            [(ngModel)]="titleFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="CompanyNameFilter">{{ l('CompanyName') }}</label>
+                                        <input type="text" class="form-control" id="CompanyNameFilter"
+                                            name="companyNameFilter" [(ngModel)]="companyNameFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="OfficerToMeetFilter">{{ l('OfficerToMeet') }}</label>
+                                        <input type="text" class="form-control" id="OfficerToMeetFilter"
+                                            name="officerToMeetFilter" [(ngModel)]="officerToMeetFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="EmailOfficerToMeetFilter">{{ l('EmailOfficerToMeet') }}</label>
+                                        <input type="text" class="form-control" id="EmailOfficerToMeetFilter"
+                                            name="officerToMeetFilter" [(ngModel)]="emailOfficerToMeetFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="PhoneNoOfficerToMeetFilter">{{ l('PhoneNoOfficerToMeet') }}</label>
+                                        <input type="text" class="form-control" id="PhoneNoOfficerToMeetFilter"
+                                            name="officerToMeetFilter" [(ngModel)]="phoneNoOfficerToMeetFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="PurposeOfVisitFilter">{{ l('PurposeOfVisit') }}</label>
+                                        <input type="text" class="form-control" id="PurposeOfVisitFilter"
+                                            name="purposeOfVisitFilter" [(ngModel)]="purposeOfVisitFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="DepartmentFilter">{{ l('Department') }}</label>
+                                        <input type="text" class="form-control" id="DepartmentFilter"
+                                            name="departmentFilter" [(ngModel)]="departmentFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="TowerFilter">{{ l('Tower') }}</label>
+                                        <input type="text" class="form-control" id="TowerFilter" name="towerFilter"
+                                            [(ngModel)]="towerFilter" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="LevelFilter">{{ l('Level') }}</label>
+                                        <input type="text" class="form-control" id="LevelFilter" name="levelFilter"
+                                            [(ngModel)]="levelFilter" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="MinAppointmentDateFilter">{{
+                                                l("MinAppDateTimeFilter")
+                                                }}</label>
+
+                                            <div class="input-group">
+                                                <input class="form-control m-input" id="MinAppDateTimeFilter"
+                                                    name="MinAppDateTimeFilter" type="datetime" bsDatepicker
+                                                    placeholder="{{
+                                                        l('MinValue')
+                                                    }}" [(ngModel)]="
+                                                    minAppDateTimeFilter
+                                                    " />
+                                                <span style="
+                                                        line-height: 40px;
+                                                        padding: 0 15px 0 15px;
+                                                    ">
+                                                    &mdash;
+                                                </span>
+                                                <input class="form-control m-input" id="MaxAppDateTimeFilter"
+                                                    name="MaxAppDateTimeFilter" type="datetime" bsDatepicker
+                                                    placeholder="{{
+                                                        l('MaxValue')
+                                                    }}" [(ngModel)]="
+                                                    maxAppDateTimeFilter
+                                                    " />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="MinAppointmentDateFilter">{{
+                                                l("MinRegDateTimeFilter")
+                                                }}</label>
+
+                                            <div class="input-group">
+                                                <input class="form-control m-input" id="MinRegDateTimeFilter"
+                                                    name="MinRegDateTimeFilter" type="datetime" bsDatepicker
+                                                    placeholder="{{
+                                                        l('MinValue')
+                                                    }}" [(ngModel)]="
+                                                    minRegDateTimeFilter
+                                                    " />
+                                                <span style="
+                                                        line-height: 40px;
+                                                        padding: 0 15px 0 15px;
+                                                    ">
+                                                    &mdash;
+                                                </span>
+                                                <input class="form-control m-input" id="MaxRegDateTimeFilter"
+                                                    name="MaxRegDateTimeFilter" type="datetime" bsDatepicker
+                                                    placeholder="{{
+                                                        l('MaxValue')
+                                                    }}" [(ngModel)]="
+                                                    maxRegDateTimeFilter
+                                                    " />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="StatusFilter">{{ l('Status') }}</label>
+                                        <input type="text" class="form-control" id="StatusFilter" name="statusFilter"
+                                            [(ngModel)]="statusFilter" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="my-3">
+                                        <label for="AppRefNo">{{ l('AppRefNo') }}</label>
+                                        <input type="text" class="form-control" id="AppRefNo" name="appRefNo"
+                                            [(ngModel)]="appRefNoFilter" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row my-4">
+                                <div class="col-sm-12">
+                                    <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                        <i class="fa fa-angle-down"></i>
+                                        {{ l('ShowAdvancedFilters') }}
+                                    </span>
+                                    <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                        <i class="fa fa-angle-up"></i>
+                                        {{ l('HideAdvancedFilters') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <p-table #dataTable (onLazyLoad)="getVMSDashboards($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false"
+                                [lazy]="true" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <!-- <th style="width: 130px"
+                                                [hidden]="!isGrantedAny('Pages.Appointments.Edit', 'Pages.Appointments.Delete')">
+                                                {{ l('Actions') }}
+                                            </th> -->
+                                        <th style="width: 150px" pSortableColumn="FullName">
+                                            {{ l('FullName') }}
+                                            <p-sortIcon field="appointment.fullName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="IdentityCard">
+                                            {{ l('IdentityCard') }}
+                                            <p-sortIcon field="appointment.identityCard"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="PhoneNo">
+                                            {{ l('PhoneNo') }}
+                                            <p-sortIcon field="appointment.phoneNo"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Email">
+                                            {{ l('Email') }}
+                                            <p-sortIcon field="appointment.email"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="PurposeOfVisit">
+                                            {{ l('PurposeOfVisit') }}
+                                            <p-sortIcon field="appointment.purposeOfVisit"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="CompanyName">
+                                            {{ l('CompanyName') }}
+                                            <p-sortIcon field="appointment.companyName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="OfficerToMeet">
+                                            {{ l('OfficerToMeet') }}
+                                            <p-sortIcon field="appointment.officerToMeet"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="EmailOfficerToMeet">
+                                            {{ l('EmailOfficerToMeet') }}
+                                            <p-sortIcon field="appointment.emailOfficerToMeet"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="PhoneNoOfficerToMeet">
+                                            {{ l('PhoneNoOfficerToMeet') }}
+                                            <p-sortIcon field="appointment.phoneNoOfficerToMeet"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Department">
+                                            {{ l('Department') }}
+                                            <p-sortIcon field="appointment.department"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Tower">
+                                            {{ l('Tower') }}
+                                            <p-sortIcon field="appointment.tower"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Level">
+                                            {{ l('Level') }}
+                                            <p-sortIcon field="appointment.level"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 250px" pSortableColumn="AppDateTime">
+                                            {{ l('AppDateTime') }}
+                                            <p-sortIcon field="appointment.appDateTime"
+                                                ate-date-format="DD MMMM YYYY"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="RegDateTime">
+                                            {{ l('RegDateTime') }}
+                                            <p-sortIcon field="appointment.creationTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Status">
+                                            {{ l('Status') }}
+                                            <p-sortIcon field="appointment.status"></p-sortIcon>
+                                        </th>
+
+                                        <th style="width: 150px" pSortableColumn="AppRefNo">
+                                            {{ l('AppRefNo') }}
+                                            <p-sortIcon field="appointment.appRefNo"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="checkInDateTime">
+                                            {{ l('checkInDateTime') }}
+                                            <p-sortIcon field="appointment.checkInDateTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="checkOutDateTime">
+                                            {{ l('checkOutDateTime') }}
+                                            <p-sortIcon field="appointment.checkOutDateTime"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                    <tr>
+                                        <!-- <td style="width: 130px"
+                                                [hidden]="!isGrantedAny('Pages.Appointments.Edit', 'Pages.Appointments.Delete')">
+                                                <div class="btn-group dropdown" dropdown container="body">
+                                                     <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                        <i class="fa fa-cog"></i>
+                                                        <span class="caret"></span>
+                                                        {{ l('Actions') }}
+                                                    </button> 
+                                                    <ul class="dropdown-menu" *dropdownMenu>
+                                                        <li>
+                                                            <a href="javascript:;" class="dropdown-item"
+                                                                (click)="viewAppointmentModal.show(record)">
+                                                                {{ l('View') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"
+                                                                *ngIf="permission.isGranted('Pages.Appointments.Edit')"
+                                                                class="dropdown-item"
+                                                                (click)="createOrEditAppointmentModal.show(record.appointment.id)">
+                                                                {{ l('Edit') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;"
+                                                                *ngIf="permission.isGranted('Pages.Appointments.Delete')"
+                                                                (click)="deleteAppointment(record.appointment)">
+                                                                {{ l('Delete') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;" 
+                                                                *ngIf="isStatusRegistered(record.appointment.status)" 
+                                                                (click)="viewAppointmentModal.processCancelAppointment(record)">
+                                                                {{ l('CancelAppointment') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"class="dropdown-item"
+                                                            *ngIf="isStatusOverstayed(record.appointment.checkInDateTime) 
+                                                            && isStatusIn(record.appointment.status)" 
+                                                                (click)="addVisitorToBlacklist.show(record.appointment.id)">
+                                                                {{ l('AddVisitorToBlacklist') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;" *ngIf="entityHistoryEnabled"
+                                                                class="dropdown-item"
+                                                                (click)="showHistory(record.appointment)">
+                                                                {{ l('History') }}
+                                                            </a>
+                                                        </li> 
+                                                    </ul>
+                                                </div>
+                                            </td>-->
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('FullName') }}</span>
+
+                                            <span  class="fullName-text" style="word-break: break-all;">{{
+                                                record.appointment.title + ' ' + record.appointment.fullName }}</span>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('IdentityCard') }}</span>
+                                            {{ record.appointment.identityCard }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('PhoneNo') }}</span>
+                                            {{ record.appointment.phoneNo }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Email') }}</span>
+                                            <span class="email-text" style="word-break: break-all;">{{
+                                                record.appointment.emailOfficerToMeet }}</span>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('PurposeOfVisit') }}</span>
+                                            {{ record.appointment.purposeOfVisit }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('CompanyName') }}</span>
+                                            {{ record.appointment.companyName }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('OfficerToMeet') }}</span>
+
+                                            <span class="officerToMeet-text" style="word-break: break-all;">{{
+                                                record.appointment.officerToMeet }}</span>
+
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('EmailOfficerToMeet') }}</span>
+
+                                            <span class="emailOfficerToMeet-text" style="word-break: break-all;"> {{
+                                                record.appointment.emailOfficerToMeet }}</span>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('PhoneNoOfficerToMeet') }}</span>
+                                            {{ record.appointment.phoneNoOfficerToMeet }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Department') }}</span>
+                                            {{ record.appointment.department }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Tower') }}</span>
+                                            {{ record.appointment.tower }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Level') }}</span>
+                                            {{ record.appointment.level }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('AppDateTime') }}</span>
+                                            {{ record.appointment.appDateTime | date:'medium'}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('RegDateTime') }}</span>
+                                            {{ record.appointment.regDateTime | date:'medium'}}
+                                        </td>
+                                        <td *ngIf="checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 3 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + 5 ) }}
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="!checkStatusOverstayed(record.appointment.checkInDateTime,record.appointment.status)
+                                        && !isStatusExpired(record.appointment.checkInDateTime,record.appointment.status)" style="width: 150px">
+                                            <span class="p-column-title">{{ l('Status') }}</span>
+                                            <ng-container>
+                                                {{ l('Enum:StatusType:' + record.appointment.status ) }}
+                                            </ng-container>
+                                        </td>
+
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('AppRefNo') }}</span>
+                                            {{ record.appointment.appRefNo }}
+                                        </td>
+                                        <td *ngIf="isStatusRegistered(record.appointment.status) || isStatusCancel(record.appointment.status)"
+                                            style="width: 150px">
+                                            <span class="p-column-title">{{ l('checkInDateTime') }}</span>
+                                            null
+                                        </td>
+                                        <td *ngIf="!isStatusRegistered(record.appointment.status) && !isStatusCancel(record.appointment.status)"
+                                            style="width: 150px">
+                                            <span class="p-column-title">{{ l('checkInDateTime') }}</span>
+                                            {{record.appointment.checkInDateTime | date:'medium' }}
+                                        </td>
+                                        <td *ngIf="isStatusRegistered(record.appointment.status) || isStatusIn(record.appointment.status) || isStatusCancel(record.appointment.status)"
+                                            style="width: 150px">
+                                            <span class="p-column-title">{{ l('checkOutDateTime') }}</span>
+                                            null
+                                        </td>
+                                        <td *ngIf="!isStatusRegistered(record.appointment.status) && !isStatusIn(record.appointment.status) && !isStatusCancel(record.appointment.status)"
+                                            style="width: 150px">
+                                            <span class="p-column-title">{{ l('checkOutDateTime') }}</span>
+                                            {{ record.appointment.checkOutDateTime | date:'medium' }}
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{ l('NoData') }}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                    (onPageChange)="getVMSDashboards($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                    [showCurrentPageReport]="true" [currentPageReportTemplate]="
+                                            'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                                        "></p-paginator>
+                            </div>
+                        </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- <branchAppointmentSettingBranchLookupTableModal #branchAppointmentSettingBranchLookupTableModal
-        (modalSave)="getNewBranchId()"></branchAppointmentSettingBranchLookupTableModal>
-    <branchAppointmentSettingServiceLookupTableModal #branchAppointmentSettingServiceLookupTableModal
-        (modalSave)="getNewServiceId()"></branchAppointmentSettingServiceLookupTableModal>
-    <viewBranchAppointmentSettingModal #viewBranchAppointmentSettingModal></viewBranchAppointmentSettingModal> -->
 </div>

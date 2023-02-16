@@ -24,7 +24,7 @@ const route: Routes = [
                         path: '',
                         children: [
                             { path: 'notifications', component: NotificationsComponent },
-                            { path: '', redirectTo: '/app/main/dashboard', pathMatch: 'full' },
+                            { path: '', redirectTo: '/app/main/vmsDashboard', pathMatch: 'full' },
                         ],
                     },
                     {

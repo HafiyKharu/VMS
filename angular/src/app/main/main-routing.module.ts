@@ -77,11 +77,6 @@ import { RouterModule } from '@angular/router';
                         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
                         data: { permission: 'Pages.Tenant.Dashboard' },
                     },
-                    
-                    // {
-                    //     path: 'vmsDashboard\vms-dashboard', component : VMSDashboardComponent ,
-                    //     data: { permission: 'Pages.VMSDasboards' },
-                    // },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
                 ],

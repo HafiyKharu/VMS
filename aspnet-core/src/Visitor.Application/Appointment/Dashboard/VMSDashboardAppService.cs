@@ -20,7 +20,7 @@ namespace Visitor.Appointment.Dashboard
     public class VMSDashboardAppService : VisitorAppServiceBase 
     {
         private readonly IRepository<VMSDashboardEnt> _vmsDashboardRepository;
-        private readonly IRepository<AppointmentEnt, Guid> _appoitnmentRepository;
+        private readonly IRepository<AppointmentEnt, Guid> _appointmentRepository;
         private readonly RoleManager _roleManager;
         private readonly IRepository<UserRole, long> _userRoleRepository;
 
@@ -31,156 +31,183 @@ namespace Visitor.Appointment.Dashboard
             IRepository<UserRole, long> userRoleRepository)
         {
             _vmsDashboardRepository = vMSDasboardRepository;
-            _appoitnmentRepository = appoitnmentRepository;
+            _appointmentRepository = appoitnmentRepository;
             _roleManager = roleManager;
             _userRoleRepository = userRoleRepository;
         }
-        [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
-        public async Task<PagedResultDto <GetVMSDashboardForViewDto> > GetAll(GetAllVMSDashboardInput input)
+        protected DateTime GetToday()
         {
-            var filterVMSDashboard = _vmsDashboardRepository.GetAll()
-                        .Include(e => e.AppointmentFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.FullName), e => e.AppointmentFk != null && e.AppointmentFk.FullName == input.FullName);
-
-            var pagedAndFilteredVMSDashboard = filterVMSDashboard
-                        .OrderBy(input.Sorting ?? "id asc")
-                        .PageBy(input);
-
-            var vmsDashboards = from o in pagedAndFilteredVMSDashboard
-                                join o1 in _appoitnmentRepository.GetAll() on o.AppoitnmentId equals o1.Id into j1
-                                from s1 in j1.DefaultIfEmpty()
-
-                                select new GetVMSDashboardForViewDto()
-                                {
-                                    VMSDashboard = new VMSDashboardDto()
-                                    {
-                                        Id = o.Id
-                                    },
-                                    FullName = s1 == null || s1.FullName == null ? "" : s1.FullName.ToString()
-                                };
-            var totalCount = await filterVMSDashboard.CountAsync();
-            return new PagedResultDto<GetVMSDashboardForViewDto>
-                (
-                    totalCount,
-                    await vmsDashboards.ToListAsync()
-                );
-        }
-        public async Task<GetVMSDashboardForViewDto> GetVMSDashboardForView (int id)
-        {
-            var vmsDashboard = await _vmsDashboardRepository.GetAsync (id);
-            var output = new GetVMSDashboardForViewDto { VMSDashboard = ObjectMapper.Map<VMSDashboardDto>(vmsDashboard) };
-            if(output.VMSDashboard.AppointmentId != null)
-            {
-                var _lookupAppointment = await _appoitnmentRepository.FirstOrDefaultAsync((Guid)output.VMSDashboard.AppointmentId);
-                output.FullName = _lookupAppointment?.FullName?.ToString();
-            }
-            return output;
-        }
-        //[AbpAuthorize(AppPermissions.Pages_VMSDashboards_Edit)]
-        public async Task<GetVMSDashboardForEditOutput> GetVMSDashboardForEdit(EntityDto input)
-        {
-            var vmsDashboard = await _vmsDashboardRepository.FirstOrDefaultAsync (input.Id);
-            var output = new GetVMSDashboardForEditOutput { VMSDashboard = ObjectMapper.Map<CreateOrEditVMSDashboardDto>(vmsDashboard) };
-            if (output.VMSDashboard.AppointmentId != null)
-            {
-                var _lookupAppointment = await _appoitnmentRepository.FirstOrDefaultAsync((Guid)output.VMSDashboard.AppointmentId);
-                output.FulName = _lookupAppointment?.FullName?.ToString();
-            }
-            return output;
-
-        }
-        public async Task CreateOrEdit(CreateOrEditVMSDashboardDto input)
-        {
-            if (input.Id == null)
-            {
-                await Create(input);
-            }
-            else
-            {
-                await Update(input);
-            }
-        }
-        //[AbpAuthorize(AppPermissions.Pages_VMSDashboards_Create)]
-        protected virtual async Task Create(CreateOrEditVMSDashboardDto input)
-        {
-            var vmsDashboard = ObjectMapper.Map<VMSDashboardEnt>(input);
-
-            if (AbpSession.TenantId != null)
-            {
-                vmsDashboard.TenantId = (int?)AbpSession.TenantId;
-            }
-
-            await _vmsDashboardRepository.InsertAsync(vmsDashboard);
-        }
-        //[AbpAuthorize(AppPermissions.Pages_VMSDashboards_Edit)]
-        protected virtual async Task Update(CreateOrEditVMSDashboardDto input)
-        {
-            var vmsDashboard = await _vmsDashboardRepository.FirstOrDefaultAsync((int)input.Id);
-            ObjectMapper.Map(input, vmsDashboard);
-        }
-        //[AbpAuthorize(AppPermissions.Pages_VMSDashboards_Delete)]
-        public async Task Delete(EntityDto input)
-        {
-            await _vmsDashboardRepository.DeleteAsync(input.Id);
+            return DateTime.Now.Date;
         }
         [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
-        public async Task<List<VMSDashboardAppoitnmentLookupTableDto>> GetAllAppointmentForTableDropdown()
+        public async Task<PagedResultDto <GetAppointmentForViewDto> > GetAllTodayVMSDashboard(GetAllAppointmentsInput input)
         {
-            return await _appoitnmentRepository.GetAll()
-                .Select(appointment => new VMSDashboardAppoitnmentLookupTableDto
+            DateTime minA = DateTime.Now;
+            DateTime maxA = DateTime.Now;
+            DateTime minR = DateTime.Now;
+            DateTime maxR = DateTime.Now;
+
+            if (input.MinAppDateTimeFilter != null)
+            {
+                minA = (DateTime)input.MinAppDateTimeFilter;
+            }
+            if (input.MaxAppDateTimeFilter != null)
+            {
+                maxA = (DateTime)input.MaxAppDateTimeFilter;
+            }
+            if (input.MinRegDateTimeFilter != null)
+            {
+                minR = (DateTime)input.MinRegDateTimeFilter;
+            }
+            if (input.MaxRegDateTimeFilter != null)
+            {
+                maxR = (DateTime)input.MaxRegDateTimeFilter;
+            }
+
+            DateTime d1 = GetToday();
+            var todaysDate = DateTime.Today;
+
+
+            var statusEnumFilter = input.StatusFilter.HasValue
+                        ? (StatusType)input.StatusFilter
+                        : default;
+
+
+            var filteredAppointments = _appointmentRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.FullName.Contains(input.Filter) || e.IdentityCard.Contains(input.Filter) || e.PhoneNo.Contains(input.Filter) || e.Email.Contains(input.Filter) || e.PassNumber.Contains(input.Filter) || e.OfficerToMeet.Contains(input.Filter) || e.OfficerToMeet.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.FullNameFilter), e => e.FullName == input.FullNameFilter)
+                        .Where(e => e.AppDateTime.Date == d1)
+
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.IdentityCardFilter), e => e.IdentityCard == input.IdentityCardFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PhoneNoFilter), e => e.PhoneNo == input.PhoneNoFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.EmailFilter), e => e.Email == input.EmailFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TitleFilter), e => e.Title == input.TitleFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CompanyNameFilter), e => e.CompanyName == input.CompanyNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.OfficerToMeetFilter), e => e.OfficerToMeet == input.OfficerToMeetFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.EmailOfficerToMeet), e => e.EmailOfficerToMeet == input.EmailOfficerToMeet)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PhoneNoFilter), e => e.PhoneNoOfficerToMeet == input.PhoneNoOfficerToMeet)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PurposeOfVisitFilter), e => e.PurposeOfVisit == input.PurposeOfVisitFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.DepartmentFilter), e => e.Department == input.DepartmentFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.TowerFilter), e => e.Tower == input.TowerFilter)
+
+                        .WhereIf(input.MinAppDateTimeFilter != null, e => e.AppDateTime.Date >= minA.Date)
+                        .WhereIf(input.MaxAppDateTimeFilter != null, e => e.AppDateTime.Date <= maxA.Date)
+                        .WhereIf(input.MinRegDateTimeFilter != null, e => e.CreationTime.Date >= minR.Date)
+                        .WhereIf(input.MaxRegDateTimeFilter != null, e => e.CreationTime.Date <= maxR.Date)
+
+
+                        .WhereIf(input.StatusFilter.HasValue, e => e.Status == statusEnumFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.LevelFilter), e => e.Level == input.LevelFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.AppRefNoFilter), e => e.AppRefNo == input.AppRefNoFilter);
+
+            var pagedAndFilteredAppointments = filteredAppointments
+                .OrderBy(input.Sorting ?? "id asc")
+                .PageBy(input);
+
+            var appointments = from o in pagedAndFilteredAppointments
+                               select new
+                               {
+                                   o.Id,
+                                   o.FullName,
+                                   o.Email,
+                                   o.PhoneNo,
+                                   o.IdentityCard,
+                                   o.PurposeOfVisit,
+                                   o.CompanyName,
+                                   o.OfficerToMeet,
+                                   o.Department,
+                                   o.Tower,
+                                   o.Level,
+                                   o.AppDateTime,
+                                   o.CreationTime,
+                                   o.Status,
+                                   o.Title,
+                                   o.ImageId,
+                                   o.AppRefNo,
+                                   o.PassNumber,
+                                   o.CheckInDateTime,
+                                   o.CheckOutDateTime,
+                                   o.EmailOfficerToMeet,
+                                   o.PhoneNoOfficerToMeet,
+                                   o.CancelDateTime,
+
+                               };
+            var dbList = await appointments.ToListAsync();
+            var results = new List<GetAppointmentForViewDto>();
+            var image = new UploadPictureOutput();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetAppointmentForViewDto()
                 {
-                    Id = appointment.Id.ToString(),
-                    FullName = appointment == null || appointment.FullName == null ? "" : appointment.FullName.ToString()
-                }).ToListAsync();
+                    Appointment = new AppointmentDto
+                    {
+                        Id = o.Id,
+                        FullName = o.FullName,
+                        Email = o.Email,
+                        PhoneNo = o.PhoneNo,
+                        IdentityCard = o.IdentityCard,
+                        PurposeOfVisit = o.PurposeOfVisit,
+                        CompanyName = o.CompanyName,
+                        OfficerToMeet = o.OfficerToMeet,
+                        Department = o.Department,
+                        Tower = o.Tower,
+                        Level = o.Level,
+                        AppDateTime = o.AppDateTime,
+                        RegDateTime = o.CreationTime,
+                        Status = o.Status,
+                        Title = o.Title,
+                        ImageId = o.ImageId,
+                        AppRefNo = o.AppRefNo,
+                        PassNumber = o.PassNumber,
+                        CheckInDateTime = o.CheckInDateTime,
+                        CheckOutDateTime = o.CheckOutDateTime,
+                        CancelDateTime = o.CancelDateTime,
+                        EmailOfficerToMeet = o.EmailOfficerToMeet,
+                        PhoneNoOfficerToMeet = o.PhoneNoOfficerToMeet
+                    }
+                };
+
+                results.Add(res);
+            }
+            var totalCount = await filteredAppointments.CountAsync();
+
+            return new PagedResultDto<GetAppointmentForViewDto>(
+                totalCount,
+                results
+            );
         }
-        [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
+        
         public async Task<VMSDashboardAppoitnmentLookupTableDto> GetTotalAppointment( DateTime appointDate)
         {
+            int totalToday = 0;
+            int registered = 0;
+            int checkIn = 0;
+            int checkOut = 0;
+            int cancel = 0;
 
-            var userId = AbpSession.UserId;
-            int RegisterAppointment = 0;
-            int CheckInAppointment = 0;
-            int CheckOutAppointment = 0;
-            int CancelAppointment = 0;
-            int MissAppointment = 0;
-            int TodayAppointment = 0;
-            int newBranchId = 0;
-            var serviceType = 0;
-
-
-            //Check if user registered or not, if not registered return 0 result
-            //if (objBranchUser == null)
-            //{
-            //    return new CMSDashboardBookingLookupTableDto();
-            //}
-
-            //set date to current date
             var todaysDate = DateTime.Today;
             if (appointDate.Year == 0001)
             {
                 appointDate = todaysDate.Date;
-                //input.MaxAppointmentDateFilter = todaysDate.Date;
             }
 
-            List<AppointmentEnt> appointment = await _appoitnmentRepository.GetAll().ToListAsync();
+            List<AppointmentEnt> appointment = await _appointmentRepository.GetAll().ToListAsync();
 
-            RegisterAppointment = appointment.Count(e => e.Status.Equals(StatusType.Registered) && e.AppDateTime.Date == appointDate.Date);
-            CheckInAppointment = appointment.Count(e => e.Status.Equals(StatusType.In) && e.AppDateTime.Date == appointDate.Date);
-            CheckOutAppointment = appointment.Count(e => e.Status.Equals(StatusType.Out) && e.AppDateTime.Date == appointDate.Date);
-            CancelAppointment = appointment.Count(e => e.Status.Equals(StatusType.Cancel) && e.AppDateTime.Date == appointDate.Date);
-            MissAppointment = appointment.Count(e => e.Status.Equals(StatusType.Overstayed) && e.AppDateTime.Date == appointDate.Date);
-            TodayAppointment = appointment.Count(e => e.AppDateTime.Date == appointDate.Date);
+            registered = appointment.Count(e => e.Status.Equals(StatusType.Registered) && e.AppDateTime.Date == appointDate.Date);
+            checkIn = appointment.Count(e => e.Status.Equals(StatusType.In) && e.AppDateTime.Date == appointDate.Date);
+            checkOut = appointment.Count(e => e.Status.Equals(StatusType.Out) && e.AppDateTime.Date == appointDate.Date);
+            cancel = appointment.Count(e => e.Status.Equals(StatusType.Cancel) && e.AppDateTime.Date == appointDate.Date);
+            totalToday = appointment.Count(e => e.AppDateTime.Date == appointDate.Date);
 
 
             var output = new VMSDashboardAppoitnmentLookupTableDto
             {
-                RegisterAppointment = RegisterAppointment,
-                CancelAppointment = CancelAppointment,
-                TodayAppointment = TodayAppointment,
-                CheckOutAppointment = CheckOutAppointment,
-                CheckInAppointment = CheckInAppointment,
-                MissAppointment = MissAppointment
+                TotalToday = totalToday,
+                Register = registered,
+                CheckIn = checkIn,
+                CheckOut = checkOut,
+                Cancel = cancel,
             };
 
             return output;
