@@ -84,6 +84,11 @@ namespace Visitor.Authorization
             blacklists.CreateChildPermission(AppPermissions.Pages_Blacklists_Create, L("CreateNewBlacklist"));
             blacklists.CreateChildPermission(AppPermissions.Pages_Blacklists_Edit, L("EditBlacklist"));
             blacklists.CreateChildPermission(AppPermissions.Pages_Blacklists_Delete, L("DeleteBlacklist"));
+            //VMSDashboard
+            var vmsDashboard = pages.CreateChildPermission(AppPermissions.Pages_VMSDashboards, L("VMSDashboards"));
+            /*vmsDashboard.CreateChildPermission(AppPermissions.Pages_Blacklists_Create, L("CreateNewBlacklist"));
+            vmsDashboard.CreateChildPermission(AppPermissions.Pages_Blacklists_Edit, L("EditBlacklist"));
+            vmsDashboard.CreateChildPermission(AppPermissions.Pages_Blacklists_Delete, L("DeleteBlacklist"));*/
 
             var roles = administration.CreateChildPermission(AppPermissions.Pages_Administration_Roles, L("Roles"));
             roles.CreateChildPermission(AppPermissions.Pages_Administration_Roles_Create, L("CreatingNewRole"));

@@ -16,6 +16,7 @@ using Visitor.Appointments;
 
 namespace Visitor.Appointment.Dashboard
 {
+    [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
     public class VMSDashboardAppService : VisitorAppServiceBase 
     {
         private readonly IRepository<VMSDashboardEnt> _vmsDashboardRepository;
@@ -34,7 +35,7 @@ namespace Visitor.Appointment.Dashboard
             _roleManager = roleManager;
             _userRoleRepository = userRoleRepository;
         }
-
+        [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
         public async Task<PagedResultDto <GetVMSDashboardForViewDto> > GetAll(GetAllVMSDashboardInput input)
         {
             var filterVMSDashboard = _vmsDashboardRepository.GetAll()
@@ -123,7 +124,7 @@ namespace Visitor.Appointment.Dashboard
         {
             await _vmsDashboardRepository.DeleteAsync(input.Id);
         }
-        //[AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
+        [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
         public async Task<List<VMSDashboardAppoitnmentLookupTableDto>> GetAllAppointmentForTableDropdown()
         {
             return await _appoitnmentRepository.GetAll()
@@ -133,6 +134,7 @@ namespace Visitor.Appointment.Dashboard
                     FullName = appointment == null || appointment.FullName == null ? "" : appointment.FullName.ToString()
                 }).ToListAsync();
         }
+        [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
         public async Task<VMSDashboardAppoitnmentLookupTableDto> GetTotalAppointment( DateTime appointDate)
         {
 
