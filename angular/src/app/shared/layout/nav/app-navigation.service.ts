@@ -13,14 +13,21 @@ export class AppNavigationService {
     ) {}
 
     getMenu(): AppMenu {
+        // return new AppMenu('MainMenu', 'MainMenu', [
+        //     new AppMenuItem(
+        //         'Dashboard',
+        //         'Pages.Administration.Host.Dashboard',
+        //         'flaticon-line-graph',
+        //         '/app/admin/hostDashboard'
+        //     ),
         return new AppMenu('MainMenu', 'MainMenu', [
             new AppMenuItem(
                 'Dashboard',
-                'Pages.Administration.Host.Dashboard',
+                'Pages.VMSDashboards',
                 'flaticon-line-graph',
-                '/app/admin/hostDashboard'
+                '/app/main/vmsDashboard'
             ),
-            
+            //new AppMenuItem('Dashboard', 'Pages.VMSDashboards', 'flaticon-line-graph', '/app/main/vmsDashboard'),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),

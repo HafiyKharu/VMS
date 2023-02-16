@@ -68,6 +68,11 @@ import { RouterModule } from '@angular/router';
                         data: { permission: 'Pages.Levels' },
                     },
                     {
+                        path: 'vmsDashboard',
+                        loadChildren: () => import('./vmsDashboard/vms-dashboard.module').then((m) => m.VMSDashboardModule),
+                        data: { permission: 'Pages.VMSDashboards' },
+                    },
+                    {
                         path: 'dashboard',
                         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
                         data: { permission: 'Pages.Tenant.Dashboard' },

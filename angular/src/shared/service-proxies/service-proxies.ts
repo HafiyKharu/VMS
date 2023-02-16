@@ -20195,6 +20195,245 @@ export class UserLoginServiceProxy {
 }
 
 @Injectable()
+export class VMSDashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param fullNameFilter (optional) 
+     * @param identityCardFilter (optional) 
+     * @param phoneNoFilter (optional) 
+     * @param emailFilter (optional) 
+     * @param titleFilter (optional) 
+     * @param companyNameFilter (optional) 
+     * @param officerToMeetFilter (optional) 
+     * @param purposeOfVisitFilter (optional) 
+     * @param departmentFilter (optional) 
+     * @param towerFilter (optional) 
+     * @param levelFilter (optional) 
+     * @param minAppDateTimeFilter (optional) 
+     * @param maxAppDateTimeFilter (optional) 
+     * @param minRegDateTimeFilter (optional) 
+     * @param maxRegDateTimeFilter (optional) 
+     * @param emailOfficerToMeet (optional) 
+     * @param phoneNoOfficerToMeet (optional) 
+     * @param statusFilter (optional) 
+     * @param passNumberFilter (optional) 
+     * @param appRefNoFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllTodayVMSDashboard(filter: string | undefined, fullNameFilter: string | undefined, identityCardFilter: string | undefined, phoneNoFilter: string | undefined, emailFilter: string | undefined, titleFilter: string | undefined, companyNameFilter: string | undefined, officerToMeetFilter: string | undefined, purposeOfVisitFilter: string | undefined, departmentFilter: string | undefined, towerFilter: string | undefined, levelFilter: string | undefined, minAppDateTimeFilter: DateTime | undefined, maxAppDateTimeFilter: DateTime | undefined, minRegDateTimeFilter: DateTime | undefined, maxRegDateTimeFilter: DateTime | undefined, emailOfficerToMeet: string | undefined, phoneNoOfficerToMeet: string | undefined, statusFilter: number | undefined, passNumberFilter: string | undefined, appRefNoFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAppointmentForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetAllTodayVMSDashboard?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (fullNameFilter === null)
+            throw new Error("The parameter 'fullNameFilter' cannot be null.");
+        else if (fullNameFilter !== undefined)
+            url_ += "FullNameFilter=" + encodeURIComponent("" + fullNameFilter) + "&";
+        if (identityCardFilter === null)
+            throw new Error("The parameter 'identityCardFilter' cannot be null.");
+        else if (identityCardFilter !== undefined)
+            url_ += "IdentityCardFilter=" + encodeURIComponent("" + identityCardFilter) + "&";
+        if (phoneNoFilter === null)
+            throw new Error("The parameter 'phoneNoFilter' cannot be null.");
+        else if (phoneNoFilter !== undefined)
+            url_ += "PhoneNoFilter=" + encodeURIComponent("" + phoneNoFilter) + "&";
+        if (emailFilter === null)
+            throw new Error("The parameter 'emailFilter' cannot be null.");
+        else if (emailFilter !== undefined)
+            url_ += "EmailFilter=" + encodeURIComponent("" + emailFilter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (companyNameFilter === null)
+            throw new Error("The parameter 'companyNameFilter' cannot be null.");
+        else if (companyNameFilter !== undefined)
+            url_ += "CompanyNameFilter=" + encodeURIComponent("" + companyNameFilter) + "&";
+        if (officerToMeetFilter === null)
+            throw new Error("The parameter 'officerToMeetFilter' cannot be null.");
+        else if (officerToMeetFilter !== undefined)
+            url_ += "OfficerToMeetFilter=" + encodeURIComponent("" + officerToMeetFilter) + "&";
+        if (purposeOfVisitFilter === null)
+            throw new Error("The parameter 'purposeOfVisitFilter' cannot be null.");
+        else if (purposeOfVisitFilter !== undefined)
+            url_ += "PurposeOfVisitFilter=" + encodeURIComponent("" + purposeOfVisitFilter) + "&";
+        if (departmentFilter === null)
+            throw new Error("The parameter 'departmentFilter' cannot be null.");
+        else if (departmentFilter !== undefined)
+            url_ += "DepartmentFilter=" + encodeURIComponent("" + departmentFilter) + "&";
+        if (towerFilter === null)
+            throw new Error("The parameter 'towerFilter' cannot be null.");
+        else if (towerFilter !== undefined)
+            url_ += "TowerFilter=" + encodeURIComponent("" + towerFilter) + "&";
+        if (levelFilter === null)
+            throw new Error("The parameter 'levelFilter' cannot be null.");
+        else if (levelFilter !== undefined)
+            url_ += "LevelFilter=" + encodeURIComponent("" + levelFilter) + "&";
+        if (minAppDateTimeFilter === null)
+            throw new Error("The parameter 'minAppDateTimeFilter' cannot be null.");
+        else if (minAppDateTimeFilter !== undefined)
+            url_ += "MinAppDateTimeFilter=" + encodeURIComponent(minAppDateTimeFilter ? "" + minAppDateTimeFilter.toJSON() : "") + "&";
+        if (maxAppDateTimeFilter === null)
+            throw new Error("The parameter 'maxAppDateTimeFilter' cannot be null.");
+        else if (maxAppDateTimeFilter !== undefined)
+            url_ += "MaxAppDateTimeFilter=" + encodeURIComponent(maxAppDateTimeFilter ? "" + maxAppDateTimeFilter.toJSON() : "") + "&";
+        if (minRegDateTimeFilter === null)
+            throw new Error("The parameter 'minRegDateTimeFilter' cannot be null.");
+        else if (minRegDateTimeFilter !== undefined)
+            url_ += "MinRegDateTimeFilter=" + encodeURIComponent(minRegDateTimeFilter ? "" + minRegDateTimeFilter.toJSON() : "") + "&";
+        if (maxRegDateTimeFilter === null)
+            throw new Error("The parameter 'maxRegDateTimeFilter' cannot be null.");
+        else if (maxRegDateTimeFilter !== undefined)
+            url_ += "MaxRegDateTimeFilter=" + encodeURIComponent(maxRegDateTimeFilter ? "" + maxRegDateTimeFilter.toJSON() : "") + "&";
+        if (emailOfficerToMeet === null)
+            throw new Error("The parameter 'emailOfficerToMeet' cannot be null.");
+        else if (emailOfficerToMeet !== undefined)
+            url_ += "EmailOfficerToMeet=" + encodeURIComponent("" + emailOfficerToMeet) + "&";
+        if (phoneNoOfficerToMeet === null)
+            throw new Error("The parameter 'phoneNoOfficerToMeet' cannot be null.");
+        else if (phoneNoOfficerToMeet !== undefined)
+            url_ += "PhoneNoOfficerToMeet=" + encodeURIComponent("" + phoneNoOfficerToMeet) + "&";
+        if (statusFilter === null)
+            throw new Error("The parameter 'statusFilter' cannot be null.");
+        else if (statusFilter !== undefined)
+            url_ += "StatusFilter=" + encodeURIComponent("" + statusFilter) + "&";
+        if (passNumberFilter === null)
+            throw new Error("The parameter 'passNumberFilter' cannot be null.");
+        else if (passNumberFilter !== undefined)
+            url_ += "PassNumberFilter=" + encodeURIComponent("" + passNumberFilter) + "&";
+        if (appRefNoFilter === null)
+            throw new Error("The parameter 'appRefNoFilter' cannot be null.");
+        else if (appRefNoFilter !== undefined)
+            url_ += "AppRefNoFilter=" + encodeURIComponent("" + appRefNoFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllTodayVMSDashboard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTodayVMSDashboard(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetAppointmentForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetAppointmentForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllTodayVMSDashboard(response: HttpResponseBase): Observable<PagedResultDtoOfGetAppointmentForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetAppointmentForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetAppointmentForViewDto>(<any>null);
+    }
+
+    /**
+     * @param appointDate (optional) 
+     * @return Success
+     */
+    getTotalAppointment(appointDate: DateTime | undefined): Observable<VMSDashboardAppoitnmentLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/VMSDashboard/GetTotalAppointment?";
+        if (appointDate === null)
+            throw new Error("The parameter 'appointDate' cannot be null.");
+        else if (appointDate !== undefined)
+            url_ += "appointDate=" + encodeURIComponent(appointDate ? "" + appointDate.toJSON() : "") + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTotalAppointment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTotalAppointment(<any>response_);
+                } catch (e) {
+                    return <Observable<VMSDashboardAppoitnmentLookupTableDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<VMSDashboardAppoitnmentLookupTableDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTotalAppointment(response: HttpResponseBase): Observable<VMSDashboardAppoitnmentLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = VMSDashboardAppoitnmentLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<VMSDashboardAppoitnmentLookupTableDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class WebhookEventServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -37460,6 +37699,58 @@ export class UsersToOrganizationUnitInput implements IUsersToOrganizationUnitInp
 export interface IUsersToOrganizationUnitInput {
     userIds: number[] | undefined;
     organizationUnitId: number;
+}
+
+export class VMSDashboardAppoitnmentLookupTableDto implements IVMSDashboardAppoitnmentLookupTableDto {
+    totalToday!: number;
+    register!: number;
+    checkIn!: number;
+    cancel!: number;
+    checkOut!: number;
+
+    constructor(data?: IVMSDashboardAppoitnmentLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalToday = _data["totalToday"];
+            this.register = _data["register"];
+            this.checkIn = _data["checkIn"];
+            this.cancel = _data["cancel"];
+            this.checkOut = _data["checkOut"];
+        }
+    }
+
+    static fromJS(data: any): VMSDashboardAppoitnmentLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new VMSDashboardAppoitnmentLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalToday"] = this.totalToday;
+        data["register"] = this.register;
+        data["checkIn"] = this.checkIn;
+        data["cancel"] = this.cancel;
+        data["checkOut"] = this.checkOut;
+        return data; 
+    }
+}
+
+export interface IVMSDashboardAppoitnmentLookupTableDto {
+    totalToday: number;
+    register: number;
+    checkIn: number;
+    cancel: number;
+    checkOut: number;
 }
 
 export class VerifySmsCodeInputDto implements IVerifySmsCodeInputDto {

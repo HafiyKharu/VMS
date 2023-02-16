@@ -10,6 +10,8 @@
     <text name="PrivacyPolicy">Privacy Policy</text>
     <text name="SecurityPolicy">Security Policy</text>
     <text name="CustomerService">Customer Service</text>
+    <text name="TitleVMSDashboards">Daily VMS Dashboards</text>
+    <text name="DashboardDesc">Monitoring Dashboard for Visitor of Bank Rakyat</text>
 
     <text name="RefNo">Referral Number</text>
     <text name="Company">Company</text>
@@ -52,6 +54,7 @@
     <text name="EditStatus">Edit status</text>
     <text name="Deletestatus">Delete status</text>
     <text name="Statuses">Status</text>
+    <text name="TotalAppointment">Total Appointment</text>
 
     <text name="Title">Visitor Title</text>
     <text name="Visitor.Title.Title">Visitor Title</text>
@@ -333,6 +336,7 @@
     <text name="ProfilePicture_Warn_SizeLimit">Picture size must be smaller than {0}MB. Please select another file.</text>
     <text name="ProfilePicture_Warn_FileType">You can only select JPG/JPEG file. Please select another file.</text>
     <text name="Dashboard">Dashboard</text>
+    <text name="VMSDashboards">VMS Dashboard</text>
     <text name="DashboardHeaderInfo">statistics and reports</text>
     <text name="GoToApplication">Go to application</text>
     <text name="TenantInformations">Tenant information</text>

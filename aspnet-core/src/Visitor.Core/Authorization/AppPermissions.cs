@@ -57,6 +57,13 @@
         public const string Pages_ExpiredUrls_Edit = "Pages.ExpiredUrls.Edit";
         public const string Pages_ExpiredUrls_Delete = "Pages.ExpiredUrls.Delete";
 
+        // PERMISSION FOR VMS Dashboard
+
+        public const string Pages_VMSDashboards = "Pages.VMSDashboards";
+        public const string Pages_VMSDashboards_Create = "Pages.VMSDashboards.Create";
+        public const string Pages_VMSDashboards_Edit = "Pages.VMSDashboards.Edit";
+        public const string Pages_VMSDashboards_Delete = "Pages.VMSDashboards.Delete";
+
         //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
         public const string Pages = "Pages";

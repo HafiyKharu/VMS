@@ -23,6 +23,7 @@ using Visitor.PurposeOfVisit;
 using Visitor.Title;
 using Visitor.Departments;
 using Visitor.Level;
+using Visitor.Appointment.Dashboard;
 
 namespace Visitor.EntityFrameworkCore
 {
@@ -38,6 +39,7 @@ namespace Visitor.EntityFrameworkCore
         public virtual DbSet<PurposeOfVisit.PurposeOfVisitEnt> PurposeOfVisitAppointments { get; set; }
         public virtual DbSet<Level.LevelEnt> LevelAppointments { get; set; }
         public virtual DbSet<Departments.Department> Departments { get; set; }
+        public virtual DbSet<VMSDashboardEnt> VMSDashboards { get; set; }
 
         public virtual DbSet<BinaryObject> BinaryObjects { get; set; }
 
