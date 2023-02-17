@@ -1122,6 +1122,7 @@ namespace Visitor.Appointment
             var appointment = await _appointmentRepository.GetAsync((Guid)input.Id);
             appointment.Status = StatusType.Cancel;
             appointment.CancelDateTime = now;
+            await _portalEmailer.SendConfirmCancelEmailAsync(ObjectMapper.Map<AppointmentEnt>(appointment));
 
         }
 
