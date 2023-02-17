@@ -268,7 +268,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="appointment.id">
+                <div *ngIf="appointment.id && !isStatusRegistered(appointment.status) && !isStatusCancel(appointment.status)">
                     <div class="modal-body">
                         <div class="my-3">
                             <label class="form-label" for="Appointment_PassNumber">{{ l('PassNumber') }}*</label>

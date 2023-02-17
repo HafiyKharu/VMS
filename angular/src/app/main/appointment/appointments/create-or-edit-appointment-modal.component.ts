@@ -480,4 +480,50 @@ export class CreateOrEditAppointmentModalComponent extends AppComponentBase impl
         else
         this.isTower = true;
     }
+    isStatusRegistered(status: any): boolean {
+        if (status == StatusType.Registered) {
+            return true;
+        }
+        else
+            return false;
+    }
+    isStatusCancel(status: any): boolean {
+        if (status == StatusType.Cancel)
+            return true;
+        else
+            return false;
+    }
+    isStatusOut(status: any): boolean {
+        if (status == StatusType.Out)
+            return true;
+        else
+            return false;
+    }
+    checkStatusOverstayed(CheckInDateTime: any, status: any): boolean {
+        if (status == StatusType.In) {
+            let dateOnlyString = new Date(CheckInDateTime);
+            let dateOnly = new Date(dateOnlyString);
+            let time = new Date();
+            let dateNow = new Date();
+            time.setHours(19);
+            time.setMinutes(0);
+            time.setSeconds(0);
+
+            let combinedDate = new Date(dateOnly.getFullYear(), dateOnly.getMonth(), dateOnly.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
+
+            if (dateNow >= combinedDate)
+                return true;
+            
+        }
+    }
+    isStatusExpired(AppDateTime: any, status: any): boolean {
+        if (status == StatusType.Registered) {
+            let appDateTime = new Date(AppDateTime);
+            let dateNow = new Date();
+
+            if (dateNow.getDate > appDateTime.getDate)
+                return true;
+            
+        }
+    }
 }
