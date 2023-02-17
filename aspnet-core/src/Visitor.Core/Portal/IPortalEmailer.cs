@@ -12,6 +12,5 @@ namespace Visitor.core.Portal
     {
         Task SendEmailDetailAppointmentAsync(AppointmentEnt appointment);
         Task SendConfirmCancelEmailAsync(AppointmentEnt appointment);
-        Task SendCancelEmailAsync(AppointmentEnt appointment);
     }
 }

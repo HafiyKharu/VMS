@@ -15,6 +15,17 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
+    <Compile Remove="NewFolder2\**" />
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder2\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder1\**" />
+    <None Remove="NewFolder2\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Abp.EntityFrameworkCore.EFPlus" Version="7.3.0" />
     <PackageReference Include="NPOI" Version="2.5.6" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
@@ -23,10 +34,5 @@
     <ProjectReference Include="..\Visitor.Application.Shared\Visitor.Application.Shared.csproj" />
     <ProjectReference Include="..\Visitor.Core\Visitor.Core.csproj" />
     <ProjectReference Include="..\Visitor.EntityFrameworkCore\Visitor.EntityFrameworkCore.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-    <Folder Include="NewFolder2\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 </Project>
