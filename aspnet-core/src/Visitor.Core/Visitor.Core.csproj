@@ -14,13 +14,12 @@
     <RootNamespace>Visitor</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization\Visitor\*.xml;Net\Emailing\EmailTemplates\default.html" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Remove="Localization\Visitor\Visitor-ms.xml" />
     <None Remove="Net\Emailing\EmailTemplates\appointmentEmail.html" />
     <None Remove="Net\Emailing\EmailTemplates\confirmCancelAppointment.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Localization\Visitor\Visitor-ms.xml" />
     <EmbeddedResource Include="Net\Emailing\EmailTemplates\confirmCancelAppointment.html" />
     <EmbeddedResource Include="Net\Emailing\EmailTemplates\appointmentEmail.html" />
   </ItemGroup>

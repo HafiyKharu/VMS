@@ -97,76 +97,7 @@ namespace Visitor.core.Portal
             await ReplaceBodyAndSend(appointment.EmailOfficerToMeet, L("AppointmentDetails"), emailTemplateOfficerToMeet, VisitorDetails, AppointmentDetails, CancelDetails, Regard);
 
         }
-
-        public async Task SendCancelEmailAsync(AppointmentEnt appointment)
-        {
-            await CheckMailSettingsEmptyOrNull();
-
-            var dateTimeInfo = new StringBuilder();
-            dateTimeInfo.AppendLine(L("AppDateTime") + ":" + "<br>");
-            dateTimeInfo.AppendLine(appointment.AppDateTime.ToString("dddd, dd MMMM yyyy ") + " at " + appointment.AppDateTime.ToString("hh:mm tt"));
-
-            var surveyUrl = _configurationAccessor.Configuration["Survey:surveyUrl"] + "cancel?appointmentId=" + appointment.Id ;
-
-           // var emailTemplate = GetTitleAndSubTitle(null, appointment.AppRefNo, dateTimeInfo);
-            var emailTemplate = GetTitleAndSubTitleCancel(null, appointment.AppRefNo, dateTimeInfo);
-            var mailMessage = new StringBuilder();
-
-            mailMessage.AppendLine(L("CancelEmailIntro") + appointment.Title+" " + appointment.FullName);
-            mailMessage.AppendLine("<br><br>");
-            mailMessage.AppendLine(L("CancelEmailBodyContent1") + appointment.AppDateTime.ToString("dd-MM-yyyy") + 
-                                   L("CancelEmailBodyContent1.1") + appointment.AppDateTime.ToString("hh: mm tt"));
-            mailMessage.AppendLine("<br>");
-            mailMessage.AppendLine(L("CancelEmailBodyContent2"));
-            mailMessage.AppendLine("<br>");
-            mailMessage.AppendLine(String.Format("<a href='" + surveyUrl + "'>Cancel</a>"));
-            mailMessage.AppendLine("<br><br>" + L("CancelEmailBodyContent3"));
-            mailMessage.AppendLine("<br><br>");
-            mailMessage.AppendLine(L("Sincerely"));
-            mailMessage.AppendLine("<br>");
-            mailMessage.AppendLine(L("BankRakyat"));
-
-            //From here on, you can implement your platform-dependent byte[]-to-image code 
-
-            await ReplaceBodyAndSendCancel(appointment.Email, L("CancelEmailBodyTitle"), emailTemplate, mailMessage);
-
-        }
-
-        private async Task CheckMailSettingsEmptyOrNull()
-        {
-#if DEBUG
-            return;
-#endif
-            if (
-                (await _settingManager.GetSettingValueAsync(EmailSettingNames.DefaultFromAddress)).IsNullOrEmpty() ||
-                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.Host)).IsNullOrEmpty()
-            )
-            {
-                throw new UserFriendlyException(L("SMTPSettingsNotProvidedWarningText"));
-            }
-
-            if ((await _settingManager.GetSettingValueAsync<bool>(EmailSettingNames.Smtp.UseDefaultCredentials)))
-            {
-                return;
-            }
-
-            if (
-                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.UserName)).IsNullOrEmpty() ||
-                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.Password)).IsNullOrEmpty()
-            )
-            {
-                throw new UserFriendlyException(L("SMTPSettingsNotProvidedWarningText"));
-            }
-        }
         private StringBuilder GetTitleAndSubTitle(int? tenantId, string title, StringBuilder dateTimeInfo)
-        {
-            var emailTemplate = new StringBuilder(_emailTemplateProvider.GetAppointmentEmailTemplate(tenantId));
-            emailTemplate.Replace("{EMAIL_TITLE}", title);
-            emailTemplate.Replace("{EMAIL_SUB_TITLE}", dateTimeInfo.ToString());
-
-            return emailTemplate;
-        }
-        private StringBuilder GetTitleAndSubTitleCancel(int? tenantId, string title, StringBuilder dateTimeInfo)
         {
             var emailTemplate = new StringBuilder(_emailTemplateProvider.GetAppointmentEmailTemplate(tenantId));
             emailTemplate.Replace("{EMAIL_TITLE}", title);
@@ -211,7 +142,7 @@ namespace Visitor.core.Portal
             var cancelInfo = new StringBuilder();
             var regardInfo = new StringBuilder();
 
-            greeting.AppendLine(L("CancelEmailIntro") + appointment.Title + " " + appointment.FullName);
+            greeting.AppendLine(L("CancelEmailIntro") + appointment.Title + " " + appointment.FullName + " /  " + appointment.OfficerToMeet);
 
             cancelInfo.AppendLine("<br>");
             cancelInfo.AppendLine(L("CancelEmailBodyContent1") + DTNow.ToString("dd/MM/yyyy hh:mm:tt"));
@@ -236,7 +167,7 @@ namespace Visitor.core.Portal
             //From here on, you can implement your platform-dependent byte[]-to-image code 
 
             await ReplaceBodyAndSendCancel(appointment.Email, L("CancelEmailBodyTitle"), emailTemplate, greeting, cancelInfo, regardInfo);
-
+            await ReplaceBodyAndSendCancel(appointment.EmailOfficerToMeet, L("CancelEmailBodyTitle"), emailTemplate, greeting, cancelInfo, regardInfo);
         }
         private StringBuilder GetTitleAndSubTitleConfirmCancel(int? tenantId, string title)
         {
@@ -260,6 +191,32 @@ namespace Visitor.core.Portal
                 Body = emailTemplate.ToString(),
                 IsBodyHtml = true,
             });
+        }
+        private async Task CheckMailSettingsEmptyOrNull()
+        {
+#if DEBUG
+            return;
+#endif
+            if (
+                (await _settingManager.GetSettingValueAsync(EmailSettingNames.DefaultFromAddress)).IsNullOrEmpty() ||
+                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.Host)).IsNullOrEmpty()
+            )
+            {
+                throw new UserFriendlyException(L("SMTPSettingsNotProvidedWarningText"));
+            }
+
+            if ((await _settingManager.GetSettingValueAsync<bool>(EmailSettingNames.Smtp.UseDefaultCredentials)))
+            {
+                return;
+            }
+
+            if (
+                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.UserName)).IsNullOrEmpty() ||
+                (await _settingManager.GetSettingValueAsync(EmailSettingNames.Smtp.Password)).IsNullOrEmpty()
+            )
+            {
+                throw new UserFriendlyException(L("SMTPSettingsNotProvidedWarningText"));
+            }
         }
     }
 }

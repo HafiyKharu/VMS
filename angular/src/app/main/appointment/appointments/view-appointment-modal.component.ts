@@ -149,6 +149,7 @@ export class ViewAppointmentModalComponent extends AppComponentBase {
     cancelAppointment(): void {
         this.message.confirm('', this.l('AreYouSureCancelAppointment'), (isConfirmed) => {
             if (isConfirmed) {
+                this.showMainSpinner();
                 this.saving = true;
                 this._appointmentsServiceProxy
                     .cancelAppointment(this.appointment)
@@ -160,6 +161,7 @@ export class ViewAppointmentModalComponent extends AppComponentBase {
                     .subscribe((result) => {
                         this.modalSave.emit(null);
                         window.location.reload();
+                        this.hideMainSpinner();
                         this.notify.info(this.l('SuccessfullyCancelAppointment'));
                     });
 

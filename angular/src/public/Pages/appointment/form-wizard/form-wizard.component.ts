@@ -311,6 +311,7 @@ export class FormWizardComponent extends AppComponentBase implements OnInit, Aft
             }
             else
             {
+                this.showMainSpinner();
                 this.saving = true;
                 this._portalAppService
                     .createOrEdit(this.appointment)

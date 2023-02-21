@@ -19,21 +19,11 @@ namespace Visitor.Appointment.Dashboard
     [AbpAuthorize(AppPermissions.Pages_VMSDashboards)]
     public class VMSDashboardAppService : VisitorAppServiceBase 
     {
-        private readonly IRepository<VMSDashboardEnt> _vmsDashboardRepository;
         private readonly IRepository<AppointmentEnt, Guid> _appointmentRepository;
-        private readonly RoleManager _roleManager;
-        private readonly IRepository<UserRole, long> _userRoleRepository;
 
-        public VMSDashboardAppService(
-            IRepository<VMSDashboardEnt> vMSDasboardRepository, 
-            IRepository<AppointmentEnt, Guid> appoitnmentRepository, 
-            RoleManager roleManager, 
-            IRepository<UserRole, long> userRoleRepository)
+        public VMSDashboardAppService(IRepository<AppointmentEnt, Guid> appoitnmentRepository)
         {
-            _vmsDashboardRepository = vMSDasboardRepository;
             _appointmentRepository = appoitnmentRepository;
-            _roleManager = roleManager;
-            _userRoleRepository = userRoleRepository;
         }
         protected DateTime GetToday()
         {
